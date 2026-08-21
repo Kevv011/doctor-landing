@@ -40,8 +40,9 @@ Expected first version:
 - `title`: public article title.
 - `slug`: unique route key.
 - `excerpt`: short summary for cards and metadata.
-- `featured_image`: optional image path or media reference.
-- `featured_image_alt`: accessible image description.
+- `featured_image`: single-file Media Library collection for the article cover.
+- `content_images`: Media Library collection for images inserted inside the block
+  editor.
 - `body`: structured JSON block content.
 - `status`: draft or published.
 - `published_at`: publication timestamp.
@@ -54,6 +55,11 @@ Prefer a React block editor for the admin authoring experience. BlockNote is the
 current recommended starting point because it provides a polished block-based UI
 with text, headings, lists, quotes, media support, and custom block extension
 paths.
+
+Images should be uploaded through an admin media endpoint backed by Spatie
+Laravel Media Library. The editor body should store structured block JSON with
+stable media references such as `media_id`, `uuid`, `url`, and `alt` so the
+public renderer can control the final landing-page styling.
 
 ## Entry Points
 

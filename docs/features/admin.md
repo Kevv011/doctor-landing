@@ -36,6 +36,7 @@ Admin visits /admin
 - Profile settings.
 - Security settings.
 - Appearance settings.
+- Users CRUD.
 - Blog CRUD.
 
 ## Entry Points
