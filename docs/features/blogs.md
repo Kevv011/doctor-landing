@@ -61,13 +61,19 @@ Laravel Media Library. The editor body should store structured block JSON with
 stable media references such as `media_id`, `uuid`, `url`, and `alt` so the
 public renderer can control the final landing-page styling.
 
+See `docs/features/blocknote.md` for the initial BlockNote integration contract,
+official references, package installation command, and Media Library upload
+flow.
+
 ## Entry Points
 
 - `app/Http/Controllers/Admin/BlogPostController.php`: expected admin CRUD.
 - `app/Http/Controllers/Public/BlogController.php`: expected public blog pages.
 - `resources/js/pages/admin/blogs/`: expected admin blog pages.
 - `resources/js/pages/public/blog/`: expected public blog pages.
-- `resources/js/components/blog/`: expected shared blog editor/rendering pieces.
+- `resources/js/pages/admin/blogs/components/blog-editor.tsx`: admin BlockNote
+  editor.
+- `resources/js/components/blog/`: expected public blog rendering pieces.
 
 ## Tests
 
