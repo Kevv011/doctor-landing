@@ -27,7 +27,7 @@ class SecurityTest extends TestCase
         ]);
         /* @end-chisel-passkeys */
 
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $this->actingAs($user)
             /* @chisel-password-confirmation */
@@ -50,7 +50,7 @@ class SecurityTest extends TestCase
     {
         $this->skipUnlessFortifyHas(Features::twoFactorAuthentication());
 
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         Features::twoFactorAuthentication([
             'confirm' => true,
@@ -70,7 +70,7 @@ class SecurityTest extends TestCase
 
         config(['fortify.features' => []]);
 
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $this->actingAs($user)
             /* @chisel-password-confirmation */
@@ -92,7 +92,7 @@ class SecurityTest extends TestCase
 
     public function test_password_can_be_updated()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $response = $this
             ->actingAs($user)
@@ -112,7 +112,7 @@ class SecurityTest extends TestCase
 
     public function test_correct_password_must_be_provided_to_update_password()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $response = $this
             ->actingAs($user)

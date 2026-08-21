@@ -54,10 +54,13 @@ php artisan test
 ## Before Completing a Task
 
 1. Run the smallest relevant checks.
-2. Run broader checks when the change touches shared behavior.
-3. Inspect the diff.
-4. Update docs when behavior, architecture, routes, or workflows change.
-5. Report any checks blocked by missing services such as MySQL/Sail.
+2. Avoid database-backed tests, migrations, refreshes, or seeders unless the
+   user explicitly approves them.
+3. Run broader checks when the change touches shared behavior and those checks
+   do not risk current data.
+4. Inspect the diff.
+5. Update docs when behavior, architecture, routes, or workflows change.
+6. Report any checks skipped because they would touch the database.
 
 ## Local Environment Notes
 

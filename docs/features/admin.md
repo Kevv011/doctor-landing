@@ -14,7 +14,7 @@ preserved as the admin foundation.
 
 ```text
 Admin visits /admin
-  -> signs in if needed
+  -> signs in at /admin/login if needed
   -> lands in starter-kit admin shell
   -> manages blog posts
   -> publishes content to public blog pages
@@ -24,6 +24,8 @@ Admin visits /admin
 
 - Admin routes should live under `/admin`.
 - Admin routes must require authentication.
+- Admin routes must require `users.is_admin = true`.
+- Authentication routes should use the `/admin` prefix.
 - Keep starter-kit account/security/settings behavior unless explicitly changed.
 - Use the existing app layout/sidebar/header patterns for admin screens.
 - Public landing design rules do not automatically apply to admin UI.
@@ -46,5 +48,4 @@ Admin visits /admin
 
 ## Open Decisions
 
-- Whether login remains at `/login` or is moved/aliased to `/admin/login`.
 - Whether the first admin version needs roles or assumes a single admin user.

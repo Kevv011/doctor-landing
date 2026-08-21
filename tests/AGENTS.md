@@ -8,6 +8,8 @@ These instructions apply to automated tests under `tests/`.
 
 - Tests describe expected behavior and should not be weakened to make changes
   pass.
+- Do not run database-backed tests, migrations, refreshes, or seeders unless the
+  user explicitly approves them for the current task.
 - Prefer feature tests for public routes, admin route protection, CRUD behavior,
   publication visibility, and form validation.
 - Prefer unit tests for isolated domain logic or formatting behavior.
@@ -26,7 +28,9 @@ These instructions apply to automated tests under `tests/`.
 
 ## Verification Flow
 
-1. Run the smallest relevant test first.
-2. Fix failures caused by the change.
-3. Run a broader suite when local checks pass.
-4. Report checks that could not run, especially when Sail/MySQL is unavailable.
+1. Prefer static checks and code inspection when DB state may be valuable.
+2. Ask for explicit approval before database-backed tests.
+3. If approved, run the smallest relevant test first.
+4. Fix failures caused by the change.
+5. Run a broader suite only when approved and appropriate.
+6. Report checks that were skipped to protect local data.

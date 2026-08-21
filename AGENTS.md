@@ -86,7 +86,9 @@ Before non-trivial implementation:
 ## Validation Commands
 
 Use the smallest relevant command first, then broaden when the change warrants
-it.
+it. Do not run database-touching commands such as `php artisan test`,
+`vendor/bin/sail artisan test`, migrations, refreshes, or seeders unless the
+user explicitly authorizes them for the current task.
 
 ```bash
 # Frontend development server
@@ -98,12 +100,12 @@ npm run format:check
 npm run types:check
 npm run build
 
-# Backend checks
+# Backend static checks
 composer lint:check
 composer types:check
-php artisan test
 
-# Full backend test pipeline
+# Database-backed tests only with explicit user approval
+php artisan test
 composer test
 ```
 
@@ -111,8 +113,10 @@ When using Sail services:
 
 ```bash
 vendor/bin/sail up -d
-vendor/bin/sail artisan test
 vendor/bin/sail npm run build
+
+# Database-backed tests only with explicit user approval
+vendor/bin/sail artisan test
 ```
 
 ## Definition of Done
@@ -122,6 +126,7 @@ A task is complete when:
 - requested behavior is implemented;
 - public and admin boundaries remain intact;
 - relevant tests/checks pass or blocked checks are clearly reported;
+- database-touching checks are skipped unless explicitly approved;
 - no unrelated user work was overwritten;
 - documentation is updated when behavior, architecture, or workflow changed;
 - the final diff is focused and reviewable.
@@ -129,6 +134,8 @@ A task is complete when:
 ## Safety Rules
 
 - Do not modify `.env` secrets or production configuration unless requested.
+- Do not run migrations, seeders, database refreshes, or database-backed tests
+  without explicit approval for the current task.
 - Do not delete or weaken tests to make implementation pass.
 - Do not introduce dependencies without explaining why they fit the project.
 - Do not replace the starter-kit admin foundation unless explicitly requested.
