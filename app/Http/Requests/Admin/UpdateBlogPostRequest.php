@@ -34,6 +34,7 @@ class UpdateBlogPostRequest extends FormRequest
             'excerpt' => ['nullable', 'string', 'max:1000'],
             'body' => ['nullable', 'json'],
             'status' => ['required', Rule::in([BlogPost::STATUS_DRAFT, BlogPost::STATUS_PUBLISHED])],
+            'is_featured' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
             'seo_title' => ['nullable', 'string', 'max:255'],
             'seo_description' => ['nullable', 'string', 'max:1000'],

@@ -47,10 +47,10 @@ Visitor opens /
 ## Entry Points
 
 - `routes/web.php`: public route definitions.
-- `resources/js/pages/public/home.tsx`: expected future home page.
+- `resources/js/pages/public/home.tsx`: public home page.
 - `resources/js/components/landing/`: expected future landing sections.
 
 ## Related Files
 
 - `SKILL_Design.md`: design language and QA checklist.
-- `resources/js/pages/welcome.tsx`: current starter public page to replace.
+- `resources/js/pages/welcome.tsx`: starter public page, no longer used by `/`.

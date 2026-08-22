@@ -1,19 +1,18 @@
 import { Form, Head, Link } from '@inertiajs/react';
-import { Edit, FileText, Plus, Trash2 } from 'lucide-react';
+import { Edit, Plus, Trash2 } from 'lucide-react';
 import Heading from '@/components/heading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-type BlogPost = {
+type Testimonial = {
     id: number;
-    title: string;
-    slug: string;
-    status: string;
-    is_featured: boolean;
-    author: string | null;
-    published_at: string | null;
+    name: string;
+    label: string;
+    rating: number;
+    is_active: boolean;
+    sort_order: number;
     created_at: string | null;
-    featured_image_url: string;
+    avatar_url: string | null;
 };
 
 type PaginationLink = {
@@ -22,8 +21,8 @@ type PaginationLink = {
     active: boolean;
 };
 
-type PaginatedPosts = {
-    data: BlogPost[];
+type PaginatedTestimonials = {
+    data: Testimonial[];
     links: PaginationLink[];
     from: number | null;
     to: number | null;
@@ -31,25 +30,25 @@ type PaginatedPosts = {
 };
 
 type Props = {
-    posts: PaginatedPosts;
+    testimonials: PaginatedTestimonials;
 };
 
-export default function BlogsIndex({ posts }: Props) {
+export default function TestimonialsIndex({ testimonials }: Props) {
     return (
         <>
-            <Head title="Blogs" />
+            <Head title="Testimonios" />
 
             <div className="space-y-6 p-4">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <Heading
-                        title="Blogs"
-                        description="Gestiona articulos educativos para la landing."
+                        title="Testimonios"
+                        description="Administra los comentarios que se mostraran en la landing."
                     />
 
                     <Button asChild>
-                        <Link href="/admin/blogs/create">
+                        <Link href="/admin/testimonials/create">
                             <Plus className="h-4 w-4" />
-                            Nuevo blog
+                            Nuevo testimonio
                         </Link>
                     </Button>
                 </div>
@@ -60,16 +59,16 @@ export default function BlogsIndex({ posts }: Props) {
                             <thead className="border-b bg-muted/40 text-left text-xs uppercase text-muted-foreground">
                                 <tr>
                                     <th className="px-4 py-3 font-medium">
-                                        Articulo
+                                        Paciente
                                     </th>
                                     <th className="px-4 py-3 font-medium">
                                         Estado
                                     </th>
                                     <th className="px-4 py-3 font-medium">
-                                        Autor
+                                        Calificacion
                                     </th>
                                     <th className="px-4 py-3 font-medium">
-                                        Publicacion
+                                        Orden
                                     </th>
                                     <th className="px-4 py-3 text-right font-medium">
                                         Acciones
@@ -77,42 +76,42 @@ export default function BlogsIndex({ posts }: Props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {posts.data.length === 0 ? (
+                                {testimonials.data.length === 0 ? (
                                     <tr>
                                         <td
                                             colSpan={5}
                                             className="px-4 py-10 text-center text-muted-foreground"
                                         >
-                                            No hay blogs registrados.
+                                            No hay testimonios registrados.
                                         </td>
                                     </tr>
                                 ) : (
-                                    posts.data.map((post) => (
+                                    testimonials.data.map((testimonial) => (
                                         <tr
-                                            key={post.id}
+                                            key={testimonial.id}
                                             className="border-b last:border-b-0"
                                         >
                                             <td className="px-4 py-3">
                                                 <div className="flex items-center gap-3">
-                                                    {post.featured_image_url ? (
+                                                    {testimonial.avatar_url ? (
                                                         <img
                                                             src={
-                                                                post.featured_image_url
+                                                                testimonial.avatar_url
                                                             }
                                                             alt=""
-                                                            className="h-12 w-16 rounded-md object-cover"
+                                                            className="size-10 rounded-full object-cover"
                                                         />
                                                     ) : (
-                                                        <div className="flex h-12 w-16 items-center justify-center rounded-md bg-muted">
-                                                            <FileText className="h-5 w-5 text-muted-foreground" />
-                                                        </div>
+                                                        <div className="size-10 rounded-full bg-muted" />
                                                     )}
                                                     <div>
                                                         <div className="font-medium">
-                                                            {post.title}
+                                                            {testimonial.name}
                                                         </div>
                                                         <div className="text-xs text-muted-foreground">
-                                                            {post.slug}
+                                                            {
+                                                                testimonial.label
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -120,30 +119,21 @@ export default function BlogsIndex({ posts }: Props) {
                                             <td className="px-4 py-3">
                                                 <Badge
                                                     variant={
-                                                        post.status ===
-                                                        'published'
+                                                        testimonial.is_active
                                                             ? 'default'
                                                             : 'secondary'
                                                     }
                                                 >
-                                                    {post.status === 'published'
-                                                        ? 'Publicado'
-                                                        : 'Borrador'}
+                                                    {testimonial.is_active
+                                                        ? 'Activo'
+                                                        : 'Inactivo'}
                                                 </Badge>
-                                                {post.is_featured && (
-                                                    <Badge
-                                                        variant="secondary"
-                                                        className="ml-2"
-                                                    >
-                                                        Destacado
-                                                    </Badge>
-                                                )}
                                             </td>
                                             <td className="px-4 py-3 text-muted-foreground">
-                                                {post.author ?? '-'}
+                                                {testimonial.rating}/5
                                             </td>
                                             <td className="px-4 py-3 text-muted-foreground">
-                                                {post.published_at ?? '-'}
+                                                {testimonial.sort_order}
                                             </td>
                                             <td className="px-4 py-3">
                                                 <div className="flex items-center justify-end gap-2">
@@ -153,7 +143,7 @@ export default function BlogsIndex({ posts }: Props) {
                                                         asChild
                                                     >
                                                         <Link
-                                                            href={`/admin/blogs/${post.id}/edit`}
+                                                            href={`/admin/testimonials/${testimonial.id}/edit`}
                                                         >
                                                             <Edit className="h-4 w-4" />
                                                             Editar
@@ -161,7 +151,7 @@ export default function BlogsIndex({ posts }: Props) {
                                                     </Button>
 
                                                     <Form
-                                                        action={`/admin/blogs/${post.id}`}
+                                                        action={`/admin/testimonials/${testimonial.id}`}
                                                         method="delete"
                                                         options={{
                                                             preserveScroll: true,
@@ -193,12 +183,13 @@ export default function BlogsIndex({ posts }: Props) {
 
                 <div className="flex flex-col gap-3 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
                     <p>
-                        Mostrando {posts.from ?? 0} a {posts.to ?? 0} de{' '}
-                        {posts.total} blogs
+                        Mostrando {testimonials.from ?? 0} a{' '}
+                        {testimonials.to ?? 0} de {testimonials.total}{' '}
+                        testimonios
                     </p>
 
                     <div className="flex flex-wrap gap-2">
-                        {posts.links.map((link, index) => (
+                        {testimonials.links.map((link, index) => (
                             <Button
                                 key={`${link.label}-${index}`}
                                 variant={link.active ? 'default' : 'outline'}
@@ -229,11 +220,11 @@ export default function BlogsIndex({ posts }: Props) {
     );
 }
 
-BlogsIndex.layout = {
+TestimonialsIndex.layout = {
     breadcrumbs: [
         {
-            title: 'Blogs',
-            href: '/admin/blogs',
+            title: 'Testimonios',
+            href: '/admin/testimonials',
         },
     ],
 };

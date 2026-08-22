@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { FileText, LayoutGrid, Users } from 'lucide-react';
+import { FileText, LayoutGrid, MessageSquareQuote, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -30,6 +30,11 @@ const mainNavItems: NavItem[] = [
         title: 'Blogs',
         href: '/admin/blogs',
         icon: FileText,
+    },
+    {
+        title: 'Testimonios',
+        href: '/admin/testimonials',
+        icon: MessageSquareQuote,
     },
 ];
 

@@ -21,6 +21,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property string|null $excerpt
  * @property array<int, array<string, mixed>>|null $body
  * @property string $status
+ * @property bool $is_featured
  * @property Carbon|null $published_at
  * @property string|null $seo_title
  * @property string|null $seo_description
@@ -50,6 +51,7 @@ class BlogPost extends Model implements HasMedia
         'excerpt',
         'body',
         'status',
+        'is_featured',
         'published_at',
         'seo_title',
         'seo_description',
@@ -64,6 +66,7 @@ class BlogPost extends Model implements HasMedia
     {
         return [
             'body' => 'array',
+            'is_featured' => 'boolean',
             'published_at' => 'datetime',
         ];
     }
@@ -106,5 +109,11 @@ class BlogPost extends Model implements HasMedia
             ->where('status', self::STATUS_PUBLISHED)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
+    }
+
+    #[Scope]
+    protected function featured(Builder $query): void
+    {
+        $query->where('is_featured', true);
     }
 }

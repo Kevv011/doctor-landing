@@ -17,6 +17,7 @@ export type BlogFormPost = {
     excerpt?: string | null;
     body?: Record<string, unknown>[] | null;
     status?: string;
+    is_featured?: boolean;
     published_at?: string | null;
     seo_title?: string | null;
     seo_description?: string | null;
@@ -124,6 +125,26 @@ export default function BlogFormFields({
                     </div>
                 </div>
 
+                <div className="flex items-start gap-3 rounded-lg border p-4">
+                    <input type="hidden" name="is_featured" value="0" />
+                    <input
+                        id="is_featured"
+                        name="is_featured"
+                        type="checkbox"
+                        value="1"
+                        defaultChecked={post?.is_featured ?? false}
+                        className="mt-1 h-4 w-4 rounded border-input"
+                    />
+                    <div className="space-y-1">
+                        <Label htmlFor="is_featured">Blog destacado</Label>
+                        <p className="text-sm text-muted-foreground">
+                            Permite mostrar este articulo en la seccion de
+                            articulos destacados de la landing.
+                        </p>
+                        <InputError message={errors.is_featured} />
+                    </div>
+                </div>
+
                 <div className="grid gap-2">
                     <Label htmlFor="featured_image">Imagen destacada</Label>
                     {post?.featured_image_url && (
@@ -217,8 +238,8 @@ export default function BlogFormFields({
 
                 <p className="text-xs text-muted-foreground">
                     {post?.media_upload_url
-                        ? 'Las imagenes embebidas se suben a Media Library.'
-                        : 'Guarda el borrador y editalo para habilitar imagenes embebidas en Media Library.'}
+                        ? 'Las imagenes seran procesadas una vez guardado.'
+                        : 'Guarda el borrador y editalo para habilitar la subida de imagenes.'}
                 </p>
                 <InputError message={errors.body} />
             </section>

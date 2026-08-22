@@ -1,5 +1,12 @@
 import { Link, usePage } from '@inertiajs/react';
-import { FileText, LayoutGrid, Menu, Search, Users } from 'lucide-react';
+import {
+    FileText,
+    LayoutGrid,
+    Menu,
+    MessageSquareQuote,
+    Search,
+    Users,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import AppLogoIcon from '@/components/app-logo-icon';
 import { Breadcrumbs } from '@/components/breadcrumbs';
@@ -49,6 +56,11 @@ const mainNavItems: NavItem[] = [
         title: 'Blogs',
         href: '/admin/blogs',
         icon: FileText,
+    },
+    {
+        title: 'Testimonios',
+        href: '/admin/testimonials',
+        icon: MessageSquareQuote,
     },
 ];
 
