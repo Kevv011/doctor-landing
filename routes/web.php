@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AppointmentSubmissionController;
+use App\Http\Controllers\Admin\AppointmentSubmissionController as AdminAppointmentSubmissionController;
 use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\Admin\BlogPostMediaController;
 use App\Http\Controllers\Admin\BusinessSettingsController;
@@ -51,6 +53,8 @@ Route::get('/', fn () => Inertia::render('public/home', [
 ]))->name('home');
 
 Route::inertia('contact', 'public/contact')->name('contact');
+Route::post('appointments', [AppointmentSubmissionController::class, 'store'])
+    ->name('appointments.store');
 
 Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(function () {
     Route::redirect('admin', '/admin/dashboard')->name('admin');
@@ -71,6 +75,10 @@ Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(functio
         ->name('admin.business-settings.edit');
     Route::put('admin/business-settings', [BusinessSettingsController::class, 'update'])
         ->name('admin.business-settings.update');
+    Route::get('admin/appointments', [AdminAppointmentSubmissionController::class, 'index'])
+        ->name('admin.appointments.index');
+    Route::patch('admin/appointments/{appointment}/review', [AdminAppointmentSubmissionController::class, 'toggleReview'])
+        ->name('admin.appointments.toggle-review');
 });
 
 require __DIR__.'/settings.php';
