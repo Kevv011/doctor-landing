@@ -181,7 +181,7 @@ export default function BlogFormFields({
                         <Label htmlFor="is_featured">Blog destacado</Label>
                         <p className="text-sm text-muted-foreground">
                             Permite mostrar este articulo en la seccion de
-                            articulos destacados de la landing.
+                            articulos destacados del sitio.
                         </p>
                         <InputError message={errors.is_featured} />
                     </div>

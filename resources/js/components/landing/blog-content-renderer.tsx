@@ -42,6 +42,31 @@ export default function BlogContentRenderer({ body }: Props) {
     for (let index = 0; index < body.length; index += 1) {
         const block = body[index];
 
+        if (isEmptyParagraph(block)) {
+            const { emptyCount, nextIndex } = collectEmptyParagraphs(
+                body,
+                index,
+            );
+
+            if (
+                renderedBlocks.length > 0 &&
+                hasRenderableBlockAfter(body, nextIndex)
+            ) {
+                renderedBlocks.push(
+                    <div
+                        key={block.id ?? `spacer-${index}`}
+                        aria-hidden="true"
+                        style={{
+                            height: `${Math.min(emptyCount, 3) * 0.85}rem`,
+                        }}
+                    />,
+                );
+            }
+
+            index = nextIndex - 1;
+            continue;
+        }
+
         if (block.type === 'numberedListItem') {
             const { items, nextIndex } = collectListItems(
                 body,
@@ -52,7 +77,7 @@ export default function BlogContentRenderer({ body }: Props) {
             renderedBlocks.push(
                 <ol
                     key={block.id ?? `ol-${index}`}
-                    className="my-6 list-decimal space-y-3 pl-6 text-base leading-8 text-[#6f7080] marker:font-black marker:text-[#e9648d]"
+                    className="my-4 list-decimal space-y-2 pl-6 text-base leading-8 text-[#6f7080] marker:font-black marker:text-[#e9648d]"
                 >
                     {items.map((item, itemIndex) => (
                         <li key={item.id ?? `ol-item-${index}-${itemIndex}`}>
@@ -75,7 +100,7 @@ export default function BlogContentRenderer({ body }: Props) {
             renderedBlocks.push(
                 <ul
                     key={block.id ?? `ul-${index}`}
-                    className="my-6 list-disc space-y-3 pl-6 text-base leading-8 text-[#6f7080] marker:text-[#e9648d]"
+                    className="my-4 list-disc space-y-2 pl-6 text-base leading-8 text-[#6f7080] marker:text-[#e9648d]"
                 >
                     {items.map((item, itemIndex) => (
                         <li key={item.id ?? `ul-item-${index}-${itemIndex}`}>
@@ -132,7 +157,7 @@ function renderBlock(block: BlogContentBlock, index: number): ReactNode {
         return (
             <p
                 key={key}
-                className="my-5 text-base leading-8 text-[#6f7080]"
+                className="my-2 text-base leading-8 text-[#6f7080]"
                 style={getTextAlignment(block)}
             >
                 {renderInlineContent(block.content)}
@@ -209,6 +234,21 @@ function collectListItems(
 
     return {
         items,
+        nextIndex: index,
+    };
+}
+
+function collectEmptyParagraphs(body: BlogContentBlock[], startIndex: number) {
+    let index = startIndex;
+    let emptyCount = 0;
+
+    while (index < body.length && isEmptyParagraph(body[index])) {
+        emptyCount += 1;
+        index += 1;
+    }
+
+    return {
+        emptyCount,
         nextIndex: index,
     };
 }
@@ -311,6 +351,23 @@ function hasContent(block: BlogContentBlock): boolean {
         }
 
         return item.content?.some((child) => child.text?.trim()) ?? false;
+    });
+}
+
+function isEmptyParagraph(block: BlogContentBlock): boolean {
+    return block.type === 'paragraph' && !hasContent(block);
+}
+
+function hasRenderableBlockAfter(
+    body: BlogContentBlock[],
+    startIndex: number,
+): boolean {
+    return body.slice(startIndex).some((block) => {
+        if (block.type === 'divider' || block.type === 'image') {
+            return true;
+        }
+
+        return hasContent(block);
     });
 }
 

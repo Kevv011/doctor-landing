@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\Admin\BlogPostMediaController;
 use App\Http\Controllers\Admin\BusinessSettingsController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\BlogController;
@@ -62,7 +63,7 @@ Route::get('blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(function () {
     Route::redirect('admin', '/admin/dashboard')->name('admin');
-    Route::inertia('admin/dashboard', 'dashboard')->name('dashboard');
+    Route::get('admin/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('admin/users', UserController::class)
         ->except(['show'])
         ->names('admin.users');

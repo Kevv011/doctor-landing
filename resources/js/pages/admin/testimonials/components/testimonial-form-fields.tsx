@@ -66,7 +66,7 @@ export default function TestimonialFormFields({
                     required
                     rows={5}
                     defaultValue={testimonial?.quote ?? ''}
-                    className="min-h-32 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                    className="min-h-32 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                     placeholder="Escribe el comentario de la paciente"
                 />
                 <InputError message={errors.quote} />
@@ -162,8 +162,7 @@ export default function TestimonialFormFields({
                 <div className="space-y-1">
                     <Label htmlFor="is_active">Activo</Label>
                     <p className="text-sm text-muted-foreground">
-                        Solo los testimonios activos se publicaran en la
-                        landing.
+                        Solo los testimonios activos se publicaran en el sitio.
                     </p>
                     <InputError message={errors.is_active} />
                 </div>

@@ -185,7 +185,7 @@ export default function BusinessSettingsEdit({
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <Heading
                         title="Configuración del negocio"
-                        description="Administra los datos base que luego se renderizarán en la landing."
+                        description="Administra los datos base que luego se renderizarán en el sitio."
                     />
 
                     <Button type="submit" disabled={processing}>
@@ -331,7 +331,7 @@ export default function BusinessSettingsEdit({
                                 Horarios
                             </h2>
                             <p className="text-sm text-muted-foreground">
-                                Define bloques visibles para la landing. El
+                                Define bloques visibles para el sitio. El
                                 texto especial puede usarse para feriados o
                                 notas.
                             </p>

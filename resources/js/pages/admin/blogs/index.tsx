@@ -44,7 +44,7 @@ export default function BlogsIndex({ posts }: Props) {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <Heading
                         title="Blogs"
-                        description="Gestiona articulos educativos para la landing."
+                        description="Gestiona articulos educativos para el sitio."
                     />
 
                     <Button asChild>

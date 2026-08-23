@@ -42,7 +42,7 @@ export default function TestimonialsIndex({ testimonials }: Props) {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <Heading
                         title="Testimonios"
-                        description="Administra los comentarios que se mostraran en la landing."
+                        description="Administra los comentarios que se mostraran en el sitio."
                     />
 
                     <Button asChild>

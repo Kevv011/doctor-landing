@@ -43,7 +43,7 @@ export default function AppointmentSubmissionsIndex({ submissions }: Props) {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <Heading
                         title="Solicitudes de cita"
-                        description="Visualiza los registros enviados desde el formulario de la landing."
+                        description="Visualiza los registros enviados desde el formulario del sitio."
                     />
 
                     <div className="inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm text-muted-foreground">
