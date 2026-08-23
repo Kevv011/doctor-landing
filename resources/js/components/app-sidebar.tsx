@@ -1,5 +1,11 @@
 import { Link } from '@inertiajs/react';
-import { FileText, LayoutGrid, MessageSquareQuote, Users } from 'lucide-react';
+import {
+    Building2,
+    FileText,
+    LayoutGrid,
+    MessageSquareQuote,
+    Users,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -35,6 +41,11 @@ const mainNavItems: NavItem[] = [
         title: 'Testimonios',
         href: '/admin/testimonials',
         icon: MessageSquareQuote,
+    },
+    {
+        title: 'Negocio',
+        href: '/admin/business-settings',
+        icon: Building2,
     },
 ];
 

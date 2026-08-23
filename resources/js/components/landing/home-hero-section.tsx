@@ -5,6 +5,7 @@ export default function HomeHeroSection() {
     return (
         <section
             id="home-hero"
+            data-navbar-hero
             className="relative isolate overflow-hidden bg-[#f26b96] text-white [font-family:Poppins,ui-sans-serif,system-ui,sans-serif]"
         >
             <img

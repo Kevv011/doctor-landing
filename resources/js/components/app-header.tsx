@@ -1,5 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
 import {
+    Building2,
     FileText,
     LayoutGrid,
     Menu,
@@ -61,6 +62,11 @@ const mainNavItems: NavItem[] = [
         title: 'Testimonios',
         href: '/admin/testimonials',
         icon: MessageSquareQuote,
+    },
+    {
+        title: 'Negocio',
+        href: '/admin/business-settings',
+        icon: Building2,
     },
 ];
 

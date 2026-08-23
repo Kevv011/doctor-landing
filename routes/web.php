@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\Admin\BlogPostMediaController;
+use App\Http\Controllers\Admin\BusinessSettingsController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
@@ -49,6 +50,8 @@ Route::get('/', fn () => Inertia::render('public/home', [
         ->values(),
 ]))->name('home');
 
+Route::inertia('contact', 'public/contact')->name('contact');
+
 Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(function () {
     Route::redirect('admin', '/admin/dashboard')->name('admin');
     Route::inertia('admin/dashboard', 'dashboard')->name('dashboard');
@@ -64,6 +67,10 @@ Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(functio
     Route::resource('admin/testimonials', TestimonialController::class)
         ->except(['show'])
         ->names('admin.testimonials');
+    Route::get('admin/business-settings', [BusinessSettingsController::class, 'edit'])
+        ->name('admin.business-settings.edit');
+    Route::put('admin/business-settings', [BusinessSettingsController::class, 'update'])
+        ->name('admin.business-settings.update');
 });
 
 require __DIR__.'/settings.php';

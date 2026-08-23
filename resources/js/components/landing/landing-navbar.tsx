@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import { Headphones, Menu, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import LandingContainer from '@/components/landing/landing-container';
+import { businessPhoneHref, useBusiness } from '@/hooks/use-business';
 
 const navItems = [
     { label: 'Inicio', href: '/' },
@@ -15,9 +16,12 @@ const navItems = [
 type NavbarVariant = 'transparent' | 'blurred' | 'solid';
 
 export default function LandingNavbar() {
+    const business = useBusiness();
     const [isOpen, setIsOpen] = useState(false);
     const [variant, setVariant] = useState<NavbarVariant>('transparent');
     const isSolid = variant === 'solid';
+    const appointmentPhone =
+        business.profile.appointment_phone || business.profile.phone;
 
     useEffect(() => {
         let frameId = 0;
@@ -26,7 +30,9 @@ export default function LandingNavbar() {
             window.cancelAnimationFrame(frameId);
 
             frameId = window.requestAnimationFrame(() => {
-                const hero = document.getElementById('home-hero');
+                const hero =
+                    document.querySelector<HTMLElement>('[data-navbar-hero]') ??
+                    document.getElementById('home-hero');
 
                 if (!hero) {
                     setVariant('solid');
@@ -121,7 +127,7 @@ export default function LandingNavbar() {
                         />
 
                         <a
-                            href="tel:+50373451108"
+                            href={businessPhoneHref(appointmentPhone)}
                             className={`flex items-center gap-3 transition ${
                                 isSolid
                                     ? 'text-[#e9648d] hover:text-[#d94e7a]'
@@ -134,7 +140,7 @@ export default function LandingNavbar() {
                                     Haz tu cita
                                 </span>
                                 <span className="text-lg font-black">
-                                    +503 7345 1108
+                                    {appointmentPhone}
                                 </span>
                             </span>
                         </a>
@@ -175,7 +181,7 @@ export default function LandingNavbar() {
                         </nav>
 
                         <a
-                            href="tel:+50373451108"
+                            href={businessPhoneHref(appointmentPhone)}
                             className="mt-4 flex items-center gap-3 rounded-sm bg-white px-4 py-3 text-[#d94e7a]"
                         >
                             <Headphones className="size-6 stroke-[1.7]" />
@@ -184,7 +190,7 @@ export default function LandingNavbar() {
                                     Haz tu cita
                                 </span>
                                 <span className="text-base font-black">
-                                    +503 7345 1108
+                                    {appointmentPhone}
                                 </span>
                             </span>
                         </a>

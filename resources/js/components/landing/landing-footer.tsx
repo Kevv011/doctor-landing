@@ -1,13 +1,26 @@
 import { Link } from '@inertiajs/react';
 import {
+    AtSign,
     CalendarDays,
     ChevronRight,
     Facebook,
+    Hash,
     Headphones,
     Instagram,
+    Linkedin,
     MapPin,
+    MessageCircle,
+    Music2,
+    Twitter,
+    Youtube,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import LandingContainer from '@/components/landing/landing-container';
+import {
+    businessHourText,
+    businessPhoneHref,
+    useBusiness,
+} from '@/hooks/use-business';
 
 const footerLinks = [
     { label: 'Servicios', href: '/#servicios' },
@@ -17,7 +30,22 @@ const footerLinks = [
     { label: 'Agendar cita', href: '/contact#agendar-cita' },
 ];
 
+const socialIcons: Record<string, LucideIcon> = {
+    facebook: Facebook,
+    instagram: Instagram,
+    tiktok: Music2,
+    whatsapp: MessageCircle,
+    youtube: Youtube,
+    linkedin: Linkedin,
+    x: Twitter,
+    threads: Hash,
+};
+
 export default function LandingFooter() {
+    const business = useBusiness();
+    const appointmentPhone =
+        business.profile.appointment_phone || business.profile.phone;
+
     return (
         <footer className="[font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-white">
             <div className="bg-[#e06488] py-14 sm:py-16">
@@ -36,7 +64,7 @@ export default function LandingFooter() {
                             </Link>
 
                             <a
-                                href="tel:+50373451108"
+                                href={businessPhoneHref(appointmentPhone)}
                                 className="mt-7 flex items-center gap-4 text-white transition hover:text-white/85"
                             >
                                 <Headphones className="size-8 shrink-0 stroke-[1.8]" />
@@ -45,7 +73,7 @@ export default function LandingFooter() {
                                         Haz tu cita
                                     </span>
                                     <span className="text-xl font-black">
-                                        +503 7345 1108
+                                        {appointmentPhone}
                                     </span>
                                 </span>
                             </a>
@@ -69,51 +97,77 @@ export default function LandingFooter() {
 
                         <div>
                             <h2 className="text-xl font-bold">Dirección</h2>
-                            <div className="mt-5 flex gap-4 text-sm font-medium leading-5 text-white/95">
+                            <div className="mt-5 flex gap-4 text-sm leading-5 font-medium text-white/95">
                                 <MapPin className="mt-1 size-5 shrink-0 fill-white stroke-white" />
                                 <p className="uppercase">
-                                    Hospital Avante Especializado, Paseo General
-                                    Escalón #4920, primer nivel, clínica 5
-                                    (contiguo a Hospital de Diagnóstico Escalón)
-                                    San Salvador.
+                                    {business.profile.address}
                                 </p>
                             </div>
                         </div>
 
                         <div>
                             <h2 className="text-xl font-bold">Horarios</h2>
-                            <div className="mt-5 flex gap-4 text-sm font-medium leading-5 text-white/95">
+                            <div className="mt-5 flex gap-4 text-sm leading-5 font-medium text-white/95">
                                 <CalendarDays className="mt-0.5 size-5 shrink-0 fill-white stroke-white" />
                                 <p className="uppercase">
-                                    Martes a viernes: 10:30am a 6:00pm
-                                    <br />
-                                    Sábados: 10:00am a 2:00pm
+                                    {business.hours.map((hour) => (
+                                        <span
+                                            key={`${hour.label}-${hour.sort_order}`}
+                                            className="block"
+                                        >
+                                            {hour.label}
+                                            {businessHourText(
+                                                hour.opens_at,
+                                                hour.closes_at,
+                                            ) && (
+                                                <>
+                                                    :{' '}
+                                                    {businessHourText(
+                                                        hour.opens_at,
+                                                        hour.closes_at,
+                                                    )}
+                                                </>
+                                            )}
+                                            {hour.special_text && (
+                                                <> · {hour.special_text}</>
+                                            )}
+                                        </span>
+                                    ))}
                                 </p>
                             </div>
 
-                            <div className="mt-7 flex gap-3">
-                                <a
-                                    href="#"
-                                    aria-label="Facebook"
-                                    className="grid size-9 place-items-center rounded-full bg-white text-[#e06488] transition hover:bg-white/90"
-                                >
-                                    <Facebook className="size-5 fill-current stroke-0" />
-                                </a>
-                                <a
-                                    href="#"
-                                    aria-label="Instagram"
-                                    className="grid size-9 place-items-center rounded-full bg-white text-[#e06488] transition hover:bg-white/90"
-                                >
-                                    <Instagram className="size-5 stroke-[2.4]" />
-                                </a>
-                            </div>
+                            {business.social_links.length > 0 && (
+                                <div className="mt-7 flex gap-3">
+                                    {business.social_links.map((socialLink) => {
+                                        const SocialIcon =
+                                            socialIcons[socialLink.platform] ??
+                                            AtSign;
+
+                                        return (
+                                            <a
+                                                key={`${socialLink.platform}-${socialLink.url}`}
+                                                href={socialLink.url}
+                                                aria-label={
+                                                    socialLink.label ??
+                                                    socialLink.platform
+                                                }
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="grid size-9 place-items-center rounded-full bg-white text-[#e06488] transition hover:bg-white/90"
+                                            >
+                                                <SocialIcon className="size-5 stroke-[2.4]" />
+                                            </a>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </LandingContainer>
             </div>
 
             <div className="bg-[#c00036] py-5 text-center text-xs font-medium">
-                Copyright © 2026 Women's Health Clinic
+                Copyright © 2026 {business.profile.name}
             </div>
         </footer>
     );
