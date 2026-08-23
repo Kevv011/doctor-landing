@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AppointmentSubmissionController;
 use App\Http\Controllers\Admin\AppointmentSubmissionController as AdminAppointmentSubmissionController;
+use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\Admin\BlogPostMediaController;
 use App\Http\Controllers\Admin\BusinessSettingsController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\BlogController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Models\BlogPost;
 use App\Models\Testimonial;
@@ -55,6 +57,8 @@ Route::get('/', fn () => Inertia::render('public/home', [
 Route::inertia('contact', 'public/contact')->name('contact');
 Route::post('appointments', [AppointmentSubmissionController::class, 'store'])
     ->name('appointments.store');
+Route::get('blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(function () {
     Route::redirect('admin', '/admin/dashboard')->name('admin');
@@ -66,6 +70,10 @@ Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(functio
         ->parameters(['blogs' => 'blog'])
         ->except(['show'])
         ->names('admin.blogs');
+    Route::resource('admin/blog-categories', BlogCategoryController::class)
+        ->parameters(['blog-categories' => 'blog_category'])
+        ->except(['show'])
+        ->names('admin.blog-categories');
     Route::post('admin/blogs/{blog}/media', [BlogPostMediaController::class, 'store'])
         ->name('admin.blogs.media.store');
     Route::resource('admin/testimonials', TestimonialController::class)

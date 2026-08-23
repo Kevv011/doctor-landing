@@ -10,14 +10,19 @@ use Illuminate\Http\Request;
 class BlogPostMediaController extends Controller
 {
     /**
-     * Store an inline blog editor image in Media Library.
+     * Store inline blog editor media in Media Library.
      */
     public function store(Request $request, BlogPost $blog): JsonResponse
     {
         abort_unless((bool) $request->user()?->is_admin, 403);
 
         $request->validate([
-            'file' => ['required', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
+            'file' => [
+                'required',
+                'file',
+                'mimes:jpg,jpeg,png,webp,avif,mp3,m4a,ogg,wav,weba,mp4,webm,mov',
+                'max:51200',
+            ],
         ]);
 
         $media = $blog

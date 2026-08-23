@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBlogPostRequest;
 use App\Http\Requests\Admin\UpdateBlogPostRequest;
+use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
@@ -20,7 +21,7 @@ class BlogPostController extends Controller
     {
         return Inertia::render('admin/blogs/index', [
             'posts' => BlogPost::query()
-                ->with(['author:id,name'])
+                ->with(['author:id,name', 'category:id,name'])
                 ->latest()
                 ->paginate(15)
                 ->through(fn (BlogPost $post) => [
@@ -29,6 +30,7 @@ class BlogPostController extends Controller
                     'slug' => $post->slug,
                     'status' => $post->status,
                     'is_featured' => $post->is_featured,
+                    'category' => $post->category?->name,
                     'author' => $post->author?->name,
                     'published_at' => $post->published_at?->format('d/m/Y H:i'),
                     'created_at' => $post->created_at?->format('d/m/Y'),
@@ -47,6 +49,7 @@ class BlogPostController extends Controller
     {
         return Inertia::render('admin/blogs/create', [
             'statuses' => $this->statuses(),
+            'categories' => $this->categories(),
         ]);
     }
 
@@ -81,8 +84,10 @@ class BlogPostController extends Controller
                 'id' => $blog->id,
                 'title' => $blog->title,
                 'slug' => $blog->slug,
+                'blog_category_id' => $blog->blog_category_id,
                 'excerpt' => $blog->excerpt,
                 'body' => $blog->body ?? [],
+                'tags' => implode(', ', $blog->tags ?? []),
                 'status' => $blog->status,
                 'is_featured' => $blog->is_featured,
                 'published_at' => $blog->published_at?->format('Y-m-d\TH:i'),
@@ -95,6 +100,7 @@ class BlogPostController extends Controller
                 'media_upload_url' => route('admin.blogs.media.store', $blog),
             ],
             'statuses' => $this->statuses(),
+            'categories' => $this->categories(),
         ]);
     }
 
@@ -144,6 +150,23 @@ class BlogPostController extends Controller
     }
 
     /**
+     * @return array<int, array{value: int, label: string}>
+     */
+    private function categories(): array
+    {
+        return BlogCategory::query()
+            ->active()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get(['id', 'name'])
+            ->map(fn (BlogCategory $category) => [
+                'value' => $category->id,
+                'label' => $category->name,
+            ])
+            ->all();
+    }
+
+    /**
      * @param  array<string, mixed>  $validated
      * @return array<string, mixed>
      */
@@ -161,10 +184,12 @@ class BlogPostController extends Controller
         }
 
         return [
+            'blog_category_id' => $validated['blog_category_id'] ?? null,
             'title' => $validated['title'],
             'slug' => $validated['slug'] ?: $this->uniqueSlug($validated['title'], $existingPost),
             'excerpt' => $validated['excerpt'] ?? null,
             'body' => $this->decodeBody($validated['body'] ?? null),
+            'tags' => $this->tags($validated['tags'] ?? null),
             'status' => $status,
             'is_featured' => (bool) ($validated['is_featured'] ?? false),
             'published_at' => $publishedAt,
@@ -203,5 +228,23 @@ class BlogPostController extends Controller
         $decoded = json_decode($body, true);
 
         return is_array($decoded) ? $decoded : [];
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function tags(?string $tags): array
+    {
+        if (blank($tags)) {
+            return [];
+        }
+
+        return collect(explode(',', $tags))
+            ->map(fn (string $tag) => trim($tag))
+            ->filter()
+            ->unique(fn (string $tag) => mb_strtolower($tag))
+            ->take(12)
+            ->values()
+            ->all();
     }
 }

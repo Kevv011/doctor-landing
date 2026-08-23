@@ -16,10 +16,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 /**
  * @property int $id
  * @property int|null $user_id
+ * @property int|null $blog_category_id
  * @property string $title
  * @property string $slug
  * @property string|null $excerpt
  * @property array<int, array<string, mixed>>|null $body
+ * @property array<int, string>|null $tags
  * @property string $status
  * @property bool $is_featured
  * @property Carbon|null $published_at
@@ -44,12 +46,33 @@ class BlogPost extends Model implements HasMedia
     /**
      * @var list<string>
      */
+    public const CONTENT_MEDIA_MIME_TYPES = [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'image/avif',
+        'audio/mpeg',
+        'audio/mp4',
+        'audio/ogg',
+        'audio/wav',
+        'audio/webm',
+        'video/mp4',
+        'video/ogg',
+        'video/webm',
+        'video/quicktime',
+    ];
+
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'user_id',
+        'blog_category_id',
         'title',
         'slug',
         'excerpt',
         'body',
+        'tags',
         'status',
         'is_featured',
         'published_at',
@@ -66,6 +89,7 @@ class BlogPost extends Model implements HasMedia
     {
         return [
             'body' => 'array',
+            'tags' => 'array',
             'is_featured' => 'boolean',
             'published_at' => 'datetime',
         ];
@@ -81,6 +105,16 @@ class BlogPost extends Model implements HasMedia
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * Get the category assigned to the post.
+     *
+     * @return BelongsTo<BlogCategory, $this>
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(BlogCategory::class, 'blog_category_id');
+    }
+
     public function registerMediaCollections(): void
     {
         $this
@@ -90,11 +124,15 @@ class BlogPost extends Model implements HasMedia
 
         $this
             ->addMediaCollection(self::MEDIA_COLLECTION_CONTENT_IMAGES)
-            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp', 'image/avif']);
+            ->acceptsMimeTypes(self::CONTENT_MEDIA_MIME_TYPES);
     }
 
     public function registerMediaConversions(?Media $media = null): void
     {
+        if ($media && ! str_starts_with((string) $media->mime_type, 'image/')) {
+            return;
+        }
+
         $this
             ->addMediaConversion('preview')
             ->width(640)

@@ -25,9 +25,11 @@ class StoreBlogPostRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
+            'blog_category_id' => ['nullable', 'integer', 'exists:blog_categories,id'],
             'slug' => ['nullable', 'string', 'max:255', 'unique:blog_posts,slug'],
             'excerpt' => ['nullable', 'string', 'max:1000'],
             'body' => ['nullable', 'json'],
+            'tags' => ['nullable', 'string', 'max:500'],
             'status' => ['required', Rule::in([BlogPost::STATUS_DRAFT, BlogPost::STATUS_PUBLISHED])],
             'is_featured' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],

@@ -1,14 +1,16 @@
 import { Form, Head } from '@inertiajs/react';
 import Heading from '@/components/heading';
 import BlogFormFields, {
+    type BlogCategoryOption,
     type BlogStatusOption,
 } from '@/pages/admin/blogs/components/blog-form-fields';
 
 type Props = {
     statuses: BlogStatusOption[];
+    categories: BlogCategoryOption[];
 };
 
-export default function BlogsCreate({ statuses }: Props) {
+export default function BlogsCreate({ statuses, categories }: Props) {
     return (
         <>
             <Head title="Nuevo blog" />
@@ -28,6 +30,7 @@ export default function BlogsCreate({ statuses }: Props) {
                     {({ processing, errors }) => (
                         <BlogFormFields
                             statuses={statuses}
+                            categories={categories}
                             errors={errors}
                             processing={processing}
                             cancelHref="/admin/blogs"

@@ -1,6 +1,7 @@
 import { Form, Head } from '@inertiajs/react';
 import Heading from '@/components/heading';
 import BlogFormFields, {
+    type BlogCategoryOption,
     type BlogFormPost,
     type BlogStatusOption,
 } from '@/pages/admin/blogs/components/blog-form-fields';
@@ -8,9 +9,10 @@ import BlogFormFields, {
 type Props = {
     post: BlogFormPost & { id: number; title: string };
     statuses: BlogStatusOption[];
+    categories: BlogCategoryOption[];
 };
 
-export default function BlogsEdit({ post, statuses }: Props) {
+export default function BlogsEdit({ post, statuses, categories }: Props) {
     return (
         <>
             <Head title={`Editar ${post.title}`} />
@@ -34,6 +36,7 @@ export default function BlogsEdit({ post, statuses }: Props) {
                             <BlogFormFields
                                 post={post}
                                 statuses={statuses}
+                                categories={categories}
                                 errors={errors}
                                 processing={processing}
                                 cancelHref="/admin/blogs"

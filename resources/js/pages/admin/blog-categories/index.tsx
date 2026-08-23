@@ -1,20 +1,16 @@
 import { Form, Head, Link } from '@inertiajs/react';
-import { Edit, FileText, Plus, Trash2 } from 'lucide-react';
+import { Edit, Plus, Trash2 } from 'lucide-react';
 import Heading from '@/components/heading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-type BlogPost = {
+type BlogCategory = {
     id: number;
-    title: string;
+    name: string;
     slug: string;
-    status: string;
-    is_featured: boolean;
-    category: string | null;
-    author: string | null;
-    published_at: string | null;
-    created_at: string | null;
-    featured_image_url: string;
+    is_active: boolean;
+    sort_order: number;
+    posts_count: number;
 };
 
 type PaginationLink = {
@@ -23,8 +19,8 @@ type PaginationLink = {
     active: boolean;
 };
 
-type PaginatedPosts = {
-    data: BlogPost[];
+type PaginatedCategories = {
+    data: BlogCategory[];
     links: PaginationLink[];
     from: number | null;
     to: number | null;
@@ -32,25 +28,25 @@ type PaginatedPosts = {
 };
 
 type Props = {
-    posts: PaginatedPosts;
+    categories: PaginatedCategories;
 };
 
-export default function BlogsIndex({ posts }: Props) {
+export default function BlogCategoriesIndex({ categories }: Props) {
     return (
         <>
-            <Head title="Blogs" />
+            <Head title="Categorías de blog" />
 
             <div className="space-y-6 p-4">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <Heading
-                        title="Blogs"
-                        description="Gestiona articulos educativos para la landing."
+                        title="Categorías de blog"
+                        description="Administra las categorías que organizan los artículos."
                     />
 
                     <Button asChild>
-                        <Link href="/admin/blogs/create">
-                            <Plus className="h-4 w-4" />
-                            Nuevo blog
+                        <Link href="/admin/blog-categories/create">
+                            <Plus className="size-4" />
+                            Nueva categoría
                         </Link>
                     </Button>
                 </div>
@@ -61,16 +57,16 @@ export default function BlogsIndex({ posts }: Props) {
                             <thead className="border-b bg-muted/40 text-left text-xs uppercase text-muted-foreground">
                                 <tr>
                                     <th className="px-4 py-3 font-medium">
-                                        Articulo
+                                        Categoría
                                     </th>
                                     <th className="px-4 py-3 font-medium">
                                         Estado
                                     </th>
                                     <th className="px-4 py-3 font-medium">
-                                        Autor
+                                        Blogs
                                     </th>
                                     <th className="px-4 py-3 font-medium">
-                                        Publicacion
+                                        Orden
                                     </th>
                                     <th className="px-4 py-3 text-right font-medium">
                                         Acciones
@@ -78,78 +74,47 @@ export default function BlogsIndex({ posts }: Props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {posts.data.length === 0 ? (
+                                {categories.data.length === 0 ? (
                                     <tr>
                                         <td
                                             colSpan={5}
                                             className="px-4 py-10 text-center text-muted-foreground"
                                         >
-                                            No hay blogs registrados.
+                                            No hay categorías registradas.
                                         </td>
                                     </tr>
                                 ) : (
-                                    posts.data.map((post) => (
+                                    categories.data.map((category) => (
                                         <tr
-                                            key={post.id}
+                                            key={category.id}
                                             className="border-b last:border-b-0"
                                         >
                                             <td className="px-4 py-3">
-                                                <div className="flex items-center gap-3">
-                                                    {post.featured_image_url ? (
-                                                        <img
-                                                            src={
-                                                                post.featured_image_url
-                                                            }
-                                                            alt=""
-                                                            className="h-12 w-16 rounded-md object-cover"
-                                                        />
-                                                    ) : (
-                                                        <div className="flex h-12 w-16 items-center justify-center rounded-md bg-muted">
-                                                            <FileText className="h-5 w-5 text-muted-foreground" />
-                                                        </div>
-                                                    )}
-                                                    <div>
-                                                        <div className="font-medium">
-                                                            {post.title}
-                                                        </div>
-                                                        <div className="text-xs text-muted-foreground">
-                                                            {post.slug}
-                                                        </div>
-                                                        <div className="text-xs text-muted-foreground">
-                                                            Categoria:{' '}
-                                                            {post.category ??
-                                                                'Sin categoria'}
-                                                        </div>
-                                                    </div>
+                                                <div className="font-medium">
+                                                    {category.name}
+                                                </div>
+                                                <div className="text-xs text-muted-foreground">
+                                                    {category.slug}
                                                 </div>
                                             </td>
                                             <td className="px-4 py-3">
                                                 <Badge
                                                     variant={
-                                                        post.status ===
-                                                        'published'
+                                                        category.is_active
                                                             ? 'default'
                                                             : 'secondary'
                                                     }
                                                 >
-                                                    {post.status === 'published'
-                                                        ? 'Publicado'
-                                                        : 'Borrador'}
+                                                    {category.is_active
+                                                        ? 'Activa'
+                                                        : 'Inactiva'}
                                                 </Badge>
-                                                {post.is_featured && (
-                                                    <Badge
-                                                        variant="secondary"
-                                                        className="ml-2"
-                                                    >
-                                                        Destacado
-                                                    </Badge>
-                                                )}
                                             </td>
                                             <td className="px-4 py-3 text-muted-foreground">
-                                                {post.author ?? '-'}
+                                                {category.posts_count}
                                             </td>
                                             <td className="px-4 py-3 text-muted-foreground">
-                                                {post.published_at ?? '-'}
+                                                {category.sort_order}
                                             </td>
                                             <td className="px-4 py-3">
                                                 <div className="flex items-center justify-end gap-2">
@@ -159,15 +124,15 @@ export default function BlogsIndex({ posts }: Props) {
                                                         asChild
                                                     >
                                                         <Link
-                                                            href={`/admin/blogs/${post.id}/edit`}
+                                                            href={`/admin/blog-categories/${category.id}/edit`}
                                                         >
-                                                            <Edit className="h-4 w-4" />
+                                                            <Edit className="size-4" />
                                                             Editar
                                                         </Link>
                                                     </Button>
 
                                                     <Form
-                                                        action={`/admin/blogs/${post.id}`}
+                                                        action={`/admin/blog-categories/${category.id}`}
                                                         method="delete"
                                                         options={{
                                                             preserveScroll: true,
@@ -179,10 +144,12 @@ export default function BlogsIndex({ posts }: Props) {
                                                                 variant="destructive"
                                                                 size="sm"
                                                                 disabled={
-                                                                    processing
+                                                                    processing ||
+                                                                    category.posts_count >
+                                                                        0
                                                                 }
                                                             >
-                                                                <Trash2 className="h-4 w-4" />
+                                                                <Trash2 className="size-4" />
                                                                 Eliminar
                                                             </Button>
                                                         )}
@@ -199,12 +166,12 @@ export default function BlogsIndex({ posts }: Props) {
 
                 <div className="flex flex-col gap-3 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
                     <p>
-                        Mostrando {posts.from ?? 0} a {posts.to ?? 0} de{' '}
-                        {posts.total} blogs
+                        Mostrando {categories.from ?? 0} a{' '}
+                        {categories.to ?? 0} de {categories.total} categorías
                     </p>
 
                     <div className="flex flex-wrap gap-2">
-                        {posts.links.map((link, index) => (
+                        {categories.links.map((link, index) => (
                             <Button
                                 key={`${link.label}-${index}`}
                                 variant={link.active ? 'default' : 'outline'}
@@ -235,11 +202,11 @@ export default function BlogsIndex({ posts }: Props) {
     );
 }
 
-BlogsIndex.layout = {
+BlogCategoriesIndex.layout = {
     breadcrumbs: [
         {
-            title: 'Blogs',
-            href: '/admin/blogs',
+            title: 'Categorías de blog',
+            href: '/admin/blog-categories',
         },
     ],
 };

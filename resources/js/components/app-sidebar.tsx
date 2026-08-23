@@ -1,12 +1,4 @@
 import { Link } from '@inertiajs/react';
-import {
-    Building2,
-    CalendarCheck,
-    FileText,
-    LayoutGrid,
-    MessageSquareQuote,
-    Users,
-} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -19,41 +11,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { adminNavGroups } from '@/lib/admin-navigation';
 import { dashboard } from '@/routes';
-import type { NavItem } from '@/types';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Panel',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Usuarios',
-        href: '/admin/users',
-        icon: Users,
-    },
-    {
-        title: 'Blogs',
-        href: '/admin/blogs',
-        icon: FileText,
-    },
-    {
-        title: 'Testimonios',
-        href: '/admin/testimonials',
-        icon: MessageSquareQuote,
-    },
-    {
-        title: 'Citas',
-        href: '/admin/appointments',
-        icon: CalendarCheck,
-    },
-    {
-        title: 'Negocio',
-        href: '/admin/business-settings',
-        icon: Building2,
-    },
-];
 
 export function AppSidebar() {
     return (
@@ -71,7 +30,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain groups={adminNavGroups} />
             </SidebarContent>
 
             <SidebarFooter>

@@ -10,12 +10,19 @@ export type BlogStatusOption = {
     label: string;
 };
 
+export type BlogCategoryOption = {
+    value: number;
+    label: string;
+};
+
 export type BlogFormPost = {
     id?: number;
+    blog_category_id?: number | null;
     title?: string;
     slug?: string;
     excerpt?: string | null;
     body?: Record<string, unknown>[] | null;
+    tags?: string | null;
     status?: string;
     is_featured?: boolean;
     published_at?: string | null;
@@ -28,6 +35,7 @@ export type BlogFormPost = {
 type Props = {
     post?: BlogFormPost;
     statuses: BlogStatusOption[];
+    categories: BlogCategoryOption[];
     errors: Partial<Record<string, string>>;
     processing: boolean;
     cancelHref: string;
@@ -37,6 +45,7 @@ type Props = {
 export default function BlogFormFields({
     post,
     statuses,
+    categories,
     errors,
     processing,
     cancelHref,
@@ -88,6 +97,39 @@ export default function BlogFormFields({
                         placeholder="Resumen corto para tarjetas y SEO"
                     />
                     <InputError message={errors.excerpt} />
+                </div>
+
+                <div className="grid gap-2">
+                    <Label htmlFor="blog_category_id">Categoria</Label>
+                    <select
+                        id="blog_category_id"
+                        name="blog_category_id"
+                        defaultValue={post?.blog_category_id ?? ''}
+                        className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                    >
+                        <option value="">Sin categoria</option>
+                        {categories.map((category) => (
+                            <option key={category.value} value={category.value}>
+                                {category.label}
+                            </option>
+                        ))}
+                    </select>
+                    <InputError message={errors.blog_category_id} />
+                </div>
+
+                <div className="grid gap-2">
+                    <Label htmlFor="tags">Etiquetas</Label>
+                    <Input
+                        id="tags"
+                        name="tags"
+                        defaultValue={post?.tags ?? ''}
+                        placeholder="Bebe, Consulta, Salud"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                        Separalas por coma. Se mostraran como filtros en la
+                        pagina de Blog.
+                    </p>
+                    <InputError message={errors.tags} />
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
