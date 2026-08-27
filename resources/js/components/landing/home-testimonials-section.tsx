@@ -81,7 +81,7 @@ export default function HomeTestimonialsSection({
     return (
         <section
             id="testimoniales"
-            className="relative overflow-hidden bg-white py-12 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f]"
+            className="relative scroll-mt-24 overflow-hidden bg-white py-12 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f] sm:scroll-mt-28"
         >
             <div className="pointer-events-none absolute right-[8%] top-12 hidden text-[#f7ddea] lg:block">
                 <svg

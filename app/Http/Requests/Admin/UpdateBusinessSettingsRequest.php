@@ -44,6 +44,8 @@ class UpdateBusinessSettingsRequest extends FormRequest
             'profile.google_maps_url' => ['nullable', 'url', 'max:2048'],
             'profile.latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'profile.longitude' => ['nullable', 'numeric', 'between:-180,180'],
+            'hero_video' => ['nullable', 'file', 'mimetypes:video/mp4,video/webm,video/ogg,video/quicktime', 'max:204800'],
+            'remove_hero_video' => ['nullable', 'boolean'],
 
             'hours' => ['nullable', 'array'],
             'hours.*.id' => ['nullable', 'integer', 'exists:business_hours,id'],

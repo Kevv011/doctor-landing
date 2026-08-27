@@ -37,7 +37,7 @@ export default function HomeServicesSection() {
     return (
         <section
             id="servicios"
-            className="bg-[#fff0f7] py-16 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f] sm:py-20 lg:py-24"
+            className="scroll-mt-24 bg-[#fff0f7] py-16 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f] sm:scroll-mt-28 sm:py-20 lg:py-24"
         >
             <LandingContainer>
                 <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-4">
@@ -60,7 +60,7 @@ export default function HomeServicesSection() {
                         <ServiceCard key={service.title} {...service} />
                     ))}
 
-                    <article className="relative min-h-[220px] overflow-hidden rounded-lg bg-[#e9648d] p-8 text-white sm:col-span-2">
+                    <article className="relative min-h-[220px] overflow-hidden rounded-lg bg-[#e9648d] p-8 text-white transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(21,35,74,0.12)] sm:col-span-2">
                         <div className="relative z-10 max-w-44">
                             <h3 className="text-2xl leading-tight font-semibold">
                                 Conozca todos nuestros servicios
@@ -103,7 +103,7 @@ function ServiceCard({
     tone: string;
 }) {
     return (
-        <article className="flex flex-col justify-between min-h-[220px] rounded-lg bg-white p-7 shadow-[0_10px_30px_rgba(21,35,74,0.04)]">
+        <article className="flex min-h-[220px] flex-col justify-between rounded-lg bg-white p-7 shadow-[0_10px_30px_rgba(21,35,74,0.04)] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(21,35,74,0.1)]">
             <div>
                 <div className={`mb-7 size-11 rounded-full ${tone}`} />
                 <h3 className="text-base leading-[0.95] font-black">{title}</h3>

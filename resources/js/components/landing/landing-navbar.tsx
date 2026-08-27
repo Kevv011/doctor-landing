@@ -1,8 +1,10 @@
 import { Link } from '@inertiajs/react';
 import { Headphones, Menu, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import type { MouseEvent } from 'react';
 import LandingContainer from '@/components/landing/landing-container';
 import { businessPhoneHref, useBusiness } from '@/hooks/use-business';
+import { useCurrentUrl } from '@/hooks/use-current-url';
 
 const navItems = [
     { label: 'Inicio', href: '/' },
@@ -19,9 +21,52 @@ export default function LandingNavbar() {
     const business = useBusiness();
     const [isOpen, setIsOpen] = useState(false);
     const [variant, setVariant] = useState<NavbarVariant>('transparent');
+    const { currentUrl } = useCurrentUrl();
     const isSolid = variant === 'solid';
     const appointmentPhone =
         business.profile.appointment_phone || business.profile.phone;
+    const currentHash =
+        typeof window !== 'undefined' ? window.location.hash : '';
+
+    const isActive = (href: string) => {
+        const [path, hash] = href.split('#');
+        const isCurrentPath = path === currentUrl;
+
+        if (hash) {
+            return isCurrentPath && currentHash === `#${hash}`;
+        }
+
+        return isCurrentPath && !currentHash;
+    };
+
+    const handleAnchorNavigation = (
+        event: MouseEvent<Element>,
+        href: string,
+    ) => {
+        const [path, hash] = href.split('#');
+
+        if (!hash || path !== window.location.pathname) {
+            return;
+        }
+
+        const target = document.getElementById(hash);
+        const header = event.currentTarget.closest('header');
+
+        if (!target || !header) {
+            return;
+        }
+
+        event.preventDefault();
+        window.history.pushState({}, '', href);
+        window.scrollTo({
+            top:
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                header.getBoundingClientRect().height -
+                16,
+            behavior: 'smooth',
+        });
+    };
 
     useEffect(() => {
         let frameId = 0;
@@ -36,6 +81,7 @@ export default function LandingNavbar() {
 
                 if (!hero) {
                     setVariant('solid');
+
                     return;
                 }
 
@@ -44,6 +90,7 @@ export default function LandingNavbar() {
 
                 if (heroRect.bottom <= 96) {
                     setVariant('solid');
+
                     return;
                 }
 
@@ -96,7 +143,17 @@ export default function LandingNavbar() {
                             <Link
                                 key={item.label}
                                 href={item.href}
-                                className={`transition ${
+                                onClick={(event) =>
+                                    handleAnchorNavigation(event, item.href)
+                                }
+                                aria-current={
+                                    isActive(item.href) ? 'page' : undefined
+                                }
+                                className={`relative py-2 font-semibold transition after:absolute after:right-0 after:bottom-0 after:left-0 after:h-1 after:origin-left after:rounded-full after:bg-[#e9648d] after:transition-transform after:duration-200 ${
+                                    isActive(item.href)
+                                        ? 'font-black after:scale-x-100'
+                                        : 'after:scale-x-0 hover:after:scale-x-100'
+                                } ${
                                     isSolid
                                         ? 'text-[#09123f]/85 hover:text-[#e9648d]'
                                         : 'text-white/90 hover:text-white'
@@ -173,7 +230,17 @@ export default function LandingNavbar() {
                                     key={item.label}
                                     href={item.href}
                                     onClick={() => setIsOpen(false)}
-                                    className="rounded-sm px-3 py-3 text-sm font-semibold text-white/95 transition hover:bg-white/10 hover:text-white"
+                                    onClickCapture={(event) =>
+                                        handleAnchorNavigation(event, item.href)
+                                    }
+                                    aria-current={
+                                        isActive(item.href) ? 'page' : undefined
+                                    }
+                                    className={`relative rounded-sm px-3 py-3 text-sm text-white/95 transition before:absolute before:top-2 before:bottom-2 before:left-0 before:w-1 before:rounded-full before:bg-white ${
+                                        isActive(item.href)
+                                            ? 'bg-white/12 font-black'
+                                            : 'font-semibold before:scale-y-0 before:transition-transform before:duration-200 hover:bg-white/10 hover:text-white hover:before:scale-y-100'
+                                    }`}
                                 >
                                     {item.label}
                                 </Link>

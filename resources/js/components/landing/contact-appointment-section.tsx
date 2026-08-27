@@ -27,7 +27,7 @@ export default function ContactAppointmentSection() {
     return (
         <section
             id="agendar-cita"
-            className="relative overflow-hidden bg-[#ff91ad] [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-white"
+            className="relative scroll-mt-24 overflow-hidden bg-[#ff91ad] [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-white sm:scroll-mt-28"
         >
             <img
                 src="/images/Contact/ContactAppointment2.png"

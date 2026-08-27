@@ -52,6 +52,7 @@ type SocialPlatform = {
 
 type Props = {
     profile: BusinessProfile;
+    heroVideoUrl: string | null;
     hours: BusinessHour[];
     socialLinks: BusinessSocialLink[];
     socialPlatforms: SocialPlatform[];
@@ -59,6 +60,8 @@ type Props = {
 
 type FormData = {
     profile: BusinessProfile;
+    hero_video: File | null;
+    remove_hero_video: boolean;
     hours: BusinessHour[];
     social_links: BusinessSocialLink[];
 };
@@ -97,19 +100,25 @@ const dayOptions = [
 
 export default function BusinessSettingsEdit({
     profile,
+    heroVideoUrl,
     hours,
     socialLinks,
     socialPlatforms,
 }: Props) {
     const { data, setData, put, processing, errors } = useForm<FormData>({
         profile: normalizeProfile(profile),
+        hero_video: null,
+        remove_hero_video: false,
         hours: hours.length > 0 ? hours : defaultHours,
         social_links: socialLinks,
     });
 
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        put('/admin/business-settings', { preserveScroll: true });
+        put('/admin/business-settings', {
+            preserveScroll: true,
+            forceFormData: true,
+        });
     };
 
     const error = (key: string) => errors[key as keyof typeof errors];
@@ -206,7 +215,10 @@ export default function BusinessSettingsEdit({
                     </div>
 
                     <div className="mt-5 grid gap-5 lg:grid-cols-2">
-                        <Field label="Nombre del negocio" error={error('profile.name')}>
+                        <Field
+                            label="Nombre del negocio"
+                            error={error('profile.name')}
+                        >
                             <Input
                                 value={data.profile.name}
                                 onChange={(event) =>
@@ -318,26 +330,89 @@ export default function BusinessSettingsEdit({
                                 updateProfile('address', event.target.value)
                             }
                             rows={4}
-                            className="min-h-28 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                            className="min-h-28 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                             placeholder="Hospital Avante Especializado..."
                         />
                     </Field>
                 </section>
 
                 <section className="rounded-xl border bg-card p-5">
+                    <div>
+                        <h2 className="text-lg font-semibold">
+                            Video de presentación
+                        </h2>
+                        <p className="text-sm text-muted-foreground">
+                            Este video aparecerá al seleccionar “Ver video” al
+                            inicio del sitio.
+                        </p>
+                    </div>
+
+                    <div className="mt-5 grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+                        <Field
+                            label="Archivo de video"
+                            error={error('hero_video')}
+                        >
+                            <Input
+                                type="file"
+                                accept="video/mp4,video/webm,video/ogg,video/quicktime"
+                                onChange={(event) => {
+                                    setData(
+                                        'hero_video',
+                                        event.target.files?.[0] ?? null,
+                                    );
+                                    setData('remove_hero_video', false);
+                                }}
+                            />
+                            <p className="text-xs text-muted-foreground">
+                                Formatos recomendados: MP4, WebM, OGG o MOV. Peso máximo: 200 MB.
+                            </p>
+                        </Field>
+
+                        {heroVideoUrl && !data.remove_hero_video && (
+                            <div className="flex items-center gap-3 rounded-lg border border-primary/25 bg-secondary/50 p-3 text-sm">
+                                <video
+                                    src={heroVideoUrl}
+                                    className="h-16 w-28 rounded-md bg-black object-cover"
+                                    muted
+                                    controls
+                                />
+                                <div className="flex flex-col gap-2">
+                                    <span className="font-medium">
+                                        Video actual
+                                    </span>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                            setData('hero_video', null);
+                                            setData('remove_hero_video', true);
+                                        }}
+                                    >
+                                        <Trash2 className="size-4" />
+                                        Quitar video
+                                    </Button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </section>
+
+                <section className="rounded-xl border bg-card p-5">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div>
-                            <h2 className="text-lg font-semibold">
-                                Horarios
-                            </h2>
+                            <h2 className="text-lg font-semibold">Horarios</h2>
                             <p className="text-sm text-muted-foreground">
-                                Define bloques visibles para el sitio. El
-                                texto especial puede usarse para feriados o
-                                notas.
+                                Define bloques visibles para el sitio. El texto
+                                especial puede usarse para feriados o notas.
                             </p>
                         </div>
 
-                        <Button type="button" variant="outline" onClick={addHour}>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={addHour}
+                        >
                             <Plus className="size-4" />
                             Agregar horario
                         </Button>
@@ -352,7 +427,9 @@ export default function BusinessSettingsEdit({
                                 <div className="grid gap-4 lg:grid-cols-[1fr_1.2fr_0.8fr_0.8fr_0.7fr_auto]">
                                     <Field
                                         label="Día"
-                                        error={error(`hours.${index}.day_of_week`)}
+                                        error={error(
+                                            `hours.${index}.day_of_week`,
+                                        )}
                                     >
                                         <Select
                                             value={
@@ -425,7 +502,9 @@ export default function BusinessSettingsEdit({
 
                                     <Field
                                         label="Cierre"
-                                        error={error(`hours.${index}.closes_at`)}
+                                        error={error(
+                                            `hours.${index}.closes_at`,
+                                        )}
                                     >
                                         <Input
                                             type="time"
@@ -442,7 +521,9 @@ export default function BusinessSettingsEdit({
 
                                     <Field
                                         label="Orden"
-                                        error={error(`hours.${index}.sort_order`)}
+                                        error={error(
+                                            `hours.${index}.sort_order`,
+                                        )}
                                     >
                                         <Input
                                             type="number"
@@ -482,7 +563,9 @@ export default function BusinessSettingsEdit({
                                 <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_auto]">
                                     <Field
                                         label="Texto especial"
-                                        error={error(`hours.${index}.special_text`)}
+                                        error={error(
+                                            `hours.${index}.special_text`,
+                                        )}
                                     >
                                         <Input
                                             value={hour.special_text ?? ''}
@@ -554,7 +637,9 @@ export default function BusinessSettingsEdit({
                             >
                                 <Field
                                     label="Red social"
-                                    error={error(`social_links.${index}.platform`)}
+                                    error={error(
+                                        `social_links.${index}.platform`,
+                                    )}
                                 >
                                     <Select
                                         value={socialLink.platform}
@@ -569,10 +654,10 @@ export default function BusinessSettingsEdit({
                                         <SelectTrigger className="w-full">
                                             <SelectValue />
                                         </SelectTrigger>
-                                            <SelectContent
-                                                position="item-aligned"
-                                                className="w-[var(--radix-select-trigger-width)]"
-                                            >
+                                        <SelectContent
+                                            position="item-aligned"
+                                            className="w-[var(--radix-select-trigger-width)]"
+                                        >
                                             {socialPlatforms.map((platform) => (
                                                 <SelectItem
                                                     key={platform.value}
@@ -621,7 +706,9 @@ export default function BusinessSettingsEdit({
 
                                 <Field
                                     label="Orden"
-                                    error={error(`social_links.${index}.sort_order`)}
+                                    error={error(
+                                        `social_links.${index}.sort_order`,
+                                    )}
                                 >
                                     <Input
                                         type="number"

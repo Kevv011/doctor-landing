@@ -1,7 +1,20 @@
 import { Play } from 'lucide-react';
+import { useState } from 'react';
 import LandingContainer from '@/components/landing/landing-container';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
+import { useBusiness } from '@/hooks/use-business';
 
 export default function HomeHeroSection() {
+    const business = useBusiness();
+    const [isVideoOpen, setIsVideoOpen] = useState(false);
+    const heroVideoUrl = business.profile.hero_video_url;
+
     return (
         <section
             id="home-hero"
@@ -17,16 +30,40 @@ export default function HomeHeroSection() {
 
             <LandingContainer>
                 <div className="grid min-h-[760px] items-center py-10 sm:py-14 lg:min-h-[820px] lg:grid-cols-[0.52fr_0.48fr] lg:py-0">
-                    <div className="z-10 pt-28 pb-10 lg:pt-20">
-                        <button
-                            type="button"
-                            className="mb-5 inline-flex items-center gap-3 text-sm font-semibold text-white/90 transition hover:text-white"
-                        >
-                            <span>Ver video</span>
-                            <span className="grid size-12 place-items-center rounded-full border-2 border-white">
-                                <Play className="ml-0.5 size-5 fill-white" />
-                            </span>
-                        </button>
+                    <div className="landing-hero-copy z-10 pt-28 pb-10 lg:pt-20">
+                        {heroVideoUrl && (
+                            <Dialog
+                                open={isVideoOpen}
+                                onOpenChange={setIsVideoOpen}
+                            >
+                                <DialogTrigger asChild>
+                                    <button
+                                        type="button"
+                                        className="landing-video-trigger mb-5 inline-flex items-center gap-3 text-sm font-semibold text-white/90 transition hover:scale-[1.02] hover:text-white"
+                                    >
+                                        <span>Ver video</span>
+                                        <span className="grid size-12 place-items-center rounded-full border-2 border-white">
+                                            <Play className="ml-0.5 size-5 fill-white" />
+                                        </span>
+                                    </button>
+                                </DialogTrigger>
+                                <DialogContent className="max-h-[92vh] w-[calc(100%-1.5rem)] max-w-[calc(100%-1.5rem)] border-white/15 bg-[#09123f] p-2 text-white sm:w-[92vw] sm:max-w-7xl sm:p-3">
+                                    <DialogTitle className="sr-only">
+                                        Video de la clínica
+                                    </DialogTitle>
+                                    <DialogDescription className="sr-only">
+                                        Video informativo de Women&apos;s Health Clinic.
+                                    </DialogDescription>
+                                    <video
+                                        src={heroVideoUrl}
+                                        className="mx-auto max-h-[84vh] max-w-full rounded-md bg-black object-contain"
+                                        controls
+                                        autoPlay
+                                        playsInline
+                                    />
+                                </DialogContent>
+                            </Dialog>
+                        )}
 
                         <h1 className="max-w-lg text-4xl font-black leading-[0.98] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
                             Clinica medica para la mujer

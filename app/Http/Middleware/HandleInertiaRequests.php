@@ -86,6 +86,7 @@ class HandleInertiaRequests extends Middleware
                     'google_maps_url' => $profile->google_maps_url,
                     'latitude' => $profile->latitude,
                     'longitude' => $profile->longitude,
+                    'hero_video_url' => $profile->getFirstMediaUrl(BusinessProfile::MEDIA_COLLECTION_HERO_VIDEO),
                 ],
                 'hours' => $profile->hours->map(fn (BusinessHour $hour) => [
                     'label' => $hour->label,
@@ -121,6 +122,7 @@ class HandleInertiaRequests extends Middleware
                 'google_maps_url' => '#',
                 'latitude' => null,
                 'longitude' => null,
+                'hero_video_url' => null,
             ],
             'hours' => [
                 [

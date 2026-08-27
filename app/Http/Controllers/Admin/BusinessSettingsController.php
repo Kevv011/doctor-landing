@@ -31,6 +31,7 @@ class BusinessSettingsController extends Controller
                 'latitude' => $profile->latitude,
                 'longitude' => $profile->longitude,
             ],
+            'heroVideoUrl' => $profile->getFirstMediaUrl(BusinessProfile::MEDIA_COLLECTION_HERO_VIDEO),
             'hours' => $profile->hours->map(fn (BusinessHour $hour) => [
                 'id' => $hour->id,
                 'day_of_week' => $hour->day_of_week,
@@ -62,6 +63,17 @@ class BusinessSettingsController extends Controller
         $profile = $this->profile();
 
         $profile->update($validated['profile']);
+
+        if ($request->boolean('remove_hero_video')) {
+            $profile->clearMediaCollection(BusinessProfile::MEDIA_COLLECTION_HERO_VIDEO);
+        }
+
+        if ($request->hasFile('hero_video')) {
+            $profile
+                ->addMediaFromRequest('hero_video')
+                ->toMediaCollection(BusinessProfile::MEDIA_COLLECTION_HERO_VIDEO);
+        }
+
         $this->syncHours($profile, $validated['hours'] ?? []);
         $this->syncSocialLinks($profile, $validated['social_links'] ?? []);
 

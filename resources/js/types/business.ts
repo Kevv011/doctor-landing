@@ -23,6 +23,7 @@ export type LandingBusiness = {
         google_maps_url: string | null;
         latitude: string | null;
         longitude: string | null;
+        hero_video_url: string | null;
     };
     hours: LandingBusinessHour[];
     social_links: LandingBusinessSocialLink[];
