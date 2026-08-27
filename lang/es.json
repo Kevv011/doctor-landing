@@ -1,0 +1,19 @@
+{
+    "The provided password was incorrect.": "La contraseña proporcionada es incorrecta.",
+    "The provided two factor authentication code was invalid.": "El código de autenticación de dos factores no es válido.",
+    "The provided two factor recovery code was invalid.": "El código de recuperación de dos factores no es válido.",
+    "The :attribute must be at least :length characters and contain at least one uppercase character.": "El campo :attribute debe tener al menos :length caracteres y contener al menos una mayúscula.",
+    "The :attribute must be at least :length characters and contain at least one number.": "El campo :attribute debe tener al menos :length caracteres y contener al menos un número.",
+    "The :attribute must be at least :length characters and contain at least one special character.": "El campo :attribute debe tener al menos :length caracteres y contener al menos un carácter especial.",
+    "The :attribute must be at least :length characters and contain at least one uppercase character and one number.": "El campo :attribute debe tener al menos :length caracteres, una mayúscula y un número.",
+    "The :attribute must be at least :length characters and contain at least one uppercase character and one special character.": "El campo :attribute debe tener al menos :length caracteres, una mayúscula y un carácter especial.",
+    "The :attribute must be at least :length characters and contain at least one uppercase character, one number, and one special character.": "El campo :attribute debe tener al menos :length caracteres, una mayúscula, un número y un carácter especial.",
+    "The :attribute must be at least :length characters and contain at least one special character and one number.": "El campo :attribute debe tener al menos :length caracteres, un carácter especial y un número.",
+    "The :attribute must be at least :length characters.": "El campo :attribute debe tener al menos :length caracteres.",
+    "Invalid credential format.": "El formato de la credencial no es válido.",
+    "Passkey verification session expired. Please try again.": "La sesión de verificación de passkey expiró. Inténtalo nuevamente.",
+    "Passkey registration session expired. Please try again.": "La sesión de registro de passkey expiró. Inténtalo nuevamente.",
+    "Unable to sign in with this account.": "No se pudo iniciar sesión con esta cuenta.",
+    "Profile updated.": "Perfil actualizado.",
+    "Password updated.": "Contraseña actualizada."
+}

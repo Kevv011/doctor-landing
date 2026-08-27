@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
+import { login as passkeyLogin, loginOptions } from '@/routes/passkey';
 
 type Props = {
     status?: string;
@@ -21,7 +22,12 @@ export default function Login({ status, canResetPassword }: Props) {
         <>
             <Head title="Iniciar sesion" />
 
-            <PasskeyVerify />
+            <PasskeyVerify
+                routes={{
+                    options: loginOptions(),
+                    submit: passkeyLogin(),
+                }}
+            />
 
             <Form
                 {...store.form()}
