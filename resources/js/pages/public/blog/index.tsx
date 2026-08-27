@@ -1,16 +1,13 @@
-import { Head } from '@inertiajs/react';
-import BlogCard, {
-    type LandingBlogCardPost,
-} from '@/components/landing/blog-card';
+import BlogCard from '@/components/landing/blog-card';
+import type {LandingBlogCardPost} from '@/components/landing/blog-card';
 import BlogHeroSection from '@/components/landing/blog-hero-section';
-import BlogSidebar, {
-    type BlogSidebarCategory,
-} from '@/components/landing/blog-sidebar';
+import BlogSidebar from '@/components/landing/blog-sidebar';
+import type {BlogSidebarCategory} from '@/components/landing/blog-sidebar';
 import LandingContainer from '@/components/landing/landing-container';
 import LandingFooter from '@/components/landing/landing-footer';
-import LandingPagination, {
-    type LandingPaginationLink,
-} from '@/components/landing/landing-pagination';
+import LandingPagination from '@/components/landing/landing-pagination';
+import type {LandingPaginationLink} from '@/components/landing/landing-pagination';
+import PublicSeo from '@/components/landing/public-seo';
 
 type BlogPost = LandingBlogCardPost & {
     category: string | null;
@@ -44,7 +41,11 @@ export default function BlogIndex({
 }: Props) {
     return (
         <>
-            <Head title="Blog" />
+            <PublicSeo
+                title="Blog de salud femenina | Women’s Health Clinic"
+                description="Consejos e información sobre ginecología, prevención y bienestar para la mujer, publicados por Women’s Health Clinic."
+                canonicalPath="/blog"
+            />
 
             <main className="min-h-screen bg-[#fff0f7]">
                 <BlogHeroSection />

@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import {
     AtSign,
     CalendarDays,
@@ -13,14 +13,13 @@ import {
     Youtube,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import BlogContentRenderer, {
-    type BlogContentBlock,
-} from '@/components/landing/blog-content-renderer';
-import BlogSidebar, {
-    type BlogSidebarCategory,
-} from '@/components/landing/blog-sidebar';
+import BlogContentRenderer from '@/components/landing/blog-content-renderer';
+import type {BlogContentBlock} from '@/components/landing/blog-content-renderer';
+import BlogSidebar from '@/components/landing/blog-sidebar';
+import type {BlogSidebarCategory} from '@/components/landing/blog-sidebar';
 import LandingContainer from '@/components/landing/landing-container';
 import LandingFooter from '@/components/landing/landing-footer';
+import PublicSeo from '@/components/landing/public-seo';
 import { useBusiness } from '@/hooks/use-business';
 
 type BlogPost = {
@@ -30,9 +29,13 @@ type BlogPost = {
     excerpt: string | null;
     body: BlogContentBlock[];
     published_at: string | null;
+    published_at_iso: string | null;
+    updated_at_iso: string | null;
     author: string | null;
     category: string | null;
     tags: string[];
+    seo_title: string | null;
+    seo_description: string | null;
     featured_image_url: string | null;
 };
 
@@ -79,7 +82,40 @@ export default function BlogShow({
 
     return (
         <>
-            <Head title={post.title} />
+            <PublicSeo
+                title={
+                    post.seo_title ||
+                    `${post.title} | Women’s Health Clinic`
+                }
+                description={
+                    post.seo_description ||
+                    post.excerpt ||
+                    'Información de salud femenina de Women’s Health Clinic.'
+                }
+                canonicalPath={`/blog/${post.slug}`}
+                imagePath={
+                    post.featured_image_url || '/images/filled-logo.png'
+                }
+                type="article"
+                schema={{
+                    '@type': 'BlogPosting',
+                    '@id': `/blog/${post.slug}#article`,
+                    headline: post.title,
+                    description:
+                        post.seo_description || post.excerpt || undefined,
+                    image: post.featured_image_url || undefined,
+                    datePublished: post.published_at_iso || undefined,
+                    dateModified: post.updated_at_iso || undefined,
+                    author: post.author
+                        ? { '@type': 'Person', name: post.author }
+                        : undefined,
+                    publisher: {
+                        '@type': 'Organization',
+                        name: business.profile.name,
+                    },
+                    mainEntityOfPage: `/blog/${post.slug}`,
+                }}
+            />
 
             <main className="min-h-screen bg-[#fff0f7] pt-28 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f]">
                 <section className="py-12 sm:py-16 lg:py-20">

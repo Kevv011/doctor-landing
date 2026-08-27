@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PublicSeoController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Models\BlogPost;
 use App\Models\Testimonial;
@@ -54,6 +55,9 @@ Route::get('/', fn () => Inertia::render('public/home', [
         ])
         ->values(),
 ]))->name('home');
+
+Route::get('robots.txt', [PublicSeoController::class, 'robots'])->name('seo.robots');
+Route::get('sitemap.xml', [PublicSeoController::class, 'sitemap'])->name('seo.sitemap');
 
 Route::inertia('contact', 'public/contact')->name('contact');
 Route::post('appointments', [AppointmentSubmissionController::class, 'store'])

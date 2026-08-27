@@ -80,9 +80,13 @@ class BlogController extends Controller
                 'excerpt' => $post->excerpt,
                 'body' => $post->body ?? [],
                 'published_at' => $post->published_at?->translatedFormat('j F Y'),
+                'published_at_iso' => $post->published_at?->toIso8601String(),
+                'updated_at_iso' => $post->updated_at?->toIso8601String(),
                 'author' => $post->author?->name,
                 'category' => $post->category?->name,
                 'tags' => $post->tags ?? [],
+                'seo_title' => $post->seo_title,
+                'seo_description' => $post->seo_description,
                 'featured_image_url' => $post->getFirstMediaUrl(
                     BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE,
                     'preview',

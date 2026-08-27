@@ -24,7 +24,7 @@ export default function HomeSpecialistsSection() {
                         <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
                             Experiencia y compromiso
                         </p>
-                        <h2 className="mx-auto mt-3 max-w-xl text-3xl font-black leading-[0.95] tracking-[-0.04em] sm:text-4xl">
+                        <h2 className="mx-auto mt-3 max-w-xl text-3xl leading-[0.95] font-black tracking-[-0.04em] sm:text-4xl">
                             Especialistas en el cuidado integral de la mujer
                         </h2>
                     </div>
@@ -42,7 +42,7 @@ export default function HomeSpecialistsSection() {
                                 />
 
                                 <div className="mt-8">
-                                    <h3 className="text-lg font-black leading-tight">
+                                    <h3 className="text-lg leading-tight font-black">
                                         {specialist.name}
                                     </h3>
                                     <p className="mt-1 text-sm font-semibold text-[#e9648d]">
