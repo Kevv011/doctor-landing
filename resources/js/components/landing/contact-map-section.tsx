@@ -11,7 +11,7 @@ export default function ContactMapSection() {
     const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}&z=16&output=embed`;
 
     return (
-        <section className="bg-[#fff0f7] [font-family:Poppins,ui-sans-serif,system-ui,sans-serif]">
+        <section className="bg-[#fff0f7]">
             <iframe
                 src={mapUrl}
                 title={`Mapa de ubicación de ${business.profile.name}`}

@@ -18,7 +18,7 @@ export default function Contact() {
                 <ContactInfoSection />
                 <ContactAppointmentSection />
                 <ContactMapSection />
-                <LandingFooter />
+                <LandingFooter overlapPrevious />
             </main>
         </>
     );

@@ -111,7 +111,7 @@ export default function LandingNavbar() {
 
     return (
         <header
-            className={`fixed inset-x-0 top-0 z-50 py-5 transition-all duration-300 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] ${
+            className={`fixed inset-x-0 top-0 z-50 py-5 transition-all duration-300 ${
                 isSolid
                     ? 'bg-white text-[#09123f] shadow-[0_12px_35px_rgba(21,35,74,0.08)]'
                     : variant === 'blurred'
@@ -222,47 +222,69 @@ export default function LandingNavbar() {
                     </button>
                 </div>
 
-                {isOpen && (
-                    <div className="mt-5 rounded-md border border-white/25 bg-[#e9648d]/95 p-4 shadow-[0_18px_45px_rgba(21,35,74,0.18)] backdrop-blur-md xl:hidden">
-                        <nav className="grid gap-1">
-                            {navItems.map((item) => (
-                                <Link
-                                    key={item.label}
-                                    href={item.href}
-                                    onClick={() => setIsOpen(false)}
-                                    onClickCapture={(event) =>
-                                        handleAnchorNavigation(event, item.href)
-                                    }
-                                    aria-current={
-                                        isActive(item.href) ? 'page' : undefined
-                                    }
-                                    className={`relative rounded-sm px-3 py-3 text-sm text-white/95 transition before:absolute before:top-2 before:bottom-2 before:left-0 before:w-1 before:rounded-full before:bg-white ${
-                                        isActive(item.href)
-                                            ? 'bg-white/12 font-black'
-                                            : 'font-semibold before:scale-y-0 before:transition-transform before:duration-200 hover:bg-white/10 hover:text-white hover:before:scale-y-100'
-                                    }`}
-                                >
-                                    {item.label}
-                                </Link>
-                            ))}
-                        </nav>
-
-                        <a
-                            href={businessPhoneHref(appointmentPhone)}
-                            className="mt-4 flex items-center gap-3 rounded-sm bg-white px-4 py-3 text-[#d94e7a]"
+                <div
+                    aria-hidden={!isOpen}
+                    className={`grid overflow-hidden transition-all duration-300 ease-out xl:hidden ${
+                        isOpen
+                            ? 'mt-5 grid-rows-[1fr] opacity-100'
+                            : 'mt-0 grid-rows-[0fr] opacity-0'
+                    }`}
+                >
+                    <div className="min-h-0 overflow-hidden">
+                        <div
+                            className={`rounded-md border border-white/25 bg-[#e9648d]/95 p-4 shadow-[0_18px_45px_rgba(21,35,74,0.18)] backdrop-blur-md transition-all duration-300 ease-out ${
+                                isOpen
+                                    ? 'translate-y-0 scale-100'
+                                    : 'pointer-events-none -translate-y-3 scale-[0.98]'
+                            }`}
                         >
-                            <Headphones className="size-6 stroke-[1.7]" />
-                            <span className="grid leading-tight">
-                                <span className="text-xs font-semibold">
-                                    Haz tu cita
+                            <nav className="grid gap-1">
+                                {navItems.map((item) => (
+                                    <Link
+                                        key={item.label}
+                                        href={item.href}
+                                        onClick={() => setIsOpen(false)}
+                                        onClickCapture={(event) =>
+                                            handleAnchorNavigation(
+                                                event,
+                                                item.href,
+                                            )
+                                        }
+                                        aria-current={
+                                            isActive(item.href)
+                                                ? 'page'
+                                                : undefined
+                                        }
+                                        tabIndex={isOpen ? 0 : -1}
+                                        className={`relative rounded-sm px-3 py-3 text-sm text-white/95 transition before:absolute before:top-2 before:bottom-2 before:left-0 before:w-1 before:rounded-full before:bg-white ${
+                                            isActive(item.href)
+                                                ? 'bg-white/12 font-black'
+                                                : 'font-semibold before:scale-y-0 before:transition-transform before:duration-200 hover:bg-white/10 hover:text-white hover:before:scale-y-100'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                ))}
+                            </nav>
+
+                            <a
+                                href={businessPhoneHref(appointmentPhone)}
+                                tabIndex={isOpen ? 0 : -1}
+                                className="mt-4 flex items-center gap-3 rounded-sm bg-white px-4 py-3 text-[#d94e7a]"
+                            >
+                                <Headphones className="size-6 stroke-[1.7]" />
+                                <span className="grid leading-tight">
+                                    <span className="text-xs font-semibold">
+                                        Haz tu cita
+                                    </span>
+                                    <span className="text-base font-black">
+                                        {appointmentPhone}
+                                    </span>
                                 </span>
-                                <span className="text-base font-black">
-                                    {appointmentPhone}
-                                </span>
-                            </span>
-                        </a>
+                            </a>
+                        </div>
                     </div>
-                )}
+                </div>
             </LandingContainer>
         </header>
     );

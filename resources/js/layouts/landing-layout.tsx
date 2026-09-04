@@ -2,6 +2,7 @@ import { usePage } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import { useEffect } from 'react';
 import LandingNavbar from '@/components/landing/landing-navbar';
+import LandingScrollToTop from '@/components/landing/landing-scroll-to-top';
 
 export default function LandingLayout({ children }: PropsWithChildren) {
     const { url } = usePage();
@@ -62,6 +63,7 @@ export default function LandingLayout({ children }: PropsWithChildren) {
         <>
             <LandingNavbar />
             {children}
+            <LandingScrollToTop />
         </>
     );
 }

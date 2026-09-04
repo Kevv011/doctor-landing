@@ -5,7 +5,7 @@ export default function BlogHeroSection() {
     return (
         <section
             data-navbar-hero
-            className="relative isolate overflow-hidden bg-[#f26b96] py-32 text-white [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] sm:py-40 lg:py-44"
+            className="relative isolate overflow-hidden bg-[#f26b96] py-32 text-white sm:py-40 lg:py-44"
         >
             <img
                 src="/images/Blog/BlogHero.png"

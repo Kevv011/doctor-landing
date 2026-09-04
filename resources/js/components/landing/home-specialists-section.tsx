@@ -17,7 +17,7 @@ const specialists = [
 
 export default function HomeSpecialistsSection() {
     return (
-        <section className="bg-white py-12 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f]">
+        <section className="bg-white py-12 text-[#09123f]">
             <LandingContainer>
                 <div className="mx-auto max-w-5xl">
                     <div className="text-center">
@@ -33,12 +33,12 @@ export default function HomeSpecialistsSection() {
                         {specialists.map((specialist) => (
                             <article
                                 key={specialist.name}
-                                className="rounded-lg bg-white px-8 py-10 shadow-[0_18px_45px_rgba(21,35,74,0.05)]"
+                                className="group rounded-lg border border-transparent bg-white px-8 py-10 shadow-[0_18px_45px_rgba(21,35,74,0.05)] transition duration-300 ease-out hover:-translate-y-1 hover:border-[#f0d4df] hover:bg-[#fff8fb] hover:shadow-[0_22px_48px_rgba(21,35,74,0.1)]"
                             >
                                 <img
                                     src={specialist.image}
                                     alt={specialist.name}
-                                    className="mx-auto size-36 rounded-full object-cover"
+                                    className="mx-auto size-36 rounded-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                                 />
 
                                 <div className="mt-8">

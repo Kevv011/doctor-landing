@@ -53,7 +53,7 @@ export default function BlogIndex({
                 <section className="bg-[#fff0f7] py-16 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f] sm:py-20 lg:py-24">
                     <LandingContainer>
                         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
-                            <div>
+                            <div className="order-2 lg:order-1">
                                 <div className="text-center lg:text-left">
                                     <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
                                         Blog
@@ -90,11 +90,13 @@ export default function BlogIndex({
                                 </div>
                             </div>
 
-                            <BlogSidebar
-                                categories={categories}
-                                tags={tags}
-                                filters={filters}
-                            />
+                            <div className="order-1 lg:order-2">
+                                <BlogSidebar
+                                    categories={categories}
+                                    tags={tags}
+                                    filters={filters}
+                                />
+                            </div>
                         </div>
                     </LandingContainer>
                 </section>

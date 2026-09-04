@@ -52,7 +52,7 @@ export default function HomeExperienceSection() {
     return (
         <section
             ref={sectionRef}
-            className="bg-white py-16 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f] sm:py-20"
+            className="bg-white py-16 text-[#09123f] sm:py-20"
         >
             <LandingContainer>
                 <div className="mx-auto max-w-4xl text-center">

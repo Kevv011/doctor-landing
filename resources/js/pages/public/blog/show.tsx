@@ -121,7 +121,7 @@ export default function BlogShow({
                 <section className="py-12 sm:py-16 lg:py-20">
                     <LandingContainer>
                         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
-                            <article className="rounded-lg bg-white p-3 shadow-[0_18px_45px_rgba(21,35,74,0.04)] sm:p-4 lg:p-5">
+                            <article className="order-2 rounded-lg bg-white p-3 shadow-[0_18px_45px_rgba(21,35,74,0.04)] sm:p-4 lg:order-1 lg:p-5">
                                 <img
                                     src={
                                         post.featured_image_url ||
@@ -244,7 +244,7 @@ export default function BlogShow({
                                 </div>
                             </article>
 
-                            <aside className="space-y-8">
+                            <aside className="order-1 space-y-8 lg:order-2">
                                 <BlogSidebar
                                     categories={categories}
                                     tags={tags}

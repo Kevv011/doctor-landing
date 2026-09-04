@@ -37,7 +37,7 @@ export default function HomeServicesSection() {
     return (
         <section
             id="servicios"
-            className="scroll-mt-24 bg-[#fff0f7] py-16 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f] sm:scroll-mt-28 sm:py-20 lg:py-24"
+            className="scroll-mt-24 bg-[#fff0f7] py-16 text-[#09123f] sm:scroll-mt-28 sm:py-20 lg:py-24"
         >
             <LandingContainer>
                 <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-4">
@@ -60,7 +60,7 @@ export default function HomeServicesSection() {
                         <ServiceCard key={service.title} {...service} />
                     ))}
 
-                    <article className="relative min-h-[220px] overflow-hidden rounded-lg bg-[#e9648d] p-8 text-white transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(21,35,74,0.12)] sm:col-span-2">
+                    <article className="group relative min-h-[220px] overflow-hidden rounded-lg bg-[#e9648d] p-8 text-white transition duration-300 ease-out hover:-translate-y-1 hover:bg-[#d94e7a] hover:shadow-[0_18px_40px_rgba(21,35,74,0.12)] sm:col-span-2">
                         <div className="relative z-10 max-w-44">
                             <h3 className="text-2xl leading-tight font-semibold">
                                 Conozca todos nuestros servicios
@@ -70,10 +70,10 @@ export default function HomeServicesSection() {
                             </p>
                             <a
                                 href="#servicios"
-                                className="mt-7 inline-flex items-center gap-3 text-sm font-bold"
+                                className="mt-7 inline-flex items-center gap-3 text-sm font-bold transition-colors hover:text-white/85"
                             >
                                 Ver servicios
-                                <span className="grid size-7 place-items-center rounded-full bg-white/25">
+                                <span className="grid size-7 place-items-center rounded-full bg-white/25 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-white group-hover:text-[#e9648d]">
                                     <ArrowUpRight className="size-4" />
                                 </span>
                             </a>
@@ -103,9 +103,11 @@ function ServiceCard({
     tone: string;
 }) {
     return (
-        <article className="flex min-h-[220px] flex-col justify-between rounded-lg bg-white p-7 shadow-[0_10px_30px_rgba(21,35,74,0.04)] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(21,35,74,0.1)]">
+        <article className="group flex min-h-[220px] flex-col justify-between rounded-lg border border-transparent bg-white p-7 shadow-[0_10px_30px_rgba(21,35,74,0.04)] transition duration-300 ease-out hover:-translate-y-1 hover:border-[#f0d4df] hover:shadow-[0_18px_40px_rgba(21,35,74,0.1)]">
             <div>
-                <div className={`mb-7 size-11 rounded-full ${tone}`} />
+                <div
+                    className={`mb-7 size-11 rounded-full transition-transform duration-300 group-hover:-translate-y-0.5 ${tone}`}
+                />
                 <h3 className="text-base leading-[0.95] font-black">{title}</h3>
                 <p className="mt-3 text-sm leading-5 text-[#6f7080]">
                     {description}
@@ -114,10 +116,10 @@ function ServiceCard({
             <div>
                 <a
                     href="#servicios"
-                    className="mt-5 inline-flex items-center gap-3 text-xs font-bold text-[#e9648d]"
+                    className="mt-5 inline-flex items-center gap-3 text-xs font-bold text-[#e9648d] transition hover:text-[#c9003c]"
                 >
                     Leer mas
-                    <ChevronRight className="size-4" />
+                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </a>
             </div>
         </article>

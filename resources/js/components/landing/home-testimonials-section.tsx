@@ -55,8 +55,10 @@ export default function HomeTestimonialsSection({
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: 'start',
         containScroll: 'trimSnaps',
-        loop: false,
+        loop: true,
+        slidesToScroll: 'auto',
     });
+    const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
 
     useEffect(() => {
         if (!emblaApi) {
@@ -78,10 +80,30 @@ export default function HomeTestimonialsSection({
         };
     }, [emblaApi]);
 
+    useEffect(() => {
+        if (
+            !emblaApi ||
+            isAutoplayPaused ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+            return;
+        }
+
+        const autoplayInterval = window.setInterval(() => {
+            if (emblaApi.canScrollNext()) {
+                emblaApi.scrollNext();
+            } else {
+                emblaApi.scrollTo(0);
+            }
+        }, 10_000);
+
+        return () => window.clearInterval(autoplayInterval);
+    }, [emblaApi, isAutoplayPaused]);
+
     return (
         <section
             id="testimoniales"
-            className="relative scroll-mt-24 overflow-hidden bg-white py-12 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f] sm:scroll-mt-28"
+            className="relative scroll-mt-24 overflow-hidden bg-white py-12 text-[#09123f] sm:scroll-mt-28"
         >
             <div className="pointer-events-none absolute right-[8%] top-12 hidden text-[#f7ddea] lg:block">
                 <svg
@@ -117,7 +139,14 @@ export default function HomeTestimonialsSection({
                         </h2>
                     </div>
 
-                    <div className="mt-10 overflow-hidden" ref={emblaRef}>
+                    <div
+                        className="-mx-4 mt-12 overflow-hidden px-8 py-12 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12"
+                        ref={emblaRef}
+                        onMouseEnter={() => setIsAutoplayPaused(true)}
+                        onMouseLeave={() => setIsAutoplayPaused(false)}
+                        onFocusCapture={() => setIsAutoplayPaused(true)}
+                        onBlurCapture={() => setIsAutoplayPaused(false)}
+                    >
                         <div className="-ml-6 flex touch-pan-y">
                             {testimonials.map((testimonial) => (
                                 <div
@@ -137,7 +166,7 @@ export default function HomeTestimonialsSection({
                                 type="button"
                                 aria-label={`Ver grupo de testimonios ${index + 1}`}
                                 onClick={() => emblaApi?.scrollTo(index)}
-                                className={`size-3 rounded-full transition ${
+                                className={`size-3 rounded-full transition-all duration-300 hover:scale-110 ${
                                     selectedIndex === index
                                         ? 'bg-[#e9648d]'
                                         : 'bg-[#cfd4df]'
@@ -157,8 +186,8 @@ function TestimonialCard({
     testimonial: LandingTestimonial;
 }) {
     return (
-        <article className="min-h-64 rounded-lg bg-white p-7 shadow-[0_18px_45px_rgba(21,35,74,0.05)]">
-            <div className="grid size-9 place-items-center rounded-full border border-[#e9648d] text-[#e9648d]">
+        <article className="group min-h-[294px] rounded-lg bg-white p-8 shadow-[0_16px_45px_rgba(21,35,74,0.045)] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(21,35,74,0.09)]">
+            <div className="grid size-9 place-items-center rounded-full border border-[#e9648d] text-[#e9648d] transition duration-300 group-hover:bg-[#fff0f7]">
                 <Quote className="size-4" />
             </div>
 

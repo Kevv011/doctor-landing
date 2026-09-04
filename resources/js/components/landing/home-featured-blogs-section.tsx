@@ -24,6 +24,7 @@ export default function HomeFeaturedBlogsSection({ blogs }: Props) {
         containScroll: 'trimSnaps',
         loop: false,
     });
+    const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
 
     useEffect(() => {
         if (!emblaApi) {
@@ -45,12 +46,32 @@ export default function HomeFeaturedBlogsSection({ blogs }: Props) {
         };
     }, [emblaApi]);
 
+    useEffect(() => {
+        if (
+            !emblaApi ||
+            isAutoplayPaused ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+            return;
+        }
+
+        const autoplayInterval = window.setInterval(() => {
+            if (emblaApi.canScrollNext()) {
+                emblaApi.scrollNext();
+            } else {
+                emblaApi.scrollTo(0);
+            }
+        }, 10_000);
+
+        return () => window.clearInterval(autoplayInterval);
+    }, [emblaApi, isAutoplayPaused]);
+
     if (blogs.length === 0) {
         return null;
     }
 
     return (
-        <section className="bg-white py-12 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] text-[#09123f]">
+        <section className="bg-white py-12 text-[#09123f]">
             <LandingContainer>
                 <div className="mx-auto max-w-5xl">
                     <div className="text-center">
@@ -62,7 +83,14 @@ export default function HomeFeaturedBlogsSection({ blogs }: Props) {
                         </h2>
                     </div>
 
-                    <div className="mt-12 overflow-hidden" ref={emblaRef}>
+                    <div
+                        className="mt-12 overflow-hidden"
+                        ref={emblaRef}
+                        onMouseEnter={() => setIsAutoplayPaused(true)}
+                        onMouseLeave={() => setIsAutoplayPaused(false)}
+                        onFocusCapture={() => setIsAutoplayPaused(true)}
+                        onBlurCapture={() => setIsAutoplayPaused(false)}
+                    >
                         <div className="-ml-7 flex touch-pan-y">
                             {blogs.map((blog) => (
                                 <div
@@ -82,7 +110,7 @@ export default function HomeFeaturedBlogsSection({ blogs }: Props) {
                                 type="button"
                                 aria-label={`Ver grupo de articulos ${index + 1}`}
                                 onClick={() => emblaApi?.scrollTo(index)}
-                                className={`size-3 rounded-full transition ${
+                                className={`size-3 rounded-full transition-all duration-300 hover:scale-110 ${
                                     selectedIndex === index
                                         ? 'bg-[#e9648d]'
                                         : 'bg-[#cfd4df]'

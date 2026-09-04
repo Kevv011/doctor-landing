@@ -23,7 +23,7 @@ export default function Home({ featuredBlogs, testimonials }: Props) {
                 description="Atención ginecológica integral, gineco-oncología, ultrasonidos, estética y clases prenatales para cuidar la salud de la mujer."
                 canonicalPath="/"
             />
-            <main className="min-h-screen bg-[#fff0f7]">
+            <main className="min-h-screen bg-white">
                 <HomeHeroSection />
                 <HomeAboutSection />
                 <HomeExperienceSection />
