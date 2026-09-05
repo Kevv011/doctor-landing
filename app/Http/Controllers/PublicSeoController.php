@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Models\Service;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
 use Throwable;
@@ -34,11 +35,33 @@ class PublicSeoController extends Controller
                 'priority' => '0.8',
             ],
             [
+                'loc' => URL::to('/servicios'),
+                'changefreq' => 'monthly',
+                'priority' => '0.8',
+            ],
+            [
                 'loc' => URL::to('/blog'),
                 'changefreq' => 'weekly',
                 'priority' => '0.8',
             ],
         ];
+
+        try {
+            $services = Service::query()
+                ->active()
+                ->get(['slug', 'updated_at']);
+
+            foreach ($services as $service) {
+                $urls[] = [
+                    'loc' => URL::to("/servicios/{$service->slug}"),
+                    'lastmod' => $service->updated_at?->toIso8601String(),
+                    'changefreq' => 'monthly',
+                    'priority' => '0.7',
+                ];
+            }
+        } catch (Throwable) {
+            // The base public URLs remain available when the database is unavailable.
+        }
 
         try {
             $posts = BlogPost::query()

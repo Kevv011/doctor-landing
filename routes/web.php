@@ -1,18 +1,21 @@
 <?php
 
-use App\Http\Controllers\AppointmentSubmissionController;
 use App\Http\Controllers\Admin\AppointmentSubmissionController as AdminAppointmentSubmissionController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\Admin\BlogPostMediaController;
 use App\Http\Controllers\Admin\BusinessSettingsController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AppointmentSubmissionController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PublicSeoController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Models\BlogPost;
+use App\Models\Service;
 use App\Models\Testimonial;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -54,11 +57,31 @@ Route::get('/', fn () => Inertia::render('public/home', [
             ) ?: $testimonial->getFirstMediaUrl(Testimonial::MEDIA_COLLECTION_AVATAR),
         ])
         ->values(),
+    'services' => Service::query()
+        ->active()
+        ->inRandomOrder()
+        ->limit(5)
+        ->get()
+        ->map(fn (Service $service) => [
+            'id' => $service->id,
+            'title' => $service->title,
+            'slug' => $service->slug,
+            'excerpt' => $service->excerpt,
+            'description' => $service->description,
+            'tags' => $service->tags ?? [],
+            'seo_title' => $service->seo_title,
+            'seo_description' => $service->seo_description,
+            'image_url' => $service->imageUrl(),
+            'url' => route('services.show', $service->slug, false),
+        ])
+        ->values(),
 ]))->name('home');
 
 Route::get('robots.txt', [PublicSeoController::class, 'robots'])->name('seo.robots');
 Route::get('sitemap.xml', [PublicSeoController::class, 'sitemap'])->name('seo.sitemap');
 
+Route::get('servicios', [ServiceController::class, 'index'])->name('services');
+Route::get('servicios/{slug}', [ServiceController::class, 'show'])->name('services.show');
 Route::inertia('contact', 'public/contact')->name('contact');
 Route::post('appointments', [AppointmentSubmissionController::class, 'store'])
     ->name('appointments.store');
@@ -81,6 +104,9 @@ Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(functio
         ->names('admin.blog-categories');
     Route::post('admin/blogs/{blog}/media', [BlogPostMediaController::class, 'store'])
         ->name('admin.blogs.media.store');
+    Route::resource('admin/services', AdminServiceController::class)
+        ->except(['show'])
+        ->names('admin.services');
     Route::resource('admin/testimonials', TestimonialController::class)
         ->except(['show'])
         ->names('admin.testimonials');

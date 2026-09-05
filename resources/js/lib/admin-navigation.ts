@@ -4,6 +4,7 @@ import {
     FileText,
     LayoutGrid,
     MessageSquareQuote,
+    Stethoscope,
     Tags,
     Users,
 } from 'lucide-react';
@@ -53,6 +54,11 @@ export const adminNavGroups: AdminNavGroup[] = [
                 title: 'Categorías blog',
                 href: '/admin/blog-categories',
                 icon: Tags,
+            },
+            {
+                title: 'Servicios',
+                href: '/admin/services',
+                icon: Stethoscope,
             },
             {
                 title: 'Testimonios',

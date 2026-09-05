@@ -20,12 +20,21 @@ export default function PublicSeo({
 }: PublicSeoProps) {
     const { site_url: configuredSiteUrl } = usePage().props;
     const business = useBusiness();
+    const fallbackOrigin =
+        typeof window === 'undefined'
+            ? 'http://localhost'
+            : window.location.origin;
     const origin = (
-        configuredSiteUrl ||
-        (typeof window === 'undefined' ? 'http://localhost' : window.location.origin)
+        typeof configuredSiteUrl === 'string'
+            ? configuredSiteUrl
+            : fallbackOrigin
     ).replace(/\/$/, '');
-    const canonicalUrl = `${origin}${canonicalPath}`;
-    const imageUrl = `${origin}${imagePath}`;
+    const canonicalUrl = canonicalPath.startsWith('http')
+        ? canonicalPath
+        : `${origin}${canonicalPath}`;
+    const imageUrl = imagePath.startsWith('http')
+        ? imagePath
+        : `${origin}${imagePath}`;
     const profile = business.profile;
 
     const clinicSchema: Record<string, unknown> = {
@@ -71,9 +80,7 @@ export default function PublicSeo({
             <meta name="twitter:title" content={title} />
             <meta name="twitter:description" content={description} />
             <meta name="twitter:image" content={imageUrl} />
-            <script type="application/ld+json">
-                {JSON.stringify(jsonLd)}
-            </script>
+            <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         </Head>
     );
 }

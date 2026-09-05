@@ -49,7 +49,7 @@ export default function LandingPagination({ links }: Props) {
                 item.type === 'ellipsis' ? (
                     <span
                         key={item.key}
-                        className="grid size-11 place-items-center rounded-md border-2 border-[#2f3033] bg-white text-lg font-black text-[#2f3033] shadow-[0_8px_0_rgba(21,35,74,0.12)]"
+                        className="grid size-11 place-items-center rounded-md border-2 border-[#f0a8bf] bg-white text-lg font-black text-[#e9648d] shadow-[0_8px_0_rgba(233,100,141,0.14)]"
                     >
                         ...
                     </span>
@@ -86,8 +86,8 @@ function PageLink({
 }) {
     const className = `grid size-11 place-items-center rounded-md border-2 text-lg font-black transition shadow-[0_8px_0_rgba(21,35,74,0.12)] ${
         active
-            ? 'border-[#2f3033] bg-[#2f3033] text-white'
-            : 'border-[#2f3033] bg-white text-[#2f3033] hover:-translate-y-0.5 hover:bg-[#fff0f7]'
+            ? 'border-[#c9003c] bg-[#c9003c] text-white shadow-[0_8px_0_rgba(201,0,60,0.18)]'
+            : 'border-[#f0a8bf] bg-white text-[#e9648d] shadow-[0_8px_0_rgba(233,100,141,0.14)] hover:-translate-y-0.5 hover:border-[#e9648d] hover:bg-[#fff0f7] hover:text-[#c9003c]'
     }`;
 
     if (!href) {
@@ -112,10 +112,10 @@ function PaginationControl({
     disabled: boolean;
     children: ReactNode;
 }) {
-    const className = `grid size-11 place-items-center rounded-md border-2 border-[#2f3033] shadow-[0_8px_0_rgba(21,35,74,0.12)] transition ${
+    const className = `grid size-11 place-items-center rounded-md border-2 shadow-[0_8px_0_rgba(233,100,141,0.14)] transition ${
         disabled
-            ? 'cursor-not-allowed bg-[#8f888d] text-white/70 opacity-70'
-            : 'bg-white text-[#2f3033] hover:-translate-y-0.5 hover:bg-[#fff0f7]'
+            ? 'cursor-not-allowed border-[#e8c6d1] bg-[#d7c6cc] text-white/80 opacity-80'
+            : 'border-[#f0a8bf] bg-white text-[#e9648d] hover:-translate-y-0.5 hover:border-[#e9648d] hover:bg-[#fff0f7] hover:text-[#c9003c]'
     }`;
 
     if (disabled || !href) {
@@ -127,7 +127,12 @@ function PaginationControl({
     }
 
     return (
-        <Link href={href} preserveScroll aria-label={label} className={className}>
+        <Link
+            href={href}
+            preserveScroll
+            aria-label={label}
+            className={className}
+        >
             {children}
         </Link>
     );
@@ -171,5 +176,8 @@ function visiblePages(
 }
 
 function stripHtml(value: string): string {
-    return value.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, '').trim();
+    return value
+        .replace(/<[^>]*>/g, '')
+        .replace(/&[^;]+;/g, '')
+        .trim();
 }

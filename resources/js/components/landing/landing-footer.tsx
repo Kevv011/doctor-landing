@@ -24,7 +24,7 @@ import {
 } from '@/hooks/use-business';
 
 const footerLinks = [
-    { label: 'Servicios', href: '/#servicios' },
+    { label: 'Servicios', href: '/servicios' },
     { label: 'Contacto', href: '/contact' },
     { label: 'Blog', href: '/blog' },
     { label: 'Testimoniales', href: '/#testimoniales' },

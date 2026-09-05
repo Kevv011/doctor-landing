@@ -8,7 +8,7 @@ import { useCurrentUrl } from '@/hooks/use-current-url';
 
 const navItems = [
     { label: 'Inicio', href: '/' },
-    { label: 'Servicios', href: '/#servicios' },
+    { label: 'Servicios', href: '/servicios' },
     { label: 'Contacto', href: '/contact' },
     { label: 'Blog', href: '/blog' },
     { label: 'Testimoniales', href: '/#testimoniales' },
@@ -34,6 +34,10 @@ export default function LandingNavbar() {
 
         if (hash) {
             return isCurrentPath && currentHash === `#${hash}`;
+        }
+
+        if (path !== '/' && currentUrl.startsWith(`${path}/`)) {
+            return true;
         }
 
         return isCurrentPath && !currentHash;

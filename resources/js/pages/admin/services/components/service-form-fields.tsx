@@ -1,0 +1,162 @@
+import InputError from '@/components/input-error';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
+export type ServiceFormRecord = {
+    id?: number;
+    title?: string;
+    excerpt?: string | null;
+    description?: string | null;
+    tags?: string | null;
+    is_active?: boolean;
+    sort_order?: number;
+    has_image?: boolean;
+    image_url?: string | null;
+};
+
+type Props = {
+    service?: ServiceFormRecord;
+    errors: Partial<Record<string, string>>;
+    processing: boolean;
+    submitLabel: string;
+};
+
+export default function ServiceFormFields({
+    service,
+    errors,
+    processing,
+    submitLabel,
+}: Props) {
+    return (
+        <>
+            <div className="grid gap-2">
+                <Label htmlFor="title">Título</Label>
+                <Input
+                    id="title"
+                    name="title"
+                    required
+                    defaultValue={service?.title ?? ''}
+                    placeholder="Consulta ginecológica y obstétrica"
+                />
+                <p className="text-xs text-muted-foreground">
+                    Este título se mostrará en las tarjetas y en el detalle del
+                    servicio.
+                </p>
+                <InputError message={errors.title} />
+            </div>
+
+            <div className="grid gap-2">
+                <Label htmlFor="excerpt">Resumen para tarjetas</Label>
+                <textarea
+                    id="excerpt"
+                    name="excerpt"
+                    rows={4}
+                    defaultValue={service?.excerpt ?? ''}
+                    className="min-h-28 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                    placeholder="Texto corto que se mostrará en el sitio y listado de servicios."
+                />
+                <InputError message={errors.excerpt} />
+            </div>
+
+            <div className="grid gap-2">
+                <Label htmlFor="description">Descripción</Label>
+                <textarea
+                    id="description"
+                    name="description"
+                    rows={8}
+                    defaultValue={service?.description ?? ''}
+                    className="min-h-44 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                    placeholder="Información del servicio. Puedes separar párrafos con saltos de línea."
+                />
+                <InputError message={errors.description} />
+            </div>
+
+            <div className="grid gap-2">
+                <Label htmlFor="tags">Etiquetas</Label>
+                <Input
+                    id="tags"
+                    name="tags"
+                    defaultValue={service?.tags ?? ''}
+                    placeholder="Cuidado, Atención, Salud"
+                />
+                <p className="text-xs text-muted-foreground">
+                    Separalas por coma. Se mostrarán como temas relacionados.
+                </p>
+                <InputError message={errors.tags} />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid gap-2">
+                    <Label htmlFor="sort_order">Orden</Label>
+                    <Input
+                        id="sort_order"
+                        name="sort_order"
+                        type="number"
+                        min={0}
+                        defaultValue={service?.sort_order ?? 0}
+                    />
+                    <InputError message={errors.sort_order} />
+                </div>
+
+                <div className="flex items-start gap-3 rounded-lg border p-4">
+                    <input type="hidden" name="is_active" value="0" />
+                    <input
+                        id="is_active"
+                        name="is_active"
+                        type="checkbox"
+                        value="1"
+                        defaultChecked={service?.is_active ?? true}
+                        className="mt-1 h-4 w-4 rounded border-input"
+                    />
+                    <div className="space-y-1">
+                        <Label htmlFor="is_active">Activo</Label>
+                        <p className="text-sm text-muted-foreground">
+                            Solo los servicios activos se publicarán en el
+                            sitio.
+                        </p>
+                        <InputError message={errors.is_active} />
+                    </div>
+                </div>
+            </div>
+
+            <div className="grid gap-2">
+                <Label htmlFor="image">Imagen del servicio</Label>
+                {service?.image_url && (
+                    <div className="overflow-hidden rounded-lg border">
+                        <img
+                            src={service.image_url}
+                            alt=""
+                            className="h-44 w-full object-cover"
+                        />
+                    </div>
+                )}
+                <Input
+                    id="image"
+                    name="image"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/avif"
+                />
+                <p className="text-xs text-muted-foreground">
+                    Si no agregas imagen, el sitio usará la imagen fallback de
+                    servicios.
+                </p>
+                <InputError message={errors.image} />
+            </div>
+
+            {service?.has_image && (
+                <label className="flex items-center gap-2 text-sm">
+                    <input
+                        type="checkbox"
+                        name="remove_image"
+                        value="1"
+                        className="h-4 w-4 rounded border-input"
+                    />
+                    Quitar imagen actual
+                </label>
+            )}
+
+            <Button disabled={processing}>{submitLabel}</Button>
+        </>
+    );
+}

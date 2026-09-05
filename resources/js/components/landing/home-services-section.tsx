@@ -1,39 +1,20 @@
+import { Link } from '@inertiajs/react';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
+import type { CSSProperties } from 'react';
 import LandingContainer from '@/components/landing/landing-container';
+import type { LandingService } from '@/types/landing-service';
 
-const services = [
-    {
-        title: 'Consulta Ginecologica',
-        description:
-            'La consulta ginecologica es el primer paso para cuidar tu salud...',
-        tone: 'bg-[#e9648d]',
-    },
-    {
-        title: 'Consulta Gineco-Oncologica y de Mama',
-        description:
-            'La prevencion y el diagnostico oportuno son fundamentales...',
-        tone: 'bg-[#e99bd5]',
-    },
-    {
-        title: 'Ultrasonido Pelvico Transvaginal',
-        description: 'El ultrasonido transvaginal es una herramienta...',
-        tone: 'bg-[#df4daf]',
-    },
-    {
-        title: 'Ultrasonido Pelvico Abdominal',
-        description:
-            'Este estudio permite valorar los organos pelvicos mediante...',
-        tone: 'bg-[#7da2ff]',
-    },
-    {
-        title: 'Ultrasonido Obstetrico',
-        description:
-            'Cada embarazo merece un seguimiento cercano y confiable...',
-        tone: 'bg-[#a79bff]',
-    },
-];
+type Props = {
+    services: LandingService[];
+};
 
-export default function HomeServicesSection() {
+export default function HomeServicesSection({ services }: Props) {
+    if (services.length === 0) {
+        return null;
+    }
+
+    const featuredServices = services.slice(0, 5);
+
     return (
         <section
             id="servicios"
@@ -50,14 +31,14 @@ export default function HomeServicesSection() {
                         </h2>
                     </div>
 
-                    {services.slice(0, 3).map((service) => (
-                        <ServiceCard key={service.title} {...service} />
+                    {featuredServices.slice(0, 3).map((service) => (
+                        <ServiceCard key={service.slug} service={service} />
                     ))}
 
                     {/* <div className="hidden lg:block" /> */}
 
-                    {services.slice(3).map((service) => (
-                        <ServiceCard key={service.title} {...service} />
+                    {featuredServices.slice(3).map((service) => (
+                        <ServiceCard key={service.slug} service={service} />
                     ))}
 
                     <article className="group relative min-h-[220px] overflow-hidden rounded-lg bg-[#e9648d] p-8 text-white transition duration-300 ease-out hover:-translate-y-1 hover:bg-[#d94e7a] hover:shadow-[0_18px_40px_rgba(21,35,74,0.12)] sm:col-span-2">
@@ -66,17 +47,17 @@ export default function HomeServicesSection() {
                                 Conozca todos nuestros servicios
                             </h3>
                             <p className="mt-4 text-sm font-medium text-white/90">
-                                +15 servicios especializados
+                                Catálogo especializado
                             </p>
-                            <a
-                                href="#servicios"
+                            <Link
+                                href="/servicios"
                                 className="mt-7 inline-flex items-center gap-3 text-sm font-bold transition-colors hover:text-white/85"
                             >
                                 Ver servicios
                                 <span className="grid size-7 place-items-center rounded-full bg-white/25 transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-white group-hover:text-[#e9648d]">
                                     <ArrowUpRight className="size-4" />
                                 </span>
-                            </a>
+                            </Link>
                         </div>
 
                         <div className="absolute right-[-18px] bottom-[-46px] size-64 overflow-hidden rounded-full bg-white/15 sm:right-[-10px] sm:bottom-[-22px] sm:size-72">
@@ -93,34 +74,42 @@ export default function HomeServicesSection() {
     );
 }
 
-function ServiceCard({
-    title,
-    description,
-    tone,
-}: {
-    title: string;
-    description: string;
-    tone: string;
-}) {
+function ServiceCard({ service }: { service: LandingService }) {
     return (
-        <article className="group flex min-h-[220px] flex-col justify-between rounded-lg border border-transparent bg-white p-7 shadow-[0_10px_30px_rgba(21,35,74,0.04)] transition duration-300 ease-out hover:-translate-y-1 hover:border-[#f0d4df] hover:shadow-[0_18px_40px_rgba(21,35,74,0.1)]">
+        <article
+            className="landing-reveal-down group flex min-h-[220px] flex-col justify-between rounded-lg border border-transparent bg-white p-7 shadow-[0_10px_30px_rgba(21,35,74,0.04)] transition duration-300 ease-out hover:-translate-y-1 hover:border-[#f0d4df] hover:shadow-[0_18px_40px_rgba(21,35,74,0.1)]"
+            style={
+                {
+                    '--landing-reveal-delay': '90ms',
+                } as CSSProperties
+            }
+        >
             <div>
-                <div
-                    className={`mb-7 size-11 rounded-full transition-transform duration-300 group-hover:-translate-y-0.5 ${tone}`}
-                />
-                <h3 className="text-base leading-[0.95] font-black">{title}</h3>
+                <div className="mb-7 size-11 overflow-hidden rounded-full bg-[#e9648d] transition-transform duration-300 group-hover:-translate-y-0.5">
+                    <img
+                        src={service.image_url}
+                        alt=""
+                        onError={(event) => {
+                            event.currentTarget.style.display = 'none';
+                        }}
+                        className="h-full w-full object-cover opacity-85"
+                    />
+                </div>
+                <h3 className="text-base leading-[0.95] font-black">
+                    {service.title}
+                </h3>
                 <p className="mt-3 text-sm leading-5 text-[#6f7080]">
-                    {description}
+                    {service.excerpt ?? service.description}
                 </p>
             </div>
             <div>
-                <a
-                    href="#servicios"
+                <Link
+                    href={service.url}
                     className="mt-5 inline-flex items-center gap-3 text-xs font-bold text-[#e9648d] transition hover:text-[#c9003c]"
                 >
                     Leer mas
                     <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-                </a>
+                </Link>
             </div>
         </article>
     );

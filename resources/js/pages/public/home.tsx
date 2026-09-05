@@ -1,21 +1,23 @@
 import HomeAboutSection from '@/components/landing/home-about-section';
 import HomeExperienceSection from '@/components/landing/home-experience-section';
 import HomeFeaturedBlogsSection from '@/components/landing/home-featured-blogs-section';
-import type {FeaturedBlog} from '@/components/landing/home-featured-blogs-section';
+import type { FeaturedBlog } from '@/components/landing/home-featured-blogs-section';
 import HomeHeroSection from '@/components/landing/home-hero-section';
 import HomeServicesSection from '@/components/landing/home-services-section';
 import HomeSpecialistsSection from '@/components/landing/home-specialists-section';
 import HomeTestimonialsSection from '@/components/landing/home-testimonials-section';
-import type {LandingTestimonial} from '@/components/landing/home-testimonials-section';
+import type { LandingTestimonial } from '@/components/landing/home-testimonials-section';
 import LandingFooter from '@/components/landing/landing-footer';
 import PublicSeo from '@/components/landing/public-seo';
+import type { LandingService } from '@/types/landing-service';
 
 type Props = {
     featuredBlogs: FeaturedBlog[];
+    services: LandingService[];
     testimonials: LandingTestimonial[];
 };
 
-export default function Home({ featuredBlogs, testimonials }: Props) {
+export default function Home({ featuredBlogs, services, testimonials }: Props) {
     return (
         <>
             <PublicSeo
@@ -27,7 +29,7 @@ export default function Home({ featuredBlogs, testimonials }: Props) {
                 <HomeHeroSection />
                 <HomeAboutSection />
                 <HomeExperienceSection />
-                <HomeServicesSection />
+                <HomeServicesSection services={services} />
                 <HomeSpecialistsSection />
                 <HomeTestimonialsSection testimonials={testimonials} />
                 <HomeFeaturedBlogsSection blogs={featuredBlogs} />
