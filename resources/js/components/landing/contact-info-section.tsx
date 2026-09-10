@@ -37,7 +37,7 @@ export default function ContactInfoSection() {
     return (
         <section className="bg-[#fff0f7] py-16 text-[#09123f] sm:py-20 lg:py-24">
             <LandingContainer>
-                <div className="text-center">
+                <div data-landing-reveal="up" className="text-center">
                     <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
                         Contáctanos
                     </p>
@@ -47,9 +47,11 @@ export default function ContactInfoSection() {
                 </div>
 
                 <div className="mx-auto mt-10 grid max-w-5xl gap-6 md:grid-cols-3">
-                    {contactCards.map((card) => (
+                    {contactCards.map((card, index) => (
                         <a
                             key={card.title}
+                            data-landing-reveal="up"
+                            data-landing-reveal-delay={90 + index * 90}
                             href={card.href}
                             target={
                                 card.href.startsWith('http')
@@ -61,7 +63,7 @@ export default function ContactInfoSection() {
                                     ? 'noreferrer'
                                     : undefined
                             }
-                            className="group flex min-h-40 gap-5 rounded-lg border border-transparent bg-white p-7 shadow-[0_12px_35px_rgba(21,35,74,0.04)] transition duration-300 ease-out hover:-translate-y-1 hover:border-[#f0d4df] hover:bg-[#fff8fb] hover:shadow-[0_18px_45px_rgba(21,35,74,0.08)]"
+                            className="group flex min-h-40 gap-5 rounded-lg border border-transparent bg-white p-7 shadow-[0_12px_35px_rgba(21,35,74,0.04)] transition duration-400 ease-in-out hover:-translate-y-1 hover:border-[#e9648d] hover:bg-[#fff8fb] hover:shadow-[0_18px_45px_rgba(21,35,74,0.1)]"
                         >
                             <span className="grid size-14 shrink-0 place-items-center rounded-lg border border-[#e9648d] text-[#e9648d] transition duration-300 group-hover:bg-[#e9648d] group-hover:text-white">
                                 <card.icon className="size-6 stroke-[1.5]" />

@@ -20,10 +20,12 @@ export default function BlogCard({ blog }: Props) {
             <img
                 src={blog.featured_image_url || '/images/blog-post-default.png'}
                 alt={blog.title}
-                className="h-72 w-full rounded-lg object-cover transition duration-300 ease-out group-hover:translate-y-2"
+                loading="lazy"
+                decoding="async"
+                className="h-72 w-full rounded-lg object-cover transition duration-400 ease-in-out group-hover:translate-y-[15px]"
             />
 
-            <div className="relative mx-4 -mt-20 rounded-lg border-b-2 border-[#e9648d] bg-white p-7 shadow-[0_18px_45px_rgba(21,35,74,0.06)] transition duration-300 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_22px_48px_rgba(21,35,74,0.1)] sm:mx-7">
+            <div className="relative mx-4 -mt-20 rounded-lg border-b-2 border-[#e9648d] bg-white p-7 shadow-[0_18px_45px_rgba(21,35,74,0.06)] transition duration-400 ease-in-out group-hover:-translate-y-[15px] group-hover:shadow-[0_22px_48px_rgba(21,35,74,0.1)] sm:mx-7">
                 {blog.published_at && (
                     <div className="flex items-center gap-2 text-xs font-medium text-[#e9648d]">
                         <CalendarDays className="size-3.5" />
@@ -31,7 +33,7 @@ export default function BlogCard({ blog }: Props) {
                     </div>
                 )}
 
-                <h3 className="mt-4 text-xl font-black leading-tight text-[#e9648d]">
+                <h3 className="mt-4 text-xl leading-tight font-black text-[#e9648d]">
                     {blog.title}
                 </h3>
 

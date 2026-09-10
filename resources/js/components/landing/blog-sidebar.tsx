@@ -57,7 +57,11 @@ export default function BlogSidebar({ categories, tags, filters }: Props) {
     const hasFilters = categories.length > 0 || tags.length > 0;
 
     return (
-        <aside className="space-y-5 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] lg:space-y-8">
+        <aside
+            data-landing-reveal="up"
+            data-landing-reveal-delay="100"
+            className="space-y-5 [font-family:Poppins,ui-sans-serif,system-ui,sans-serif] lg:space-y-8"
+        >
             <SidebarCard title="Búsqueda">
                 <form action="/blog" method="get" className="flex">
                     {filters.category && (
@@ -80,7 +84,7 @@ export default function BlogSidebar({ categories, tags, filters }: Props) {
                     <button
                         type="submit"
                         aria-label="Buscar"
-                        className="grid w-14 place-items-center rounded-r-md bg-[#e9648d] text-white transition hover:bg-[#d94e7a]"
+                        className="landing-action grid w-14 place-items-center rounded-r-md bg-[#e9648d] text-white hover:bg-[#d94e7a]"
                     >
                         <Search className="size-5" />
                     </button>
@@ -93,7 +97,7 @@ export default function BlogSidebar({ categories, tags, filters }: Props) {
                         <DialogTrigger asChild>
                             <button
                                 type="button"
-                                className="flex w-full items-center justify-center gap-3 rounded-lg bg-[#e9648d] px-5 py-4 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(122,0,38,0.12)] transition hover:-translate-y-0.5 hover:bg-[#d94e7a] hover:shadow-[0_18px_34px_rgba(122,0,38,0.16)] focus-visible:ring-4 focus-visible:ring-[#e9648d]/25 focus-visible:outline-none"
+                                className="landing-action flex w-full items-center justify-center gap-3 rounded-lg bg-[#e9648d] px-5 py-4 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(122,0,38,0.12)] hover:bg-[#d94e7a] hover:shadow-[0_18px_34px_rgba(122,0,38,0.16)] focus-visible:ring-4 focus-visible:ring-[#e9648d]/25 focus-visible:outline-none"
                             >
                                 <SlidersHorizontal className="size-5" />
                                 Filtros
@@ -232,7 +236,7 @@ function SocialLinksCard({
                             aria-label={socialLink.label ?? socialLink.platform}
                             target="_blank"
                             rel="noreferrer"
-                            className="grid size-10 place-items-center rounded-full bg-[#e9648d] text-white transition hover:-translate-y-0.5 hover:bg-[#d94e7a]"
+                            className="landing-social-action grid size-10 place-items-center rounded-full bg-[#e9648d] text-white transition duration-300 hover:bg-[#d94e7a]"
                         >
                             <SocialIcon className="size-5 stroke-[2.4]" />
                         </a>

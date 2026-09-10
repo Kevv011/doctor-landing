@@ -127,8 +127,10 @@ export default function LandingNavbar() {
                 <div className="flex items-center justify-between gap-6">
                     <Link
                         href="/"
-                        className={`flex shrink-0 items-center justify-center rounded-sm text-center text-[11px] font-black leading-tight tracking-[0.08em] uppercase transition ${
-                            isSolid ? 'hover:bg-[#e9648d]/10' : 'hover:bg-white/15'
+                        className={`flex shrink-0 items-center justify-center rounded-sm text-center text-[11px] leading-tight font-black tracking-[0.08em] uppercase transition ${
+                            isSolid
+                                ? 'hover:bg-[#e9648d]/10'
+                                : 'hover:bg-white/15'
                         }`}
                     >
                         <img
@@ -153,7 +155,7 @@ export default function LandingNavbar() {
                                 aria-current={
                                     isActive(item.href) ? 'page' : undefined
                                 }
-                                className={`relative py-2 font-semibold transition after:absolute after:right-0 after:bottom-0 after:left-0 after:h-1 after:origin-left after:rounded-full after:bg-[#e9648d] after:transition-transform after:duration-200 ${
+                                className={`relative py-2 font-semibold transition after:absolute after:right-0 after:bottom-0 after:left-0 after:h-1 after:origin-left after:rounded-full after:bg-[#e9648d] after:transition-transform after:duration-400 ${
                                     isActive(item.href)
                                         ? 'font-black after:scale-x-100'
                                         : 'after:scale-x-0 hover:after:scale-x-100'

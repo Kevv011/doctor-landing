@@ -13,6 +13,7 @@ export default function ContactMapSection() {
     return (
         <section className="bg-[#fff0f7]">
             <iframe
+                data-landing-reveal="up"
                 src={mapUrl}
                 title={`Mapa de ubicación de ${business.profile.name}`}
                 className="h-[360px] w-full border-0 sm:h-[440px] lg:h-[520px]"

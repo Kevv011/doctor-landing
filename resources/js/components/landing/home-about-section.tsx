@@ -1,12 +1,19 @@
-import { CheckCircle2 } from 'lucide-react';
+import {
+    HeartHandshake,
+    Scale,
+    ShieldCheck,
+    Stethoscope,
+    UsersRound,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import LandingContainer from '@/components/landing/landing-container';
 
-const values = [
-    'Etica profesional',
-    'Calidad medica',
-    'Enfoque humano',
-    'Responsabilidad social',
-    'Integridad',
+const values: { label: string; icon: LucideIcon }[] = [
+    { label: 'Ética profesional', icon: ShieldCheck },
+    { label: 'Calidad médica', icon: Stethoscope },
+    { label: 'Enfoque humano', icon: HeartHandshake },
+    { label: 'Responsabilidad social', icon: UsersRound },
+    { label: 'Integridad', icon: Scale },
 ];
 
 export default function HomeAboutSection() {
@@ -14,27 +21,40 @@ export default function HomeAboutSection() {
         <section className="bg-[#fff0f7] py-16 text-[#20243a] sm:py-20 lg:py-24">
             <LandingContainer>
                 <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[1fr_0.92fr] lg:items-center">
-                    <div className="mx-auto grid max-w-3xl grid-cols-[0.9fr_1fr] items-start gap-3 sm:gap-5 lg:mx-0 lg:max-w-none">
+                    <div
+                        data-landing-reveal="up"
+                        className="mx-auto grid max-w-3xl grid-cols-[0.9fr_1fr] items-start gap-3 sm:gap-5 lg:mx-0 lg:max-w-none"
+                    >
                         <div className="grid gap-3 sm:gap-5">
                             <img
                                 src="/images/Home/HomeAbout1.png"
                                 alt="Especialista de Women's Health Clinic"
+                                loading="lazy"
+                                decoding="async"
                                 className="aspect-[1.16/1] w-full rounded-lg object-cover object-[center_18%]"
                             />
                             <img
                                 src="/images/Home/HomeAbout2.png"
                                 alt="Especialista de Women's Health Clinic"
+                                loading="lazy"
+                                decoding="async"
                                 className="aspect-[1.16/1] w-full rounded-lg object-cover object-[center_16%]"
                             />
                         </div>
                         <img
                             src="/images/Home/HomeAbout3.png"
                             alt="Ultrasonido realizado en la clínica"
+                            loading="lazy"
+                            decoding="async"
                             className="aspect-[0.65/1] w-full rounded-lg object-cover object-[center_28%]"
                         />
                     </div>
 
-                    <div className="mx-auto mt-12 max-w-3xl text-center sm:mt-16 lg:mx-0 lg:mt-0 lg:max-w-[470px] lg:text-left">
+                    <div
+                        data-landing-reveal="up"
+                        data-landing-reveal-delay="100"
+                        className="mx-auto mt-12 max-w-3xl text-center sm:mt-16 lg:mx-0 lg:mt-0 lg:max-w-[470px] lg:text-left"
+                    >
                         <p className="text-[11px] font-bold tracking-[0.28em] text-[#e9648d] uppercase">
                             Quienes somos
                         </p>
@@ -45,6 +65,8 @@ export default function HomeAboutSection() {
                             <img
                                 src="/images/filled-logo.png"
                                 alt="Women's Health Clinic AR&CO"
+                                loading="lazy"
+                                decoding="async"
                                 className="h-full w-full object-contain"
                             />
                         </div>
@@ -70,18 +92,25 @@ export default function HomeAboutSection() {
                             </p>
                         </div>
 
-                        <div className="mt-6">
-                            <p className="text-sm font-bold text-[#e9648d]">
-                                Valores institucionales:
+                        <div className="mt-8">
+                            <p className="text-[11px] font-medium tracking-[0.2em] text-[#e9648d] uppercase">
+                                Valores institucionales
                             </p>
-                            <div className="mx-auto mt-4 grid max-w-lg gap-x-10 gap-y-3 text-left sm:grid-cols-2 lg:mx-0">
-                                {values.map((value) => (
+                            <h3 className="mt-2 text-lg font-semibold text-[#09123f]">
+                                Principios que guían nuestra atención
+                            </h3>
+                            <div className="mx-auto mt-5 flex max-w-lg flex-wrap justify-center gap-3 lg:mx-0 lg:justify-start">
+                                {values.map(({ label, icon: ValueIcon }) => (
                                     <div
-                                        key={value}
-                                        className="flex items-center gap-2 text-[13px] font-semibold text-[#15234a]"
+                                        key={label}
+                                        className="group flex min-h-24 w-[calc(50%_-_0.375rem)] flex-col items-center justify-center gap-2 rounded-xl border border-[#f2c5d6] bg-white/70 px-3 py-4 text-center shadow-[0_10px_26px_rgba(92,30,61,0.045)] transition duration-400 hover:-translate-y-1 hover:border-[#e9648d] hover:bg-white hover:shadow-[0_16px_32px_rgba(92,30,61,0.1)] sm:w-[calc(33.333%_-_0.5rem)] lg:w-[calc(50%_-_0.375rem)] lg:flex-row lg:justify-start lg:text-left"
                                     >
-                                        <CheckCircle2 className="size-3.5 shrink-0 fill-[#e9648d] text-white" />
-                                        {value}
+                                        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#fde1ec] text-[#e45d86] transition duration-400 group-hover:bg-[#e9648d] group-hover:text-white">
+                                            <ValueIcon className="size-4.5 stroke-[1.9]" />
+                                        </span>
+                                        <span className="text-xs leading-4.5 font-medium text-[#15234a]">
+                                            {label}
+                                        </span>
                                     </div>
                                 ))}
                             </div>

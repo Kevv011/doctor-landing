@@ -14,9 +14,9 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import BlogContentRenderer from '@/components/landing/blog-content-renderer';
-import type {BlogContentBlock} from '@/components/landing/blog-content-renderer';
+import type { BlogContentBlock } from '@/components/landing/blog-content-renderer';
 import BlogSidebar from '@/components/landing/blog-sidebar';
-import type {BlogSidebarCategory} from '@/components/landing/blog-sidebar';
+import type { BlogSidebarCategory } from '@/components/landing/blog-sidebar';
 import LandingContainer from '@/components/landing/landing-container';
 import LandingFooter from '@/components/landing/landing-footer';
 import PublicSeo from '@/components/landing/public-seo';
@@ -78,14 +78,15 @@ export default function BlogShow({
 }: Props) {
     const business = useBusiness();
     const shareUrl =
-        typeof window === 'undefined' ? `/blog/${post.slug}` : window.location.href;
+        typeof window === 'undefined'
+            ? `/blog/${post.slug}`
+            : window.location.href;
 
     return (
         <>
             <PublicSeo
                 title={
-                    post.seo_title ||
-                    `${post.title} | Women’s Health Clinic`
+                    post.seo_title || `${post.title} | Women’s Health Clinic`
                 }
                 description={
                     post.seo_description ||
@@ -93,9 +94,7 @@ export default function BlogShow({
                     'Información de salud femenina de Women’s Health Clinic.'
                 }
                 canonicalPath={`/blog/${post.slug}`}
-                imagePath={
-                    post.featured_image_url || '/images/filled-logo.png'
-                }
+                imagePath={post.featured_image_url || '/images/filled-logo.png'}
                 type="article"
                 schema={{
                     '@type': 'BlogPosting',
@@ -121,7 +120,10 @@ export default function BlogShow({
                 <section className="py-12 sm:py-16 lg:py-20">
                     <LandingContainer>
                         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
-                            <article className="order-2 rounded-lg bg-white p-3 shadow-[0_18px_45px_rgba(21,35,74,0.04)] sm:p-4 lg:order-1 lg:p-5">
+                            <article
+                                data-landing-reveal="up"
+                                className="order-2 rounded-lg bg-white p-3 shadow-[0_18px_45px_rgba(21,35,74,0.04)] sm:p-4 lg:order-1 lg:p-5"
+                            >
                                 <img
                                     src={
                                         post.featured_image_url ||
@@ -132,7 +134,7 @@ export default function BlogShow({
                                 />
 
                                 <div className="px-2 py-6 sm:px-4">
-                                    <h1 className="text-3xl font-black leading-tight tracking-[-0.04em] text-[#09123f] sm:text-4xl">
+                                    <h1 className="text-3xl leading-tight font-black tracking-[-0.04em] text-[#09123f] sm:text-4xl">
                                         {post.title}
                                     </h1>
 
@@ -207,7 +209,7 @@ export default function BlogShow({
                                                                 aria-label={`Compartir en ${socialLink.label ?? socialLink.platform}`}
                                                                 target="_blank"
                                                                 rel="noreferrer"
-                                                                className="grid size-9 place-items-center rounded-full bg-[#e9648d] text-white transition hover:bg-[#d94e7a]"
+                                                                className="landing-social-action grid size-9 place-items-center rounded-full bg-[#e9648d] text-white transition duration-300 hover:bg-[#d94e7a]"
                                                             >
                                                                 <SocialIcon className="size-5 stroke-[2.4]" />
                                                             </a>
@@ -215,7 +217,7 @@ export default function BlogShow({
                                                     })}
                                                 <a
                                                     href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(shareUrl)}`}
-                                                    className="grid size-9 place-items-center rounded-full bg-[#e9648d] text-white transition hover:bg-[#d94e7a]"
+                                                    className="landing-social-action grid size-9 place-items-center rounded-full bg-[#e9648d] text-white transition duration-300 hover:bg-[#d94e7a]"
                                                     aria-label="Compartir por correo"
                                                 >
                                                     <AtSign className="size-5" />
@@ -252,7 +254,11 @@ export default function BlogShow({
                                 />
 
                                 {relatedPosts.length > 0 && (
-                                    <section className="rounded-lg bg-white px-7 py-8 text-[#09123f] shadow-[0_12px_35px_rgba(21,35,74,0.04)]">
+                                    <section
+                                        data-landing-reveal="up"
+                                        data-landing-reveal-delay="180"
+                                        className="rounded-lg bg-white px-7 py-8 text-[#09123f] shadow-[0_12px_35px_rgba(21,35,74,0.04)]"
+                                    >
                                         <h2 className="text-center text-base font-black">
                                             Otros
                                         </h2>
@@ -272,7 +278,7 @@ export default function BlogShow({
                                                         alt=""
                                                         className="size-[72px] rounded-md object-cover"
                                                     />
-                                                    <span className="text-sm font-semibold leading-5 text-[#e9648d]">
+                                                    <span className="text-sm leading-5 font-semibold text-[#e9648d]">
                                                         {relatedPost.title}
                                                     </span>
                                                 </Link>

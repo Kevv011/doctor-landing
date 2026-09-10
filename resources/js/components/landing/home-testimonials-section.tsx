@@ -105,7 +105,7 @@ export default function HomeTestimonialsSection({
             id="testimoniales"
             className="relative scroll-mt-24 overflow-hidden bg-white py-12 text-[#09123f] sm:scroll-mt-28"
         >
-            <div className="pointer-events-none absolute right-[8%] top-12 hidden text-[#f7ddea] lg:block">
+            <div className="pointer-events-none absolute top-12 right-[8%] hidden text-[#f7ddea] lg:block">
                 <svg
                     width="120"
                     height="170"
@@ -130,7 +130,7 @@ export default function HomeTestimonialsSection({
 
             <LandingContainer>
                 <div className="mx-auto max-w-5xl">
-                    <div className="text-center">
+                    <div data-landing-reveal="up" className="text-center">
                         <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
                             Testimonios
                         </p>
@@ -140,6 +140,8 @@ export default function HomeTestimonialsSection({
                     </div>
 
                     <div
+                        data-landing-reveal="up"
+                        data-landing-reveal-delay="100"
                         className="-mx-4 mt-12 overflow-hidden px-8 py-12 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12"
                         ref={emblaRef}
                         onMouseEnter={() => setIsAutoplayPaused(true)}
@@ -153,7 +155,9 @@ export default function HomeTestimonialsSection({
                                     key={testimonial.id}
                                     className="min-w-0 flex-[0_0_100%] pl-6 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
                                 >
-                                    <TestimonialCard testimonial={testimonial} />
+                                    <TestimonialCard
+                                        testimonial={testimonial}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -180,18 +184,14 @@ export default function HomeTestimonialsSection({
     );
 }
 
-function TestimonialCard({
-    testimonial,
-}: {
-    testimonial: LandingTestimonial;
-}) {
+function TestimonialCard({ testimonial }: { testimonial: LandingTestimonial }) {
     return (
-        <article className="group min-h-[294px] rounded-lg bg-white p-8 shadow-[0_16px_45px_rgba(21,35,74,0.045)] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(21,35,74,0.09)]">
-            <div className="grid size-9 place-items-center rounded-full border border-[#e9648d] text-[#e9648d] transition duration-300 group-hover:bg-[#fff0f7]">
+        <article className="group min-h-[294px] rounded-lg bg-white p-8 shadow-[0_16px_45px_rgba(21,35,74,0.045)] transition duration-400 ease-in-out hover:-translate-y-1 hover:bg-[#e9648d] hover:shadow-[0_24px_52px_rgba(21,35,74,0.15)]">
+            <div className="grid size-9 place-items-center rounded-full border border-[#e9648d] text-[#e9648d] transition duration-400 group-hover:border-white group-hover:bg-white group-hover:text-[#e9648d]">
                 <Quote className="size-4" />
             </div>
 
-            <p className="mt-5 text-sm leading-6 text-[#6f7080]">
+            <p className="mt-5 text-sm leading-6 text-[#6f7080] transition-colors duration-400 group-hover:text-white/90">
                 {testimonial.quote}
             </p>
 
@@ -200,12 +200,16 @@ function TestimonialCard({
                     <img
                         src={testimonial.avatar_url}
                         alt={testimonial.name}
+                        loading="lazy"
+                        decoding="async"
                         className="size-10 rounded-full object-cover"
                     />
                 ) : (
                     <img
                         src="/images/user-vneck-hair-long.png"
                         alt="Avatar por defecto"
+                        loading="lazy"
+                        decoding="async"
                         className="size-10 rounded-full object-cover"
                     />
                 )}
@@ -217,10 +221,10 @@ function TestimonialCard({
                     >
                         {'★'.repeat(testimonial.rating)}
                     </div>
-                    <p className="mt-1 text-sm font-bold text-[#e9648d]">
+                    <p className="mt-1 text-sm font-bold text-[#e9648d] transition-colors duration-400 group-hover:text-white">
                         {testimonial.name}
                     </p>
-                    <p className="text-xs text-[#6f7080]">
+                    <p className="text-xs text-[#6f7080] transition-colors duration-400 group-hover:text-white/80">
                         {testimonial.label}
                     </p>
                 </div>

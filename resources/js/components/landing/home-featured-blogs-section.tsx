@@ -74,7 +74,7 @@ export default function HomeFeaturedBlogsSection({ blogs }: Props) {
         <section className="bg-white py-12 text-[#09123f]">
             <LandingContainer>
                 <div className="mx-auto max-w-5xl">
-                    <div className="text-center">
+                    <div data-landing-reveal="up" className="text-center">
                         <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
                             Blog
                         </p>
@@ -84,6 +84,8 @@ export default function HomeFeaturedBlogsSection({ blogs }: Props) {
                     </div>
 
                     <div
+                        data-landing-reveal="up"
+                        data-landing-reveal-delay="100"
                         className="mt-12 overflow-hidden"
                         ref={emblaRef}
                         onMouseEnter={() => setIsAutoplayPaused(true)}

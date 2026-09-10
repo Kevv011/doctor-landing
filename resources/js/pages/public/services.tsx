@@ -1,8 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { ChevronRight, Search, X } from 'lucide-react';
-import type { CSSProperties } from 'react';
 import LandingContainer from '@/components/landing/landing-container';
 import LandingFooter from '@/components/landing/landing-footer';
+import LandingHeroImage from '@/components/landing/landing-hero-image';
 import LandingPagination from '@/components/landing/landing-pagination';
 import type { LandingPaginationLink } from '@/components/landing/landing-pagination';
 import PublicSeo from '@/components/landing/public-seo';
@@ -52,27 +52,36 @@ function ServicesHeroSection() {
             data-navbar-hero
             className="relative isolate overflow-hidden py-32 text-white sm:py-40 lg:py-44"
         >
-            <img
+            <LandingHeroImage
                 src="/images/Services/ServicesHero.png"
+                webpSrc="/images/Services/ServicesHero.webp"
                 alt="Servicios de Women's Health Clinic"
-                onError={(event) => {
-                    event.currentTarget.style.display = 'none';
-                }}
                 className="absolute inset-0 -z-20 h-full w-full object-cover"
             />
             <div className="absolute inset-0 -z-10 bg-[#09123f]/10" />
 
             <LandingContainer>
                 <div className="mx-auto max-w-3xl pt-16 text-center">
-                    <h1 className="landing-hero-copy text-5xl font-black tracking-[-0.05em] sm:text-6xl lg:text-7xl">
+                    <h1
+                        data-landing-reveal="up"
+                        className="text-5xl font-black tracking-[-0.05em] sm:text-6xl lg:text-7xl"
+                    >
                         Servicios
                     </h1>
-                    <p className="landing-hero-copy mx-auto mt-5 max-w-xl text-sm leading-6 text-white/90 sm:text-base">
+                    <p
+                        data-landing-reveal="up"
+                        data-landing-reveal-delay="90"
+                        className="mx-auto mt-5 max-w-xl text-sm leading-6 text-white/90 sm:text-base"
+                    >
                         Atención médica especializada, humana y cercana para
                         cuidar tu salud en cada etapa.
                     </p>
 
-                    <div className="landing-hero-copy mt-8 inline-flex items-center gap-3 rounded-sm bg-[#09123f]/65 px-6 py-3 text-sm font-semibold shadow-[0_16px_36px_rgba(21,35,74,0.18)] backdrop-blur-sm">
+                    <div
+                        data-landing-reveal="up"
+                        data-landing-reveal-delay="180"
+                        className="mt-8 inline-flex items-center gap-3 rounded-sm bg-[#09123f]/65 px-6 py-3 text-sm font-semibold shadow-[0_16px_36px_rgba(21,35,74,0.18)] backdrop-blur-sm"
+                    >
                         <Link
                             href="/"
                             className="transition hover:text-white/80"
@@ -101,7 +110,10 @@ function ServicesCatalogSection({
             className="scroll-mt-24 bg-[#fff0f7] py-16 text-[#09123f] sm:scroll-mt-28 sm:py-20 lg:py-24"
         >
             <LandingContainer>
-                <div className="mx-auto max-w-3xl text-center">
+                <div
+                    data-landing-reveal="up"
+                    className="mx-auto max-w-3xl text-center"
+                >
                     <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
                         Nuestros servicios
                     </p>
@@ -117,7 +129,10 @@ function ServicesCatalogSection({
                 <SearchCard search={filters.search} />
 
                 {services.data.length === 0 ? (
-                    <div className="mt-10 rounded-lg bg-white p-10 text-center text-[#6f7080] shadow-[0_12px_35px_rgba(21,35,74,0.04)]">
+                    <div
+                        data-landing-reveal="up"
+                        className="mt-10 rounded-lg bg-white p-10 text-center text-[#6f7080] shadow-[0_12px_35px_rgba(21,35,74,0.04)]"
+                    >
                         {filters.search
                             ? 'No encontramos servicios con ese título.'
                             : 'No hay servicios publicados por el momento.'}
@@ -134,7 +149,10 @@ function ServicesCatalogSection({
                             ))}
                         </div>
 
-                        <div className="mt-10 flex flex-col gap-3 text-sm text-[#6f7080] sm:flex-row sm:items-center sm:justify-between">
+                        <div
+                            data-landing-reveal="up"
+                            className="mt-10 flex flex-col gap-3 text-sm text-[#6f7080] sm:flex-row sm:items-center sm:justify-between"
+                        >
                             <p>
                                 Mostrando {services.from ?? 0} a{' '}
                                 {services.to ?? 0} de {services.total} servicios
@@ -151,7 +169,11 @@ function ServicesCatalogSection({
 
 function SearchCard({ search }: { search: string }) {
     return (
-        <div className="landing-reveal-down mx-auto mt-10 max-w-2xl rounded-lg bg-white p-5 shadow-[0_12px_35px_rgba(21,35,74,0.04)] sm:p-7">
+        <div
+            data-landing-reveal="up"
+            data-landing-reveal-delay="100"
+            className="mx-auto mt-10 max-w-2xl rounded-lg bg-white p-5 shadow-[0_12px_35px_rgba(21,35,74,0.04)] sm:p-7"
+        >
             <form action="/servicios" method="get" className="flex gap-3">
                 <label htmlFor="services-search" className="sr-only">
                     Buscar servicio por título
@@ -166,7 +188,7 @@ function SearchCard({ search }: { search: string }) {
                 />
                 <button
                     type="submit"
-                    className="grid min-h-12 min-w-12 place-items-center rounded-md bg-[#e9648d] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#c9003c]"
+                    className="landing-action grid min-h-12 min-w-12 place-items-center rounded-md bg-[#e9648d] text-white hover:bg-[#c9003c]"
                     aria-label="Buscar"
                 >
                     <Search className="size-5" />
@@ -198,17 +220,16 @@ function ServiceCard({
 }) {
     return (
         <article
-            className="landing-reveal-down group overflow-hidden rounded-lg bg-white shadow-[0_12px_35px_rgba(21,35,74,0.04)] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(21,35,74,0.1)]"
-            style={
-                {
-                    '--landing-reveal-delay': `${Math.min(index * 70, 420)}ms`,
-                } as CSSProperties
-            }
+            data-landing-reveal="up"
+            data-landing-reveal-delay={Math.min(index * 70, 420)}
+            className="group overflow-hidden rounded-lg bg-white shadow-[0_12px_35px_rgba(21,35,74,0.04)] transition duration-400 ease-in-out hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(21,35,74,0.1)]"
         >
             <div className="relative h-40 overflow-hidden bg-[#d9d9d9] sm:h-44">
                 <img
                     src={service.image_url}
                     alt={service.title}
+                    loading="lazy"
+                    decoding="async"
                     onError={(event) => {
                         event.currentTarget.style.display = 'none';
                     }}

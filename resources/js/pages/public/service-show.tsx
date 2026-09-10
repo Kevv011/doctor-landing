@@ -17,6 +17,7 @@ import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import LandingContainer from '@/components/landing/landing-container';
 import LandingFooter from '@/components/landing/landing-footer';
+import LandingHeroImage from '@/components/landing/landing-hero-image';
 import PublicSeo from '@/components/landing/public-seo';
 import { useBusiness } from '@/hooks/use-business';
 import type { LandingService } from '@/types/landing-service';
@@ -67,11 +68,16 @@ export default function ServiceShow({ service, relatedServices }: Props) {
                         <BackButton />
 
                         <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
-                            <article className="landing-reveal-down overflow-hidden rounded-lg bg-white p-3 shadow-[0_18px_45px_rgba(21,35,74,0.04)] sm:p-4 lg:p-5">
+                            <article
+                                data-landing-reveal="up"
+                                className="overflow-hidden rounded-lg bg-white p-3 shadow-[0_18px_45px_rgba(21,35,74,0.04)] sm:p-4 lg:p-5"
+                            >
                                 <div className="relative min-h-[260px] overflow-hidden rounded-md bg-[#f6dce8] sm:min-h-[380px] lg:min-h-[430px]">
                                     <img
                                         src={service.image_url}
                                         alt={service.title}
+                                        loading="lazy"
+                                        decoding="async"
                                         onError={(event) => {
                                             event.currentTarget.src =
                                                 '/images/Services/ServicesDefault.png';
@@ -150,23 +156,29 @@ function ServiceDetailHero({ title }: { title: string }) {
             data-navbar-hero
             className="relative isolate overflow-hidden py-32 text-white sm:py-40 lg:py-44"
         >
-            <img
+            <LandingHeroImage
                 src="/images/Services/ServicesHeroDetail.png"
+                webpSrc="/images/Services/ServicesHeroDetail.webp"
                 alt=""
-                onError={(event) => {
-                    event.currentTarget.style.display = 'none';
-                }}
-                className="absolute inset-0 -z-20 h-full w-full object-cover opacity-75"
+                loadedClassName="opacity-75"
+                className="absolute inset-0 -z-20 h-full w-full object-cover"
             />
             <div className="absolute inset-x-0 top-0 -z-10 h-48 bg-[linear-gradient(180deg,rgba(9,18,63,0.2)_0%,rgba(9,18,63,0.1)_44%,rgba(9,18,63,0)_100%)] sm:h-56 lg:h-64" />
 
             <LandingContainer>
                 <div className="mx-auto max-w-4xl pt-16 text-center">
-                    <h1 className="landing-hero-copy text-4xl leading-[0.95] font-black tracking-[-0.05em] sm:text-6xl lg:text-7xl">
+                    <h1
+                        data-landing-reveal="up"
+                        className="text-4xl leading-[0.95] font-black tracking-[-0.05em] sm:text-6xl lg:text-7xl"
+                    >
                         {title}
                     </h1>
 
-                    <div className="landing-hero-copy mt-8 inline-flex items-center gap-3 rounded-sm bg-[#09123f]/65 px-6 py-3 text-sm font-semibold shadow-[0_16px_36px_rgba(21,35,74,0.18)] backdrop-blur-sm">
+                    <div
+                        data-landing-reveal="up"
+                        data-landing-reveal-delay="100"
+                        className="mt-8 inline-flex items-center gap-3 rounded-sm bg-[#09123f]/65 px-6 py-3 text-sm font-semibold shadow-[0_16px_36px_rgba(21,35,74,0.18)] backdrop-blur-sm"
+                    >
                         <Link
                             href="/"
                             className="transition hover:text-white/80"
@@ -201,8 +213,9 @@ function BackButton() {
     return (
         <button
             type="button"
+            data-landing-reveal="up"
             onClick={handleBack}
-            className="group inline-flex items-center gap-3 rounded-full border border-[#f0d4df] bg-white px-5 py-3 text-sm font-semibold text-[#e9648d] shadow-[0_12px_30px_rgba(21,35,74,0.05)] transition duration-300 hover:-translate-y-0.5 hover:border-[#e9648d] hover:text-[#c9003c] hover:shadow-[0_18px_40px_rgba(21,35,74,0.1)]"
+            className="landing-action group inline-flex items-center gap-3 rounded-full border border-[#f0d4df] bg-white px-5 py-3 text-sm font-semibold text-[#e9648d] shadow-[0_12px_30px_rgba(21,35,74,0.05)] hover:border-[#e9648d] hover:text-[#c9003c] hover:shadow-[0_18px_40px_rgba(21,35,74,0.1)]"
         >
             <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" />
             Volver
@@ -220,7 +233,7 @@ function ServiceDetailSidebar({
     return (
         <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             {relatedServices.length > 0 && (
-                <SidebarCard title="Otros servicios">
+                <SidebarCard title="Otros servicios" delay={80}>
                     <nav className="grid gap-3 text-sm font-semibold">
                         {relatedServices.map((service) => (
                             <Link
@@ -236,7 +249,7 @@ function ServiceDetailSidebar({
                 </SidebarCard>
             )}
 
-            <SidebarCard title="Agenda tu cita">
+            <SidebarCard title="Agenda tu cita" delay={160}>
                 <div className="text-center">
                     <div className="mx-auto grid size-14 place-items-center rounded-full bg-[#e9648d] text-white">
                         <CalendarCheck className="size-7 stroke-[1.9]" />
@@ -247,7 +260,7 @@ function ServiceDetailSidebar({
                     </p>
                     <Link
                         href="/contact#agendar-cita"
-                        className="mt-5 inline-flex items-center gap-3 rounded-md bg-[#e9648d] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#c9003c]"
+                        className="landing-action mt-5 inline-flex items-center gap-3 rounded-md bg-[#e9648d] px-5 py-3 text-sm font-semibold text-white hover:bg-[#c9003c]"
                     >
                         Hacer cita
                         <ChevronRight className="size-4" />
@@ -256,7 +269,7 @@ function ServiceDetailSidebar({
             </SidebarCard>
 
             {business.social_links.length > 0 && (
-                <SidebarCard title="Síguenos">
+                <SidebarCard title="Síguenos" delay={240}>
                     <div className="flex justify-center gap-3">
                         {business.social_links.map((socialLink) => {
                             const SocialIcon =
@@ -271,7 +284,7 @@ function ServiceDetailSidebar({
                                     }
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="grid size-10 place-items-center rounded-full bg-[#e9648d] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#c9003c]"
+                                    className="landing-social-action grid size-10 place-items-center rounded-full bg-[#e9648d] text-white transition duration-300 hover:bg-[#c9003c]"
                                 >
                                     <SocialIcon className="size-5 stroke-[2.4]" />
                                 </a>
@@ -287,12 +300,18 @@ function ServiceDetailSidebar({
 function SidebarCard({
     title,
     children,
+    delay = 0,
 }: {
     title: string;
     children: ReactNode;
+    delay?: number;
 }) {
     return (
-        <section className="landing-reveal-down rounded-lg bg-white px-7 py-8 text-[#09123f] shadow-[0_12px_35px_rgba(21,35,74,0.04)]">
+        <section
+            data-landing-reveal="up"
+            data-landing-reveal-delay={delay}
+            className="rounded-lg bg-white px-7 py-8 text-[#09123f] shadow-[0_12px_35px_rgba(21,35,74,0.04)]"
+        >
             <h2 className="text-center text-base font-black">{title}</h2>
             <div className="mx-auto my-5 h-px w-48 max-w-full bg-[#e9648d]" />
             {children}

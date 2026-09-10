@@ -119,19 +119,19 @@ La fuente global actual es **Outfit** variable, cargada localmente desde
 
 La landing combina rosa médico, azul navy y superficies muy claras.
 
-| Rol | Color | Uso |
-| --- | --- | --- |
-| Navy principal | `#09123f` / `#15234a` | Títulos, íconos y texto de alto contraste. |
-| Texto base | `#20243a` | Cuerpo oscuro y superficie global. |
-| Rosa principal | `#e9648d` | CTA, enlaces, indicadores, bordes e íconos. |
-| Rosa intenso | `#c9003c` | Botón primario del video y franja final del footer. |
-| Rosa hero | `#f26b96` | Fondo de hero cuando la imagen no cubre. |
-| Rosa footer | `#e06488` | Bloque principal del footer. |
-| Rosa cita | `#ff91ad` | Fondo de la sección de agenda. |
-| Blush | `#fff0f7` / `#fff8fb` | Fondo de páginas y secciones alternas. |
-| Rosa decorativo | `#f7ddea` / `#fceaf2` | Fondos suaves, ornamentos y acentos. |
-| Texto secundario | `#6f7080` | Párrafos, metadatos y contenido de soporte. |
-| Borde | `#f0d4df` | Inputs y contornos ligeros. |
+| Rol              | Color                 | Uso                                                 |
+| ---------------- | --------------------- | --------------------------------------------------- |
+| Navy principal   | `#09123f` / `#15234a` | Títulos, íconos y texto de alto contraste.          |
+| Texto base       | `#20243a`             | Cuerpo oscuro y superficie global.                  |
+| Rosa principal   | `#e9648d`             | CTA, enlaces, indicadores, bordes e íconos.         |
+| Rosa intenso     | `#c9003c`             | Botón primario del video y franja final del footer. |
+| Rosa hero        | `#f26b96`             | Fondo de hero cuando la imagen no cubre.            |
+| Rosa footer      | `#e06488`             | Bloque principal del footer.                        |
+| Rosa cita        | `#ff91ad`             | Fondo de la sección de agenda.                      |
+| Blush            | `#fff0f7` / `#fff8fb` | Fondo de páginas y secciones alternas.              |
+| Rosa decorativo  | `#f7ddea` / `#fceaf2` | Fondos suaves, ornamentos y acentos.                |
+| Texto secundario | `#6f7080`             | Párrafos, metadatos y contenido de soporte.         |
+| Borde            | `#f0d4df`             | Inputs y contornos ligeros.                         |
 
 Los servicios pueden usar acentos secundarios (`#df4daf`, `#e99bd5`,
 `#eca2d8`, `#7da2ff`, `#a79bff`) en círculos e indicadores. Deben servir para
@@ -193,10 +193,15 @@ Orden deliberado de secciones:
 
 1. `HomeHeroSection`: imagen de fondo, composición con foto de especialistas,
    promesa principal y CTA “Ver video”. El video actual es
-   `/videos/HomeVideo.mp4` y se abre en un `Dialog` Radix grande, hasta 92vw y
-   84vh, para acomodar también video vertical. El hero identifica el target
+   `/videos/HomeVideo.mp4` y se abre en un `Dialog` Radix que aprovecha casi
+   todo el ancho disponible en teléfono y tablet, manteniendo un margen seguro
+   y una altura máxima basada en `100dvh`. En teléfono, el texto y el CTA se
+   renderizan antes de la fotografía para no cubrir a los especialistas; desde
+   `sm` se conserva la composición superpuesta. El hero identifica el target
    `data-navbar-hero`.
 2. `HomeAboutSection`: mosaico fotográfico, logo, misión, visión y valores.
+   Los valores se presentan como tarjetas compactas con iconografía Lucide y
+   distribución flexible para mantener una lectura breve en móvil.
 3. `HomeExperienceSection`: señales de confianza: años, premios IOCIM y
    pacientes. Los números 10, 5 y 3,200 cuentan una única vez al entrar al
    viewport.
@@ -205,7 +210,9 @@ Orden deliberado de secciones:
    y biografía.
 6. `HomeTestimonialsSection`: carrusel Embla responsivo de testimonios.
 7. `HomeFeaturedBlogsSection`: carrusel Embla de posts destacados publicados.
-8. `LandingFooter`: contacto, enlaces, dirección, horarios y redes.
+8. `LandingFooter`: contacto, enlaces, dirección, horarios y redes. La imagen
+   de la tarjeta flotante ocupa prácticamente toda su altura desde tablet y se
+   desplaza hacia la izquierda para mantener libre el bloque de conversión.
 
 La Home recibe `featuredBlogs` y `testimonials` desde Laravel. Las tarjetas de
 servicio, testimonios y blog usan componentes propios; no duplicar su markup
@@ -215,6 +222,19 @@ Nota de consistencia: el contrato global del negocio aún expone
 `hero_video_url`, pero el hero público actual usa una ruta estática
 `/videos/HomeVideo.mp4`. Antes de volver a hacer configurable este video, usar
 una única fuente de verdad y actualizar el contrato, el Admin y el Hero juntos.
+
+### Imágenes críticas de Hero
+
+Los fondos principales conservan su PNG original como fallback, pero el
+navegador recibe primero una variante WebP optimizada mediante
+`LandingHeroImage`. Estas imágenes usan `loading="eager"`, prioridad alta,
+decodificación asíncrona y una transición corta de opacidad sobre el color base
+del Hero. React genera la precarga correspondiente desde el `<head>` al detectar
+esa prioridad. Las imágenes ubicadas debajo del primer viewport usan carga
+diferida para no competir con el Hero.
+
+No sustituir estas imágenes por PNG nuevos de varios megabytes sin generar su
+variante WebP equivalente y actualizar el `webpSrc` del Hero correspondiente.
 
 ### Contacto y agenda
 
@@ -251,25 +271,33 @@ La landing busca sentirse pausada y cuidada, no llamativa ni mecánica.
 
 ### Animaciones globales
 
-- `landing-hero-enter`: entrada del contenido de hero con opacidad y
-  `translateY(18px)` durante 1000 ms, curva
-  `cubic-bezier(0.22, 1, 0.36, 1)`.
+- `landing-page-enter`: transición discreta de opacidad y `translateY(10px)`
+  durante 360 ms al navegar entre páginas Inertia. No utiliza loader.
 - `landing-video-pulse`: pulso sutil del aro del CTA de video, 3.6 s, con
   inicio retrasado de 1.4 s.
-- `LandingLayout` observa cada `main > section` con `IntersectionObserver`.
-  Cuando una sección entra en viewport, añade `landing-reveal is-visible`.
-- `landing-reveal` transiciona opacidad y blur (4 px a 0) durante 1000 ms.
-  La demora escalonada es de 65 ms por sección, con tope de 320 ms.
+- `LandingLayout` observa cada elemento con `data-landing-reveal` mediante
+  `IntersectionObserver` y agrega `is-visible` una sola vez.
+- La variante por defecto, `data-landing-reveal="up"`, reproduce el ritmo de
+  Medwell: opacidad de 0 a 1 y desplazamiento vertical de 100 px a 0 durante
+  700 ms. En móvil la distancia baja a 42 px.
+- También existen las variantes `down`, `left` y `right`. El atributo
+  `data-landing-reveal-delay` permite escalonar grupos, con un máximo de 420 ms.
 
-El reveal no usa `transform` en el contenedor de sección. Esto es importante:
-transformar el target alteraba el cálculo de los anchors bajo el navbar fijo.
+Los atributos de revelado se colocan en títulos, cards o bloques internos, no
+en el contenedor principal de una sección. Esto evita alterar el cálculo de los
+anchors bajo el navbar fijo.
 
 ### Microinteracciones
 
 - Cards de servicios y contacto: elevación vertical corta y sombra más visible
   en hover.
-- Enlaces y botones: transiciones de color; no aplicar rebotes o escalas grandes.
+- `.landing-action`: CTA con transición de 400 ms y elevación de 8 px, siguiendo
+  el patrón del template Medwell.
+- `.landing-social-action`: elevación de 6 px para enlaces sociales.
 - Flechas en cards de contacto: pequeño desplazamiento diagonal en hover.
+- Testimonios: la superficie pasa al rosa principal y ajusta el contraste de
+  texto e iconografía.
+- Cards de blog: la imagen baja 15 px y el contenido superpuesto sube 15 px.
 - Dots de carrusel: cambian entre rosa activo y gris azulado inactivo.
 - Dialog del video: overlay oscuro, controles nativos y cierre accesible.
 

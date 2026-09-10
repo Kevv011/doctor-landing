@@ -20,7 +20,7 @@ export default function HomeSpecialistsSection() {
         <section className="bg-white py-12 text-[#09123f]">
             <LandingContainer>
                 <div className="mx-auto max-w-5xl">
-                    <div className="text-center">
+                    <div data-landing-reveal="up" className="text-center">
                         <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
                             Experiencia y compromiso
                         </p>
@@ -30,14 +30,18 @@ export default function HomeSpecialistsSection() {
                     </div>
 
                     <div className="mt-10 grid gap-8 md:grid-cols-2">
-                        {specialists.map((specialist) => (
+                        {specialists.map((specialist, index) => (
                             <article
                                 key={specialist.name}
-                                className="group rounded-lg border border-transparent bg-white px-8 py-10 shadow-[0_18px_45px_rgba(21,35,74,0.05)] transition duration-300 ease-out hover:-translate-y-1 hover:border-[#f0d4df] hover:bg-[#fff8fb] hover:shadow-[0_22px_48px_rgba(21,35,74,0.1)]"
+                                data-landing-reveal="up"
+                                data-landing-reveal-delay={90 + index * 100}
+                                className="group rounded-lg border border-transparent bg-white px-8 py-10 shadow-[0_18px_45px_rgba(21,35,74,0.05)] transition duration-400 ease-in-out hover:-translate-y-1 hover:border-[#f0d4df] hover:bg-[#fff8fb] hover:shadow-[0_22px_48px_rgba(21,35,74,0.1)]"
                             >
                                 <img
                                     src={specialist.image}
                                     alt={specialist.name}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="mx-auto size-36 rounded-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                                 />
 

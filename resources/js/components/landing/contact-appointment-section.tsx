@@ -1,24 +1,26 @@
 import { useForm } from '@inertiajs/react';
 import { ArrowUpRight } from 'lucide-react';
-import type { CSSProperties, FormEvent } from 'react';
+import type { FormEvent } from 'react';
 
 const fieldClass =
     'w-full border-0 border-b border-white/35 bg-transparent px-0 py-3 text-sm text-white placeholder:text-white/80 focus:border-white focus:ring-0 focus:outline-none';
 
-const revealStyle = (delay: number) =>
-    ({
-        '--landing-reveal-delay': `${delay}ms`,
-    }) as CSSProperties;
-
 export default function ContactAppointmentSection() {
-    const { data, setData, post, processing, errors, recentlySuccessful, reset } =
-        useForm({
-            name: '',
-            phone: '',
-            email: '',
-            appointment_date: '',
-            message: '',
-        });
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        errors,
+        recentlySuccessful,
+        reset,
+    } = useForm({
+        name: '',
+        phone: '',
+        email: '',
+        appointment_date: '',
+        message: '',
+    });
 
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -38,6 +40,8 @@ export default function ContactAppointmentSection() {
             <img
                 src="/images/Contact/ContactAppointment.png"
                 alt="Doctores de la clínica"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-y-0 right-0 h-full w-full object-cover object-[center_top] md:w-1/2 lg:object-[center_18%]"
             />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(240,167,218,0.86),rgba(254,159,176,0.82)_48%,rgba(254,159,176,0.24))] md:bg-[linear-gradient(90deg,#f0a7da_0%,#fe9fb0_32%,rgba(254,159,176,0.72)_44%,rgba(254,159,176,0.12)_52%,rgba(254,159,176,0)_64%)]" />
@@ -48,8 +52,8 @@ export default function ContactAppointmentSection() {
                     className="w-full max-w-[520px] rounded-lg bg-[#e06488]/88 p-8 shadow-[0_28px_70px_rgba(122,0,38,0.18)] backdrop-blur-sm sm:p-12 lg:ml-6 xl:ml-0"
                 >
                     <div
-                        className="landing-reveal-down"
-                        style={revealStyle(80)}
+                        data-landing-reveal="down"
+                        data-landing-reveal-delay="80"
                     >
                         <p className="text-xs font-semibold tracking-[0.18em] text-white/80 uppercase">
                             Haz una cita
@@ -60,8 +64,9 @@ export default function ContactAppointmentSection() {
                     </div>
 
                     <div
-                        className="landing-reveal-down mt-8 grid gap-x-8 gap-y-4 sm:grid-cols-2"
-                        style={revealStyle(160)}
+                        data-landing-reveal="down"
+                        data-landing-reveal-delay="160"
+                        className="mt-8 grid gap-x-8 gap-y-4 sm:grid-cols-2"
                     >
                         <label>
                             <span className="sr-only">Nombre</span>
@@ -144,8 +149,9 @@ export default function ContactAppointmentSection() {
                     </div>
 
                     <label
-                        className="landing-reveal-down mt-5 block"
-                        style={revealStyle(240)}
+                        data-landing-reveal="down"
+                        data-landing-reveal-delay="240"
+                        className="mt-5 block"
                     >
                         <span className="sr-only">Mensaje</span>
                         <textarea
@@ -172,13 +178,13 @@ export default function ContactAppointmentSection() {
                     )}
 
                     <div
-                        className="landing-reveal-down"
-                        style={revealStyle(320)}
+                        data-landing-reveal="down"
+                        data-landing-reveal-delay="320"
                     >
                         <button
                             type="submit"
                             disabled={processing}
-                            className="group mt-10 inline-flex items-center gap-4 text-sm font-bold text-white transition hover:text-white/85"
+                            className="landing-action group mt-10 inline-flex items-center gap-4 text-sm font-bold text-white hover:text-white/85"
                         >
                             {processing ? 'Enviando...' : 'Hacer cita'}
                             <span className="grid size-10 place-items-center rounded-full border border-white transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-white group-hover:text-[#e9648d]">

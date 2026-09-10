@@ -12,7 +12,8 @@ const experienceItems = [
         icon: Stethoscope,
         tone: 'bg-[#df4daf]',
         title: 'Premios internacionales IOCIM',
-        description: 'Achievement for a Better Life (2018) y Medical Success (2023)',
+        description:
+            'Achievement for a Better Life (2018) y Medical Success (2023)',
     },
     {
         icon: UserRound,
@@ -56,17 +57,21 @@ export default function HomeExperienceSection() {
         >
             <LandingContainer>
                 <div className="mx-auto max-w-4xl text-center">
-                    <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
-                        Comprometidos con tu bienestar
-                    </p>
-                    <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
-                        La experiencia que nos respalda
-                    </h2>
+                    <div data-landing-reveal="up">
+                        <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
+                            Comprometidos con tu bienestar
+                        </p>
+                        <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
+                            La experiencia que nos respalda
+                        </h2>
+                    </div>
 
                     <div className="mt-12 grid gap-10 sm:grid-cols-3">
                         {experienceItems.map((item, index) => (
                             <article
                                 key={item.title}
+                                data-landing-reveal="up"
+                                data-landing-reveal-delay={90 + index * 90}
                                 className="mx-auto grid max-w-48 justify-items-center text-center"
                             >
                                 <div
@@ -74,7 +79,7 @@ export default function HomeExperienceSection() {
                                 >
                                     <item.icon className="size-14 stroke-[#c9003c] stroke-[1.8]" />
                                 </div>
-                                <h3 className="mt-5 text-base font-black leading-[0.95]">
+                                <h3 className="mt-5 text-base leading-[0.95] font-black">
                                     {index === 0 ? (
                                         <>
                                             +
@@ -129,9 +134,7 @@ function CountUp({ end, start }: { end: number; start: boolean }) {
         ).matches;
 
         if (reduceMotion) {
-            const frameId = window.requestAnimationFrame(() =>
-                setValue(end),
-            );
+            const frameId = window.requestAnimationFrame(() => setValue(end));
 
             return () => window.cancelAnimationFrame(frameId);
         }

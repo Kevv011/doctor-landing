@@ -25,12 +25,14 @@ export default function LandingLayout({ children }: PropsWithChildren) {
             });
         }
 
-        const sections = Array.from(
-            document.querySelectorAll<HTMLElement>('main > section'),
+        const revealElements = Array.from(
+            document.querySelectorAll<HTMLElement>('[data-landing-reveal]'),
         );
 
         if (!('IntersectionObserver' in window)) {
-            sections.forEach((section) => section.classList.add('is-visible'));
+            revealElements.forEach((element) =>
+                element.classList.add('is-visible'),
+            );
 
             return;
         }
@@ -44,16 +46,20 @@ export default function LandingLayout({ children }: PropsWithChildren) {
                     }
                 });
             },
-            { rootMargin: '0px 0px -10% 0px', threshold: 0.08 },
+            { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
         );
 
-        sections.forEach((section, index) => {
-            section.classList.add('landing-reveal');
-            section.style.setProperty(
-                '--landing-reveal-delay',
-                `${Math.min(index * 65, 320)}ms`,
+        revealElements.forEach((element) => {
+            const delay = Math.min(
+                Number(element.dataset.landingRevealDelay ?? 0),
+                420,
             );
-            observer.observe(section);
+
+            element.style.setProperty(
+                '--landing-reveal-delay',
+                `${Number.isFinite(delay) ? delay : 0}ms`,
+            );
+            observer.observe(element);
         });
 
         return () => observer.disconnect();
@@ -62,7 +68,9 @@ export default function LandingLayout({ children }: PropsWithChildren) {
     return (
         <>
             <LandingNavbar />
-            {children}
+            <div key={url} className="landing-page-enter">
+                {children}
+            </div>
             <LandingScrollToTop />
         </>
     );

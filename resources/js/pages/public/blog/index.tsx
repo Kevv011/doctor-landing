@@ -1,12 +1,12 @@
 import BlogCard from '@/components/landing/blog-card';
-import type {LandingBlogCardPost} from '@/components/landing/blog-card';
+import type { LandingBlogCardPost } from '@/components/landing/blog-card';
 import BlogHeroSection from '@/components/landing/blog-hero-section';
 import BlogSidebar from '@/components/landing/blog-sidebar';
-import type {BlogSidebarCategory} from '@/components/landing/blog-sidebar';
+import type { BlogSidebarCategory } from '@/components/landing/blog-sidebar';
 import LandingContainer from '@/components/landing/landing-container';
 import LandingFooter from '@/components/landing/landing-footer';
 import LandingPagination from '@/components/landing/landing-pagination';
-import type {LandingPaginationLink} from '@/components/landing/landing-pagination';
+import type { LandingPaginationLink } from '@/components/landing/landing-pagination';
 import PublicSeo from '@/components/landing/public-seo';
 
 type BlogPost = LandingBlogCardPost & {
@@ -33,12 +33,7 @@ type Props = {
     };
 };
 
-export default function BlogIndex({
-    posts,
-    categories,
-    tags,
-    filters,
-}: Props) {
+export default function BlogIndex({ posts, categories, tags, filters }: Props) {
     return (
         <>
             <PublicSeo
@@ -54,7 +49,10 @@ export default function BlogIndex({
                     <LandingContainer>
                         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
                             <div className="order-2 lg:order-1">
-                                <div className="text-center lg:text-left">
+                                <div
+                                    data-landing-reveal="up"
+                                    className="text-center lg:text-left"
+                                >
                                     <p className="text-[11px] font-medium tracking-[0.22em] text-[#e9648d] uppercase">
                                         Blog
                                     </p>
@@ -64,22 +62,34 @@ export default function BlogIndex({
                                 </div>
 
                                 {posts.data.length === 0 ? (
-                                    <div className="mt-12 rounded-lg bg-white p-10 text-center text-[#6f7080] shadow-[0_12px_35px_rgba(21,35,74,0.04)]">
+                                    <div
+                                        data-landing-reveal="up"
+                                        className="mt-12 rounded-lg bg-white p-10 text-center text-[#6f7080] shadow-[0_12px_35px_rgba(21,35,74,0.04)]"
+                                    >
                                         No encontramos artículos publicados con
                                         estos filtros.
                                     </div>
                                 ) : (
                                     <div className="mt-12 grid gap-x-10 gap-y-12 md:grid-cols-2">
-                                        {posts.data.map((post) => (
-                                            <BlogCard
+                                        {posts.data.map((post, index) => (
+                                            <div
                                                 key={post.id}
-                                                blog={post}
-                                            />
+                                                data-landing-reveal="up"
+                                                data-landing-reveal-delay={Math.min(
+                                                    index * 90,
+                                                    360,
+                                                )}
+                                            >
+                                                <BlogCard blog={post} />
+                                            </div>
                                         ))}
                                     </div>
                                 )}
 
-                                <div className="mt-10 flex flex-col gap-3 text-sm text-[#6f7080] sm:flex-row sm:items-center sm:justify-between">
+                                <div
+                                    data-landing-reveal="up"
+                                    className="mt-10 flex flex-col gap-3 text-sm text-[#6f7080] sm:flex-row sm:items-center sm:justify-between"
+                                >
                                     <p>
                                         Mostrando {posts.from ?? 0} a{' '}
                                         {posts.to ?? 0} de {posts.total}{' '}

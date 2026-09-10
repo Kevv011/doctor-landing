@@ -1,6 +1,5 @@
 import { Link } from '@inertiajs/react';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
-import type { CSSProperties } from 'react';
 import LandingContainer from '@/components/landing/landing-container';
 import type { LandingService } from '@/types/landing-service';
 
@@ -22,7 +21,7 @@ export default function HomeServicesSection({ services }: Props) {
         >
             <LandingContainer>
                 <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-4">
-                    <div className="lg:pt-1">
+                    <div data-landing-reveal="up" className="lg:pt-1">
                         <p className="text-[11px] font-medium tracking-[0.2em] text-[#e9648d] uppercase">
                             Nuestros servicios
                         </p>
@@ -31,17 +30,29 @@ export default function HomeServicesSection({ services }: Props) {
                         </h2>
                     </div>
 
-                    {featuredServices.slice(0, 3).map((service) => (
-                        <ServiceCard key={service.slug} service={service} />
+                    {featuredServices.slice(0, 3).map((service, index) => (
+                        <ServiceCard
+                            key={service.slug}
+                            service={service}
+                            index={index}
+                        />
                     ))}
 
                     {/* <div className="hidden lg:block" /> */}
 
-                    {featuredServices.slice(3).map((service) => (
-                        <ServiceCard key={service.slug} service={service} />
+                    {featuredServices.slice(3).map((service, index) => (
+                        <ServiceCard
+                            key={service.slug}
+                            service={service}
+                            index={index + 3}
+                        />
                     ))}
 
-                    <article className="group relative min-h-[220px] overflow-hidden rounded-lg bg-[#e9648d] p-8 text-white transition duration-300 ease-out hover:-translate-y-1 hover:bg-[#d94e7a] hover:shadow-[0_18px_40px_rgba(21,35,74,0.12)] sm:col-span-2">
+                    <article
+                        data-landing-reveal="up"
+                        data-landing-reveal-delay="270"
+                        className="group relative min-h-[220px] overflow-hidden rounded-lg bg-[#e9648d] p-8 text-white transition duration-400 ease-in-out hover:-translate-y-1 hover:bg-[#d94e7a] hover:shadow-[0_18px_40px_rgba(21,35,74,0.12)] sm:col-span-2"
+                    >
                         <div className="relative z-10 max-w-44">
                             <h3 className="text-2xl leading-tight font-semibold">
                                 Conozca todos nuestros servicios
@@ -64,6 +75,8 @@ export default function HomeServicesSection({ services }: Props) {
                             <img
                                 src="/images/Home/HomeServices1.png"
                                 alt="Doctores de la clinica"
+                                loading="lazy"
+                                decoding="async"
                                 className="h-full w-full object-cover"
                             />
                         </div>
@@ -74,21 +87,26 @@ export default function HomeServicesSection({ services }: Props) {
     );
 }
 
-function ServiceCard({ service }: { service: LandingService }) {
+function ServiceCard({
+    service,
+    index,
+}: {
+    service: LandingService;
+    index: number;
+}) {
     return (
         <article
-            className="landing-reveal-down group flex min-h-[220px] flex-col justify-between rounded-lg border border-transparent bg-white p-7 shadow-[0_10px_30px_rgba(21,35,74,0.04)] transition duration-300 ease-out hover:-translate-y-1 hover:border-[#f0d4df] hover:shadow-[0_18px_40px_rgba(21,35,74,0.1)]"
-            style={
-                {
-                    '--landing-reveal-delay': '90ms',
-                } as CSSProperties
-            }
+            data-landing-reveal="up"
+            data-landing-reveal-delay={90 + index * 70}
+            className="group flex min-h-[220px] flex-col justify-between rounded-lg border border-transparent bg-white p-7 shadow-[0_10px_30px_rgba(21,35,74,0.04)] transition duration-400 ease-in-out hover:border-[#e9648d] hover:shadow-[0_18px_40px_rgba(21,35,74,0.13)]"
         >
             <div>
                 <div className="mb-7 size-11 overflow-hidden rounded-full bg-[#e9648d] transition-transform duration-300 group-hover:-translate-y-0.5">
                     <img
                         src={service.image_url}
                         alt=""
+                        loading="lazy"
+                        decoding="async"
                         onError={(event) => {
                             event.currentTarget.style.display = 'none';
                         }}

@@ -63,11 +63,18 @@ export default function LandingFooter({
                     <div className="relative">
                         <section className="absolute inset-x-0 top-0 z-20 -translate-y-1/2 overflow-hidden rounded-lg bg-[#ff91ad] px-7 py-11 shadow-[0_24px_56px_rgba(21,35,74,0.18)] sm:px-12 sm:py-14 md:min-h-[250px] md:px-14 lg:min-h-[260px] lg:px-16 lg:py-12">
                             <img
-                                src="/images/Home/Doctors.png"
+                                data-landing-reveal="right"
+                                src="/images/Home/Doctors.webp"
                                 alt="Especialistas de Women's Health Clinic"
-                                className="pointer-events-none absolute bottom-0 left-[-4.5rem] hidden w-[410px] max-w-none md:block lg:left-[-7.5rem] lg:w-[560px] xl:left-[-6rem] xl:w-[590px]"
+                                loading="lazy"
+                                decoding="async"
+                                className="pointer-events-none absolute bottom-0 left-[-8.5rem] hidden w-[560px] max-w-none md:block lg:left-[-7.5rem] lg:w-[560px] xl:left-[-6rem] xl:w-[590px]"
                             />
-                            <div className="relative z-10 mx-auto max-w-xl text-center md:ml-[39%] md:max-w-[420px] md:text-left lg:ml-[42%] lg:max-w-[520px] xl:ml-[40%]">
+                            <div
+                                data-landing-reveal="up"
+                                data-landing-reveal-delay="90"
+                                className="relative z-10 mx-auto max-w-xl text-center md:ml-[39%] md:max-w-[420px] md:text-left lg:ml-[42%] lg:max-w-[520px] xl:ml-[40%]"
+                            >
                                 <p className="text-[11px] tracking-normal text-white/85 uppercase">
                                     Agenda tu cita
                                 </p>
@@ -76,7 +83,7 @@ export default function LandingFooter({
                                 </h2>
                                 <Link
                                     href="/contact#agendar-cita"
-                                    className="group mt-7 inline-flex items-center gap-4 text-sm font-medium transition hover:text-white/85"
+                                    className="landing-action group mt-7 inline-flex items-center gap-4 text-sm font-medium hover:text-white/85"
                                 >
                                     Reservar una consulta
                                     <span className="grid size-11 place-items-center rounded-full border border-white transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-white group-hover:text-[#e9648d]">
@@ -95,7 +102,10 @@ export default function LandingFooter({
                         </section>
 
                         <div className="grid justify-items-center gap-x-12 gap-y-11 pt-[10rem] pb-14 text-center md:grid-cols-2 md:pt-[11rem] lg:grid-cols-[1.25fr_0.75fr_1.05fr_1fr] lg:justify-items-start lg:gap-16 lg:pt-[11rem] lg:pb-16 lg:text-left">
-                            <div className="flex flex-col items-center lg:items-start">
+                            <div
+                                data-landing-reveal="up"
+                                className="flex flex-col items-center lg:items-start"
+                            >
                                 <Link
                                     href="/"
                                     className="inline-flex max-w-64 rounded-sm transition hover:opacity-85"
@@ -103,6 +113,8 @@ export default function LandingFooter({
                                     <img
                                         src="/images/filled-logo-2.png"
                                         alt="Women's Health Clinic"
+                                        loading="lazy"
+                                        decoding="async"
                                         className="h-auto w-full object-contain"
                                     />
                                 </Link>
@@ -123,7 +135,10 @@ export default function LandingFooter({
                                 </a>
                             </div>
 
-                            <div>
+                            <div
+                                data-landing-reveal="up"
+                                data-landing-reveal-delay="80"
+                            >
                                 <h2 className="text-xl font-medium">
                                     Servicios
                                 </h2>
@@ -141,7 +156,10 @@ export default function LandingFooter({
                                 </nav>
                             </div>
 
-                            <div>
+                            <div
+                                data-landing-reveal="up"
+                                data-landing-reveal-delay="160"
+                            >
                                 <h2 className="text-xl font-medium">
                                     Dirección
                                 </h2>
@@ -153,7 +171,10 @@ export default function LandingFooter({
                                 </div>
                             </div>
 
-                            <div>
+                            <div
+                                data-landing-reveal="up"
+                                data-landing-reveal-delay="240"
+                            >
                                 <h2 className="text-xl font-medium">
                                     Horarios
                                 </h2>
@@ -205,7 +226,7 @@ export default function LandingFooter({
                                                         }
                                                         target="_blank"
                                                         rel="noreferrer"
-                                                        className="grid size-10 place-items-center rounded-full bg-white text-[#e06488] transition duration-300 hover:-translate-y-1 hover:bg-[#fff0f7] hover:text-[#c9003c]"
+                                                        className="landing-social-action grid size-10 place-items-center rounded-full bg-white text-[#e06488] transition duration-300 hover:bg-[#fff0f7] hover:text-[#c9003c]"
                                                     >
                                                         <SocialIcon className="size-5 stroke-[2.4]" />
                                                     </a>
