@@ -56,7 +56,7 @@ export default function ContactAppointmentSection() {
                         data-landing-reveal-delay="80"
                     >
                         <p className="text-xs font-semibold tracking-[0.18em] text-white/80 uppercase">
-                            Haz una cita
+                            Agenda tu cita
                         </p>
                         <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
                             Agenda tu consulta
@@ -186,7 +186,7 @@ export default function ContactAppointmentSection() {
                             disabled={processing}
                             className="landing-action group mt-10 inline-flex items-center gap-4 text-sm font-bold text-white hover:text-white/85"
                         >
-                            {processing ? 'Enviando...' : 'Hacer cita'}
+                            {processing ? 'Enviando...' : 'Agenda tu cita'}
                             <span className="grid size-10 place-items-center rounded-full border border-white transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-white group-hover:text-[#e9648d]">
                                 <ArrowUpRight className="size-5" />
                             </span>

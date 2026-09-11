@@ -26,7 +26,7 @@ export default function HomeServicesSection({ services }: Props) {
                             Nuestros servicios
                         </p>
                         <h2 className="mt-3 max-w-52 text-3xl leading-[0.95] font-black tracking-[-0.04em] sm:text-4xl">
-                            Atencion Medica Especializada
+                            Atención médica especializada
                         </h2>
                     </div>
 
@@ -55,7 +55,7 @@ export default function HomeServicesSection({ services }: Props) {
                     >
                         <div className="relative z-10 max-w-44">
                             <h3 className="text-2xl leading-tight font-semibold">
-                                Conozca todos nuestros servicios
+                                Conoce todos nuestros servicios
                             </h3>
                             <p className="mt-4 text-sm font-medium text-white/90">
                                 Catálogo especializado
@@ -74,7 +74,7 @@ export default function HomeServicesSection({ services }: Props) {
                         <div className="absolute right-[-18px] bottom-[-46px] size-64 overflow-hidden rounded-full bg-white/15 sm:right-[-10px] sm:bottom-[-22px] sm:size-72">
                             <img
                                 src="/images/Home/HomeServices1.png"
-                                alt="Doctores de la clinica"
+                                alt="Especialistas de la clínica"
                                 loading="lazy"
                                 decoding="async"
                                 className="h-full w-full object-cover"
@@ -125,7 +125,7 @@ function ServiceCard({
                     href={service.url}
                     className="mt-5 inline-flex items-center gap-3 text-xs font-bold text-[#e9648d] transition hover:text-[#c9003c]"
                 >
-                    Leer mas
+                    Leer más
                     <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
             </div>

@@ -262,7 +262,7 @@ function ServiceDetailSidebar({
                         href="/contact#agendar-cita"
                         className="landing-action mt-5 inline-flex items-center gap-3 rounded-md bg-[#e9648d] px-5 py-3 text-sm font-semibold text-white hover:bg-[#c9003c]"
                     >
-                        Hacer cita
+                        Agenda tu cita
                         <ChevronRight className="size-4" />
                     </Link>
                 </div>

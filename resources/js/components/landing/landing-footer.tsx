@@ -28,7 +28,7 @@ const footerLinks = [
     { label: 'Contacto', href: '/contact' },
     { label: 'Blog', href: '/blog' },
     { label: 'Testimoniales', href: '/#testimoniales' },
-    { label: 'Agendar cita', href: '/contact#agendar-cita' },
+    { label: 'Agenda tu cita', href: '/contact#agendar-cita' },
 ];
 
 const socialIcons: Record<string, LucideIcon> = {
@@ -85,7 +85,7 @@ export default function LandingFooter({
                                     href="/contact#agendar-cita"
                                     className="landing-action group mt-7 inline-flex items-center gap-4 text-sm font-medium hover:text-white/85"
                                 >
-                                    Reservar una consulta
+                                    Agenda tu cita
                                     <span className="grid size-11 place-items-center rounded-full border border-white transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-white group-hover:text-[#e9648d]">
                                         <ArrowUpRight className="size-5" />
                                     </span>
@@ -126,7 +126,7 @@ export default function LandingFooter({
                                     <PhoneCall className="size-8 shrink-0 stroke-[2.1] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:rotate-[-6deg]" />
                                     <span className="grid leading-tight">
                                         <span className="text-sm font-medium">
-                                            Haz tu cita
+                                            Agenda tu cita
                                         </span>
                                         <span className="text-xl font-medium">
                                             {appointmentPhone}
@@ -242,7 +242,7 @@ export default function LandingFooter({
             </div>
 
             <div className="relative bg-[#c9003c] py-5 text-center text-xs font-medium text-white/90">
-                Copyright © 2026 {business.profile.name}
+                © 2026 {business.profile.name}. Todos los derechos reservados.
             </div>
         </footer>
     );

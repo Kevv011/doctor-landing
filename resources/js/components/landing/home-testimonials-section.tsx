@@ -12,44 +12,11 @@ export type LandingTestimonial = {
     avatar_url?: string | null;
 };
 
-const defaultTestimonials: LandingTestimonial[] = [
-    {
-        id: 1,
-        name: 'Nombre Apellido',
-        label: 'Paciente',
-        quote: 'Quisquam est rui dolorem ipsum rui dolor sit amet, consectetur, adipise velit sed quia non numquam eiusm tempora incidunt ut labore',
-        rating: 5,
-    },
-    {
-        id: 2,
-        name: 'Nombre Apellido',
-        label: 'Paciente',
-        quote: 'Quisquam est rui dolorem ipsum rui dolor sit amet, consectetur, adipise velit sed quia non numquam eiusm tempora incidunt ut labore',
-        rating: 5,
-    },
-    {
-        id: 3,
-        name: 'Nombre Apellido',
-        label: 'Paciente',
-        quote: 'Quisquam est rui dolorem ipsum rui dolor sit amet, consectetur, adipise velit sed quia non numquam eiusm tempora incidunt ut labore',
-        rating: 5,
-    },
-    {
-        id: 4,
-        name: 'Nombre Apellido',
-        label: 'Paciente',
-        quote: 'Quisquam est rui dolorem ipsum rui dolor sit amet, consectetur, adipise velit sed quia non numquam eiusm tempora incidunt ut labore',
-        rating: 5,
-    },
-];
-
 type Props = {
     testimonials?: LandingTestimonial[];
 };
 
-export default function HomeTestimonialsSection({
-    testimonials = defaultTestimonials,
-}: Props) {
+export default function HomeTestimonialsSection({ testimonials = [] }: Props) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
     const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -99,6 +66,10 @@ export default function HomeTestimonialsSection({
 
         return () => window.clearInterval(autoplayInterval);
     }, [emblaApi, isAutoplayPaused]);
+
+    if (testimonials.length === 0) {
+        return null;
+    }
 
     return (
         <section

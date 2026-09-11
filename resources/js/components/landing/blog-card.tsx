@@ -47,7 +47,7 @@ export default function BlogCard({ blog }: Props) {
                     href={`/blog/${blog.slug}`}
                     className="mt-6 inline-flex items-center gap-3 text-sm font-bold text-[#e9648d] transition hover:text-[#c9003c]"
                 >
-                    Leer mas
+                    Leer más
                     <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
             </div>

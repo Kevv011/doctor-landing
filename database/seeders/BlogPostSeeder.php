@@ -20,34 +20,34 @@ class BlogPostSeeder extends Seeder
 
         $posts = [
             [
-                'title' => 'El miedo no debe cuidar tu salud. Tu si.',
+                'title' => 'El miedo no debe cuidar tu salud. Tú sí.',
                 'slug' => 'el-miedo-no-debe-cuidar-tu-salud-tu-si',
-                'excerpt' => 'La prevencion ginecologica es una forma de amor propio y cuidado oportuno.',
+                'excerpt' => 'La prevención ginecológica es una forma de amor propio y cuidado oportuno.',
                 'body' => $this->body([
                     'Muchas mujeres posponen sus controles por miedo, dudas o falta de tiempo.',
-                    'La evaluacion ginecologica permite detectar cambios a tiempo y tomar decisiones con informacion clara.',
-                    'Cuidarte tambien significa preguntar, revisar y atender tu bienestar antes de que exista una urgencia.',
+                    'La evaluación ginecológica permite detectar cambios a tiempo y tomar decisiones con información clara.',
+                    'Cuidarte también significa preguntar, revisar y atender tu bienestar antes de que exista una urgencia.',
                 ]),
                 'published_at' => now()->subDays(12),
             ],
             [
-                'title' => 'Tik, tak... tu bebe viene en camino.',
+                'title' => 'Tic, tac... tu bebé viene en camino.',
                 'slug' => 'tik-tak-tu-bebe-viene-en-camino',
-                'excerpt' => 'El acompanamiento prenatal ayuda a vivir el embarazo con mas calma y confianza.',
+                'excerpt' => 'El acompañamiento prenatal ayuda a vivir el embarazo con más calma y confianza.',
                 'body' => $this->body([
                     'Cada embarazo tiene su propio ritmo y merece seguimiento cercano.',
-                    'Los controles prenatales permiten revisar el desarrollo del bebe y resolver dudas importantes en cada etapa.',
-                    'Un acompanamiento humano hace que la experiencia sea mas segura, informada y tranquila.',
+                    'Los controles prenatales permiten revisar el desarrollo del bebé y resolver dudas importantes en cada etapa.',
+                    'Un acompañamiento humano hace que la experiencia sea más segura, informada y tranquila.',
                 ]),
                 'published_at' => now()->subDays(24),
             ],
             [
                 'title' => 'Cada mujer es diferente...',
                 'slug' => 'cada-mujer-es-diferente',
-                'excerpt' => 'La salud femenina necesita atencion personalizada segun cada etapa de vida.',
+                'excerpt' => 'La salud femenina necesita atención personalizada según cada etapa de la vida.',
                 'body' => $this->body([
-                    'No todas las pacientes tienen las mismas necesidades, antecedentes o sintomas.',
-                    'Por eso, la atencion integral debe escuchar la historia de cada mujer y adaptar sus recomendaciones.',
+                    'No todas las pacientes tienen las mismas necesidades, antecedentes o síntomas.',
+                    'Por eso, la atención integral debe escuchar la historia de cada mujer y adaptar sus recomendaciones.',
                     'La medicina cercana y personalizada permite cuidar mejor la salud presente y futura.',
                 ]),
                 'published_at' => now()->subDays(46),

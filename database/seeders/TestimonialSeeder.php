@@ -14,25 +14,25 @@ class TestimonialSeeder extends Seeder
     {
         $testimonials = [
             [
-                'name' => 'Mariana Lopez',
+                'name' => 'Mariana López',
                 'label' => 'Paciente',
-                'quote' => 'Recibi una atencion muy humana y clara desde la primera consulta. Me senti acompanada durante todo mi proceso.',
+                'quote' => 'Recibí una atención muy humana y clara desde la primera consulta. Me sentí acompañada durante todo mi proceso.',
                 'rating' => 5,
                 'is_active' => true,
                 'sort_order' => 1,
             ],
             [
-                'name' => 'Karla Hernandez',
+                'name' => 'Karla Hernández',
                 'label' => 'Paciente',
-                'quote' => 'El equipo resolvio mis dudas con paciencia y profesionalismo. La experiencia fue muy tranquila y confiable.',
+                'quote' => 'El equipo resolvió mis dudas con paciencia y profesionalismo. La experiencia fue muy tranquila y confiable.',
                 'rating' => 5,
                 'is_active' => true,
                 'sort_order' => 2,
             ],
             [
-                'name' => 'Andrea Ramirez',
+                'name' => 'Andrea Ramírez',
                 'label' => 'Paciente',
-                'quote' => 'Me gusto la calidez del trato y la explicacion detallada de cada paso. Recomiendo mucho la clinica.',
+                'quote' => 'Me gustó la calidez del trato y la explicación detallada de cada paso. Recomiendo mucho la clínica.',
                 'rating' => 5,
                 'is_active' => true,
                 'sort_order' => 3,

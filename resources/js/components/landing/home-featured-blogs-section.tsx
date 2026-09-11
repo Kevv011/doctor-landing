@@ -79,7 +79,7 @@ export default function HomeFeaturedBlogsSection({ blogs }: Props) {
                             Blog
                         </p>
                         <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
-                            Articulos destacados
+                            Artículos destacados
                         </h2>
                     </div>
 
@@ -110,7 +110,7 @@ export default function HomeFeaturedBlogsSection({ blogs }: Props) {
                             <button
                                 key={index}
                                 type="button"
-                                aria-label={`Ver grupo de articulos ${index + 1}`}
+                                aria-label={`Ver grupo de artículos ${index + 1}`}
                                 onClick={() => emblaApi?.scrollTo(index)}
                                 className={`size-3 rounded-full transition-all duration-300 hover:scale-110 ${
                                     selectedIndex === index

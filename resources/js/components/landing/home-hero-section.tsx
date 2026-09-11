@@ -34,15 +34,15 @@ export default function HomeHeroSection() {
                             data-landing-reveal="up"
                             className="max-w-lg text-4xl leading-[0.98] font-black tracking-[-0.04em] sm:text-5xl lg:text-6xl"
                         >
-                            Clinica medica para la mujer
+                            Clínica médica para la mujer
                         </h1>
                         <p
                             data-landing-reveal="up"
                             data-landing-reveal-delay="90"
                             className="mt-5 max-w-md text-base leading-7 text-white/90 sm:text-lg"
                         >
-                            Puedes realizar tu tratamiento ginecologico,
-                            oncologico, estetico o tomar clases prenatales.
+                            Puedes realizar tu tratamiento ginecológico,
+                            oncológico, estético o tomar clases prenatales.
                         </p>
 
                         <div

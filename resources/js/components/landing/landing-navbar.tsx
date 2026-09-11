@@ -12,7 +12,7 @@ const navItems = [
     { label: 'Contacto', href: '/contact' },
     { label: 'Blog', href: '/blog' },
     { label: 'Testimoniales', href: '/#testimoniales' },
-    { label: 'Agendar cita', href: '/contact#agendar-cita' },
+    { label: 'Agenda tu cita', href: '/contact#agendar-cita' },
 ];
 
 type NavbarVariant = 'transparent' | 'blurred' | 'solid';
@@ -200,7 +200,7 @@ export default function LandingNavbar() {
                             <Headphones className="size-8 stroke-[1.7]" />
                             <span className="grid leading-tight">
                                 <span className="text-sm font-semibold">
-                                    Haz tu cita
+                                    Agenda tu cita
                                 </span>
                                 <span className="text-lg font-black">
                                     {appointmentPhone}
@@ -211,7 +211,7 @@ export default function LandingNavbar() {
 
                     <button
                         type="button"
-                        aria-label="Abrir menu"
+                        aria-label="Abrir menú"
                         aria-expanded={isOpen}
                         onClick={() => setIsOpen((value) => !value)}
                         className={`grid size-11 place-items-center rounded-sm border backdrop-blur-sm xl:hidden ${
@@ -281,7 +281,7 @@ export default function LandingNavbar() {
                                 <Headphones className="size-6 stroke-[1.7]" />
                                 <span className="grid leading-tight">
                                     <span className="text-xs font-semibold">
-                                        Haz tu cita
+                                        Agenda tu cita
                                     </span>
                                     <span className="text-base font-black">
                                         {appointmentPhone}

@@ -56,7 +56,7 @@ export default function HomeAboutSection() {
                         className="mx-auto mt-12 max-w-3xl text-center sm:mt-16 lg:mx-0 lg:mt-0 lg:max-w-[470px] lg:text-left"
                     >
                         <p className="text-[11px] font-bold tracking-[0.28em] text-[#e9648d] uppercase">
-                            Quienes somos
+                            Quiénes somos
                         </p>
                         <h2 className="mx-auto mt-3 max-w-xl text-3xl leading-[0.98] font-black tracking-[-0.04em] text-[#09123f] sm:text-4xl lg:mx-0">
                             Cuidamos tu salud en cada etapa de tu vida
@@ -74,20 +74,20 @@ export default function HomeAboutSection() {
                         <div className="mt-6 space-y-4 text-sm leading-6 text-[#6f7080] sm:text-base sm:leading-7">
                             <p>
                                 <strong className="font-bold text-[#e9648d]">
-                                    Mision:
+                                    Misión:
                                 </strong>{' '}
-                                Brindar atencion ginecologica integral, etica y
-                                humana basada en evidencia, enfocandonos en la
-                                prevencion, el diagnostico oportuno y la salud
+                                Brindar atención ginecológica integral, ética y
+                                humana basada en evidencia, enfocándonos en la
+                                prevención, el diagnóstico oportuno y la salud
                                 integral de la mujer en cada etapa de su vida.
                             </p>
                             <p>
                                 <strong className="font-bold text-[#e9648d]">
-                                    Vision:
+                                    Visión:
                                 </strong>{' '}
-                                Ser la clinica de referencia en salud femenina,
-                                reconocida por la excelencia medica, la
-                                innovacion y el acompanamiento humano y digno a
+                                Ser la clínica de referencia en salud femenina,
+                                reconocida por la excelencia médica, la
+                                innovación y el acompañamiento humano y digno a
                                 nuestra comunidad.
                             </p>
                         </div>

@@ -6,7 +6,7 @@ const experienceItems = [
     {
         icon: CirclePlus,
         tone: 'bg-[#e9648d]',
-        title: '+10 años de experiencia y formacion en 5 paises.',
+        title: '+10 años de experiencia y formación en 5 países.',
     },
     {
         icon: Stethoscope,
@@ -87,12 +87,12 @@ export default function HomeExperienceSection() {
                                                 end={10}
                                                 start={hasEnteredViewport}
                                             />{' '}
-                                            años de experiencia y formacion en{' '}
+                                            años de experiencia y formación en{' '}
                                             <CountUp
                                                 end={5}
                                                 start={hasEnteredViewport}
                                             />{' '}
-                                            paises.
+                                            países.
                                         </>
                                     ) : index === 2 ? (
                                         <>

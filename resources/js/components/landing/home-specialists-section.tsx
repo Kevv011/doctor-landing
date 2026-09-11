@@ -2,16 +2,16 @@ import LandingContainer from '@/components/landing/landing-container';
 
 const specialists = [
     {
-        name: 'Dra. Priscila Elizabeth Coto de Arevalo',
-        specialty: 'Ginecologa y Obstetra',
+        name: 'Dra. Priscila Elizabeth Coto de Arévalo',
+        specialty: 'Ginecóloga y obstetra',
         image: '/images/Home/HomeSpecialist1.png',
-        bio: 'Especialista en ginecologia, obstetricia, colposcopia y ultrasonografia, con mas de 11 años de experiencia en la atencion integral de la salud femenina. Brinda un acompanamiento cercano y humanizado en cada etapa de la vida de sus pacientes.',
+        bio: 'Especialista en ginecología, obstetricia, colposcopia y ultrasonografía, con más de 11 años de experiencia en la atención integral de la salud femenina. Brinda un acompañamiento cercano y humanizado en cada etapa de la vida de sus pacientes.',
     },
     {
-        name: 'Dr. Danilo Alfonso Arevalo Sandoval',
-        specialty: 'Ginecologo Obstetra | Ginecologo Oncologo',
+        name: 'Dr. Danilo Alfonso Arévalo Sandoval',
+        specialty: 'Ginecólogo obstetra | ginecólogo oncólogo',
         image: '/images/Home/HomeSpecialist2.png',
-        bio: 'Especialista en ginecologia oncologica, cirugia ginecologica y laparoscopia avanzada, con mas de 15 años de experiencia. Cuenta con formacion internacional y una amplia trayectoria en el manejo integral del cancer ginecologico y la innovacion en salud.',
+        bio: 'Especialista en ginecología oncológica, cirugía ginecológica y laparoscopia avanzada, con más de 15 años de experiencia. Cuenta con formación internacional y una amplia trayectoria en el manejo integral del cáncer ginecológico y la innovación en salud.',
     },
 ];
 
