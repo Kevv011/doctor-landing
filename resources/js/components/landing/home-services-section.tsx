@@ -71,13 +71,13 @@ export default function HomeServicesSection({ services }: Props) {
                             </Link>
                         </div>
 
-                        <div className="absolute right-[-18px] bottom-[-46px] size-64 overflow-hidden rounded-full bg-white/15 sm:right-[-10px] sm:bottom-[-22px] sm:size-72">
+                        <div className="pointer-events-none absolute right-[-10px] bottom-[-28px] size-64 sm:right-[-10px] sm:bottom-[-22px] sm:size-72">
                             <img
                                 src="/images/Home/HomeServices1.png"
                                 alt="Especialistas de la clínica"
                                 loading="lazy"
                                 decoding="async"
-                                className="h-full w-full object-cover"
+                                className="h-full w-full object-contain"
                             />
                         </div>
                     </article>

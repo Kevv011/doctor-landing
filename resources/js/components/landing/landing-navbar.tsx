@@ -72,6 +72,24 @@ export default function LandingNavbar() {
         });
     };
 
+    const handleLogoNavigation = (event: MouseEvent<Element>) => {
+        if (currentUrl !== '/') {
+            return;
+        }
+
+        event.preventDefault();
+        setIsOpen(false);
+        window.history.replaceState({}, '', '/');
+
+        window.scrollTo({
+            top: 0,
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)')
+                .matches
+                ? 'auto'
+                : 'smooth',
+        });
+    };
+
     useEffect(() => {
         let frameId = 0;
 
@@ -127,6 +145,7 @@ export default function LandingNavbar() {
                 <div className="flex items-center justify-between gap-6">
                     <Link
                         href="/"
+                        onClick={handleLogoNavigation}
                         className={`flex shrink-0 items-center justify-center rounded-sm text-center text-[11px] leading-tight font-black tracking-[0.08em] uppercase transition ${
                             isSolid
                                 ? 'hover:bg-[#e9648d]/10'
@@ -136,11 +155,11 @@ export default function LandingNavbar() {
                         <img
                             src={
                                 isSolid
-                                    ? '/images/unfilled-logo.png'
-                                    : '/images/unfilled-logo.png'
+                                    ? '/images/filled-logo.png'
+                                    : '/images/filled-logo.png'
                             }
                             alt="Logo marca"
-                            className="h-full w-full object-contain"
+                            className="object-contain h-20 w-auto"
                         />
                     </Link>
 

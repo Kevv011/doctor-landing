@@ -63,7 +63,9 @@ export default function LandingLayout({ children }: PropsWithChildren) {
         });
 
         return () => observer.disconnect();
-    }, [url]);
+    // A same-route Inertia visit replaces `children` without changing `url`.
+    // Re-run the observer so freshly rendered landing sections are revealed.
+    }, [url, children]);
 
     return (
         <>
