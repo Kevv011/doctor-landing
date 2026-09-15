@@ -1,6 +1,5 @@
-import { Form, Head, Link } from '@inertiajs/react';
+import { Form, Head } from '@inertiajs/react';
 import Heading from '@/components/heading';
-import { Button } from '@/components/ui/button';
 import ServiceFormFields from '@/pages/admin/services/components/service-form-fields';
 
 export default function ServicesCreate() {
@@ -8,7 +7,7 @@ export default function ServicesCreate() {
         <>
             <Head title="Nuevo servicio" />
 
-            <div className="max-w-3xl space-y-6 p-4">
+            <div className="space-y-6 p-4">
                 <Heading
                     title="Nuevo servicio"
                     description="Crea un servicio para mostrarlo en el sitio"
@@ -25,12 +24,9 @@ export default function ServicesCreate() {
                             <ServiceFormFields
                                 errors={errors}
                                 processing={processing}
+                                cancelHref="/admin/services"
                                 submitLabel="Crear servicio"
                             />
-
-                            <Button variant="outline" asChild>
-                                <Link href="/admin/services">Cancelar</Link>
-                            </Button>
                         </>
                     )}
                 </Form>

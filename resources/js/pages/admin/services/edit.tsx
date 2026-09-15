@@ -1,9 +1,7 @@
-import { Form, Head, Link } from '@inertiajs/react';
+import { Form, Head } from '@inertiajs/react';
 import Heading from '@/components/heading';
-import { Button } from '@/components/ui/button';
-import ServiceFormFields, {
-    type ServiceFormRecord,
-} from '@/pages/admin/services/components/service-form-fields';
+import ServiceFormFields from '@/pages/admin/services/components/service-form-fields';
+import type { ServiceFormRecord } from '@/pages/admin/services/components/service-form-fields';
 
 type Props = {
     service: ServiceFormRecord & { id: number; title: string };
@@ -14,7 +12,7 @@ export default function ServicesEdit({ service }: Props) {
         <>
             <Head title={`Editar ${service.title}`} />
 
-            <div className="max-w-3xl space-y-6 p-4">
+            <div className="space-y-6 p-4">
                 <Heading
                     title="Editar servicio"
                     description="Actualiza la información, imagen, orden y visibilidad."
@@ -33,12 +31,9 @@ export default function ServicesEdit({ service }: Props) {
                                 service={service}
                                 errors={errors}
                                 processing={processing}
+                                cancelHref="/admin/services"
                                 submitLabel="Guardar cambios"
                             />
-
-                            <Button variant="outline" asChild>
-                                <Link href="/admin/services">Cancelar</Link>
-                            </Button>
                         </>
                     )}
                 </Form>

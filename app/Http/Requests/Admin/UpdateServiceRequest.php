@@ -22,7 +22,7 @@ class UpdateServiceRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'excerpt' => ['nullable', 'string', 'max:1000'],
-            'description' => ['nullable', 'string'],
+            'body' => ['nullable', 'json'],
             'tags' => ['nullable', 'string', 'max:500'],
             'is_active' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0', 'max:9999'],

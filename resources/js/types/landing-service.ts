@@ -1,8 +1,11 @@
+import type { BlogContentBlock } from '@/components/landing/blog-content-renderer';
+
 export type LandingService = {
     id: number;
     title: string;
     slug: string;
     excerpt: string | null;
+    body?: BlogContentBlock[];
     description: string | null;
     tags: string[];
     seo_title: string | null;

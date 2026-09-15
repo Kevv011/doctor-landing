@@ -70,12 +70,13 @@ class ServiceController extends Controller
                 'id' => $service->id,
                 'title' => $service->title,
                 'excerpt' => $service->excerpt,
-                'description' => $service->description,
+                'body' => $service->body ?? $this->legacyBody($service->description),
                 'tags' => implode(', ', $service->tags ?? []),
                 'is_active' => $service->is_active,
                 'sort_order' => $service->sort_order,
                 'has_image' => $service->hasMedia(Service::MEDIA_COLLECTION_IMAGE),
                 'image_url' => $service->imageUrl(),
+                'media_upload_url' => route('admin.services.media.store', $service),
             ],
         ]);
     }
@@ -123,7 +124,7 @@ class ServiceController extends Controller
         return [
             'title' => $validated['title'],
             'excerpt' => $validated['excerpt'] ?? null,
-            'description' => $validated['description'] ?? null,
+            'body' => $this->decodeBody($validated['body'] ?? null),
             'tags' => $this->tags($validated['tags'] ?? null),
             'is_active' => (bool) ($validated['is_active'] ?? false),
             'sort_order' => $validated['sort_order'] ?? 0,
@@ -144,6 +145,40 @@ class ServiceController extends Controller
             ->filter()
             ->unique(fn (string $tag) => mb_strtolower($tag))
             ->take(12)
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function decodeBody(?string $body): array
+    {
+        if (blank($body)) {
+            return [];
+        }
+
+        $decoded = json_decode($body, true);
+
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    /**
+     * @return array<int, array{type: string, content: string}>
+     */
+    private function legacyBody(?string $description): array
+    {
+        if (blank($description)) {
+            return [];
+        }
+
+        return collect(preg_split('/\\R{2,}/', trim($description)) ?: [])
+            ->map(fn (string $paragraph) => trim($paragraph))
+            ->filter()
+            ->map(fn (string $paragraph) => [
+                'type' => 'paragraph',
+                'content' => $paragraph,
+            ])
             ->values()
             ->all();
     }

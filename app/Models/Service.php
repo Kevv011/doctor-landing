@@ -19,6 +19,18 @@ class Service extends Model implements HasMedia
 
     public const MEDIA_COLLECTION_IMAGE = 'image';
 
+    public const MEDIA_COLLECTION_CONTENT_IMAGES = 'content_images';
+
+    /**
+     * @var list<string>
+     */
+    public const CONTENT_MEDIA_MIME_TYPES = [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'image/avif',
+    ];
+
     public const FALLBACK_IMAGE = '/images/Services/ServicesDefault.png';
 
     /**
@@ -28,6 +40,7 @@ class Service extends Model implements HasMedia
         'title',
         'slug',
         'excerpt',
+        'body',
         'description',
         'tags',
         'is_active',
@@ -42,6 +55,7 @@ class Service extends Model implements HasMedia
     protected function casts(): array
     {
         return [
+            'body' => 'array',
             'tags' => 'array',
             'is_active' => 'boolean',
             'sort_order' => 'integer',
@@ -70,6 +84,10 @@ class Service extends Model implements HasMedia
             ->addMediaCollection(self::MEDIA_COLLECTION_IMAGE)
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp', 'image/avif'])
             ->singleFile();
+
+        $this
+            ->addMediaCollection(self::MEDIA_COLLECTION_CONTENT_IMAGES)
+            ->acceptsMimeTypes(self::CONTENT_MEDIA_MIME_TYPES);
     }
 
     public function registerMediaConversions(?Media $media = null): void

@@ -65,6 +65,7 @@ class ServiceController extends Controller
             'title' => $service->title,
             'slug' => $service->slug,
             'excerpt' => $service->excerpt,
+            'body' => $service->body ?? $this->legacyBody($service->description),
             'description' => $service->description,
             'tags' => $service->tags ?? [],
             'seo_title' => $service->seo_title,
@@ -72,5 +73,25 @@ class ServiceController extends Controller
             'image_url' => $service->imageUrl(),
             'url' => route('services.show', $service->slug, false),
         ];
+    }
+
+    /**
+     * @return array<int, array{type: string, content: string}>
+     */
+    private function legacyBody(?string $description): array
+    {
+        if (blank($description)) {
+            return [];
+        }
+
+        return collect(preg_split('/\\R{2,}/', trim($description)) ?: [])
+            ->map(fn (string $paragraph) => trim($paragraph))
+            ->filter()
+            ->map(fn (string $paragraph) => [
+                'type' => 'paragraph',
+                'content' => $paragraph,
+            ])
+            ->values()
+            ->all();
     }
 }

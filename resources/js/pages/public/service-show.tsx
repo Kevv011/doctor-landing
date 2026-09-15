@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
+import BlogContentRenderer from '@/components/landing/blog-content-renderer';
 import LandingContainer from '@/components/landing/landing-container';
 import LandingFooter from '@/components/landing/landing-footer';
 import LandingHeroImage from '@/components/landing/landing-hero-image';
@@ -39,8 +40,6 @@ const socialIcons: Record<string, LucideIcon> = {
 };
 
 export default function ServiceShow({ service, relatedServices }: Props) {
-    const paragraphs = serviceDescriptionParagraphs(service);
-
     return (
         <>
             <PublicSeo
@@ -107,15 +106,9 @@ export default function ServiceShow({ service, relatedServices }: Props) {
                                         </p>
                                     )}
 
-                                    {paragraphs.length > 0 && (
-                                        <div className="mt-8 space-y-5 text-sm leading-8 text-[#6f7080] sm:text-base">
-                                            {paragraphs.map((paragraph) => (
-                                                <p key={paragraph}>
-                                                    {paragraph}
-                                                </p>
-                                            ))}
-                                        </div>
-                                    )}
+                                    <BlogContentRenderer
+                                        body={service.body ?? []}
+                                    />
 
                                     {service.tags.length > 0 && (
                                         <div className="mt-10">
@@ -317,11 +310,4 @@ function SidebarCard({
             {children}
         </section>
     );
-}
-
-function serviceDescriptionParagraphs(service: LandingService): string[] {
-    return (service.description ?? '')
-        .split(/\n{2,}|\r?\n/)
-        .map((paragraph) => paragraph.trim())
-        .filter(Boolean);
 }

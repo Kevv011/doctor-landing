@@ -165,10 +165,27 @@ class ServiceSeeder extends Seeder
                 ['slug' => Str::slug($service['title'])],
                 [
                     ...$service,
+                    'body' => $this->body($service['description']),
                     'is_active' => true,
                     'sort_order' => $index + 1,
                 ],
             );
         }
+    }
+
+    /**
+     * @return list<array{type: string, content: string}>
+     */
+    private function body(string $description): array
+    {
+        return collect(preg_split('/\\R{2,}/', trim($description)) ?: [])
+            ->map(fn (string $paragraph) => trim($paragraph))
+            ->filter()
+            ->map(fn (string $paragraph) => [
+                'type' => 'paragraph',
+                'content' => $paragraph,
+            ])
+            ->values()
+            ->all();
     }
 }

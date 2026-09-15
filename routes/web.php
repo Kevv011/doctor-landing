@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BlogPostMediaController;
 use App\Http\Controllers\Admin\BusinessSettingsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\Admin\ServiceMediaController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AppointmentSubmissionController;
@@ -107,6 +108,8 @@ Route::middleware(['auth', 'verified', EnsureUserIsAdmin::class])->group(functio
     Route::resource('admin/services', AdminServiceController::class)
         ->except(['show'])
         ->names('admin.services');
+    Route::post('admin/services/{service}/media', [ServiceMediaController::class, 'store'])
+        ->name('admin.services.media.store');
     Route::resource('admin/testimonials', TestimonialController::class)
         ->except(['show'])
         ->names('admin.testimonials');

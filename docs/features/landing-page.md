@@ -28,6 +28,10 @@ Visitor opens /
 - Keep page sections modular and reusable.
 - Maintain clear CTAs for appointment scheduling and contact.
 - Use semantic HTML and accessible forms/navigation.
+- Service details are authored as structured BlockNote JSON. The public service
+  page renders those blocks with the same landing renderer used for Blog.
+- The service summary, tags, image, order, and visibility remain separate from
+  the rich-text detail so they can be used independently in service cards.
 
 ## Expected Sections
 

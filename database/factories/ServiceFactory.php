@@ -31,6 +31,7 @@ class ServiceFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'excerpt' => fake()->sentence(16),
+            'body' => [],
             'description' => fake()->paragraphs(2, true),
             'tags' => fake()->words(3),
             'is_active' => true,
