@@ -60,7 +60,8 @@ Route::get('/', fn () => Inertia::render('public/home', [
         ->values(),
     'services' => Service::query()
         ->active()
-        ->inRandomOrder()
+        ->orderBy('sort_order')
+        ->orderBy('title')
         ->limit(5)
         ->get()
         ->map(fn (Service $service) => [

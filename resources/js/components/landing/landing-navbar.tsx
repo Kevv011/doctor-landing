@@ -1,30 +1,25 @@
 import { Link } from '@inertiajs/react';
-import { Headphones, Menu, Search, X } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { MouseEvent } from 'react';
 import LandingContainer from '@/components/landing/landing-container';
-import { businessPhoneHref, useBusiness } from '@/hooks/use-business';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 
 const navItems = [
     { label: 'Inicio', href: '/' },
     { label: 'Servicios', href: '/servicios' },
-    { label: 'Contacto', href: '/contact' },
     { label: 'Blog', href: '/blog' },
     { label: 'Testimoniales', href: '/#testimoniales' },
-    { label: 'Agenda tu cita', href: '/contact#agendar-cita' },
+    { label: 'Contacto', href: '/contact' },
 ];
 
 type NavbarVariant = 'transparent' | 'blurred' | 'solid';
 
 export default function LandingNavbar() {
-    const business = useBusiness();
     const [isOpen, setIsOpen] = useState(false);
     const [variant, setVariant] = useState<NavbarVariant>('transparent');
     const { currentUrl } = useCurrentUrl();
     const isSolid = variant === 'solid';
-    const appointmentPhone =
-        business.profile.appointment_phone || business.profile.phone;
     const currentHash =
         typeof window !== 'undefined' ? window.location.hash : '';
 
@@ -201,31 +196,6 @@ export default function LandingNavbar() {
                         >
                             <Search className="size-5" />
                         </button>
-
-                        <div
-                            className={`h-9 w-px ${
-                                isSolid ? 'bg-[#09123f]/15' : 'bg-white/30'
-                            }`}
-                        />
-
-                        <a
-                            href={businessPhoneHref(appointmentPhone)}
-                            className={`flex items-center gap-3 transition ${
-                                isSolid
-                                    ? 'text-[#e9648d] hover:text-[#d94e7a]'
-                                    : 'text-white hover:text-white/90'
-                            }`}
-                        >
-                            <Headphones className="size-8 stroke-[1.7]" />
-                            <span className="grid leading-tight">
-                                <span className="text-sm font-semibold">
-                                    Agenda tu cita
-                                </span>
-                                <span className="text-lg font-black">
-                                    {appointmentPhone}
-                                </span>
-                            </span>
-                        </a>
                     </div>
 
                     <button
@@ -291,22 +261,6 @@ export default function LandingNavbar() {
                                     </Link>
                                 ))}
                             </nav>
-
-                            <a
-                                href={businessPhoneHref(appointmentPhone)}
-                                tabIndex={isOpen ? 0 : -1}
-                                className="mt-4 flex items-center gap-3 rounded-sm bg-white px-4 py-3 text-[#d94e7a]"
-                            >
-                                <Headphones className="size-6 stroke-[1.7]" />
-                                <span className="grid leading-tight">
-                                    <span className="text-xs font-semibold">
-                                        Agenda tu cita
-                                    </span>
-                                    <span className="text-base font-black">
-                                        {appointmentPhone}
-                                    </span>
-                                </span>
-                            </a>
                         </div>
                     </div>
                 </div>
