@@ -38,6 +38,7 @@ Route::get('/', fn () => Inertia::render('public/home', [
                 BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE,
                 'preview',
             ) ?: $post->getFirstMediaUrl(BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE),
+            'gallery_image_urls' => $post->galleryImageUrls(),
         ])
         ->values(),
     'testimonials' => Testimonial::query()

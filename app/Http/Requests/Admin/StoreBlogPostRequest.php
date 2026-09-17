@@ -36,6 +36,8 @@ class StoreBlogPostRequest extends FormRequest
             'seo_title' => ['nullable', 'string', 'max:255'],
             'seo_description' => ['nullable', 'string', 'max:1000'],
             'featured_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
+            'gallery_images' => ['nullable', 'array', 'max:'.BlogPost::MAX_GALLERY_IMAGES_PER_UPLOAD],
+            'gallery_images.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
         ];
     }
 }

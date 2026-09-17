@@ -16,7 +16,7 @@ site and blog pages.
 ```text
 Admin opens /admin/blogs
   -> creates or edits a post
-  -> adds title, excerpt, image, and block content
+  -> adds title, excerpt, cover image, gallery images, and block content
   -> saves as draft or publishes
   -> public visitor reads it at /blog/{slug}
 ```
@@ -28,6 +28,9 @@ Admin opens /admin/blogs
 - Drafts must remain hidden from public routes.
 - Slugs must be unique.
 - Featured images should have alt text or an accessible fallback.
+- Gallery images are optional and stored separately from the cover image. They
+  render as an automatic public carousel that advances every seven seconds,
+  while preserving the cover image as a fallback when no gallery exists.
 - Body content should be stored as structured JSON, not arbitrary trusted HTML.
 - Public rendering should use landing/blog components aligned with
   `SKILL_Design.md`.
@@ -41,6 +44,9 @@ Expected first version:
 - `slug`: unique route key.
 - `excerpt`: short summary for cards and metadata.
 - `featured_image`: single-file Media Library collection for the article cover.
+- `gallery_images`: multi-file Media Library collection for the public image
+  carousel; the admin can upload up to 10 images in one submission and remove
+  existing images individually.
 - `content_images`: Media Library collection for images inserted inside the block
   editor.
 - `body`: structured JSON block content.

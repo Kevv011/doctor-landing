@@ -41,6 +41,10 @@ class BlogPost extends Model implements HasMedia
 
     public const MEDIA_COLLECTION_FEATURED_IMAGE = 'featured_image';
 
+    public const MEDIA_COLLECTION_GALLERY_IMAGES = 'gallery_images';
+
+    public const MAX_GALLERY_IMAGES_PER_UPLOAD = 10;
+
     public const MEDIA_COLLECTION_CONTENT_IMAGES = 'content_images';
 
     /**
@@ -123,6 +127,10 @@ class BlogPost extends Model implements HasMedia
             ->singleFile();
 
         $this
+            ->addMediaCollection(self::MEDIA_COLLECTION_GALLERY_IMAGES)
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp', 'image/avif']);
+
+        $this
             ->addMediaCollection(self::MEDIA_COLLECTION_CONTENT_IMAGES)
             ->acceptsMimeTypes(self::CONTENT_MEDIA_MIME_TYPES);
     }
@@ -153,5 +161,20 @@ class BlogPost extends Model implements HasMedia
     protected function featured(Builder $query): void
     {
         $query->where('is_featured', true);
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function galleryImageUrls(?string $conversion = 'preview'): array
+    {
+        return $this
+            ->getMedia(self::MEDIA_COLLECTION_GALLERY_IMAGES)
+            ->map(fn (Media $media) => $conversion
+                ? $media->getUrl($conversion)
+                : $media->getUrl())
+            ->filter()
+            ->values()
+            ->all();
     }
 }

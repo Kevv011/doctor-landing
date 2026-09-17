@@ -29,6 +29,10 @@ export type BlogFormPost = {
     seo_title?: string | null;
     seo_description?: string | null;
     featured_image_url?: string | null;
+    gallery_images?: Array<{
+        id: number;
+        url: string;
+    }>;
     media_upload_url?: string | null;
 };
 
@@ -93,7 +97,7 @@ export default function BlogFormFields({
                         name="excerpt"
                         defaultValue={post?.excerpt ?? ''}
                         rows={4}
-                        className="min-h-28 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                        className="min-h-28 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                         placeholder="Resumen corto para tarjetas y SEO"
                     />
                     <InputError message={errors.excerpt} />
@@ -105,7 +109,7 @@ export default function BlogFormFields({
                         id="blog_category_id"
                         name="blog_category_id"
                         defaultValue={post?.blog_category_id ?? ''}
-                        className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                        className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                     >
                         <option value="">Sin categoria</option>
                         {categories.map((category) => (
@@ -139,13 +143,10 @@ export default function BlogFormFields({
                             id="status"
                             name="status"
                             defaultValue={post?.status ?? 'draft'}
-                            className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                            className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                         >
                             {statuses.map((status) => (
-                                <option
-                                    key={status.value}
-                                    value={status.value}
-                                >
+                                <option key={status.value} value={status.value}>
                                     {status.label}
                                 </option>
                             ))}
@@ -219,6 +220,58 @@ export default function BlogFormFields({
                     </label>
                 )}
 
+                <div className="grid gap-2">
+                    <Label htmlFor="gallery_images">Galería de imágenes</Label>
+                    <Input
+                        id="gallery_images"
+                        name="gallery_images[]"
+                        type="file"
+                        multiple
+                        accept="image/jpeg,image/png,image/webp,image/avif"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                        Puedes subir hasta 10 imágenes por carga. Se mostrarán
+                        en un carrusel automático de 7 segundos en el blog.
+                    </p>
+                    <InputError message={errors.gallery_images} />
+                </div>
+
+                {post?.gallery_images && post.gallery_images.length > 0 && (
+                    <div className="grid gap-3">
+                        <div>
+                            <h3 className="text-sm font-medium">
+                                Imágenes de la galería
+                            </h3>
+                            <p className="text-xs text-muted-foreground">
+                                Marca las imágenes que deseas quitar al guardar.
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                            {post.gallery_images.map((image) => (
+                                <label
+                                    key={image.id}
+                                    className="overflow-hidden rounded-md border bg-background"
+                                >
+                                    <img
+                                        src={image.url}
+                                        alt=""
+                                        className="aspect-[4/3] w-full object-cover"
+                                    />
+                                    <span className="flex items-center gap-2 p-2 text-xs">
+                                        <input
+                                            type="checkbox"
+                                            name="remove_gallery_images[]"
+                                            value={image.id}
+                                            className="h-4 w-4 rounded border-input"
+                                        />
+                                        Quitar
+                                    </span>
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 <div className="grid gap-4 rounded-lg border p-4">
                     <div>
                         <h3 className="font-medium">SEO</h3>
@@ -238,15 +291,13 @@ export default function BlogFormFields({
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="seo_description">
-                            Descripcion SEO
-                        </Label>
+                        <Label htmlFor="seo_description">Descripcion SEO</Label>
                         <textarea
                             id="seo_description"
                             name="seo_description"
                             defaultValue={post?.seo_description ?? ''}
                             rows={3}
-                            className="min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                            className="min-h-24 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                         />
                         <InputError message={errors.seo_description} />
                     </div>
@@ -264,8 +315,8 @@ export default function BlogFormFields({
                 <div className="grid gap-2">
                     <Label htmlFor="body">Editor de contenido</Label>
                     <p className="text-sm text-muted-foreground">
-                        Construye el articulo con bloques. Esta zona mantiene
-                        su propio scroll para revisar el contenido completo.
+                        Construye el articulo con bloques. Esta zona mantiene su
+                        propio scroll para revisar el contenido completo.
                     </p>
                 </div>
 
