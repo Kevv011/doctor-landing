@@ -42,6 +42,10 @@ class UpdateBlogPostRequest extends FormRequest
             'seo_description' => ['nullable', 'string', 'max:1000'],
             'featured_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
             'remove_featured_image' => ['nullable', 'boolean'],
+            'gallery_images' => ['nullable', 'array', 'max:'.BlogPost::MAX_GALLERY_IMAGES_PER_UPLOAD],
+            'gallery_images.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
+            'remove_gallery_images' => ['nullable', 'array'],
+            'remove_gallery_images.*' => ['integer', 'distinct'],
         ];
     }
 }

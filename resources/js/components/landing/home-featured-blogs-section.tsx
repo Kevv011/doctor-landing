@@ -10,6 +10,7 @@ export type FeaturedBlog = {
     excerpt: string | null;
     published_at: string | null;
     featured_image_url: string;
+    gallery_image_urls: string[];
 };
 
 type Props = {

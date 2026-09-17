@@ -47,6 +47,7 @@ class BlogController extends Controller
                     BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE,
                     'preview',
                 ) ?: $post->getFirstMediaUrl(BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE),
+                'gallery_image_urls' => $post->galleryImageUrls(),
             ]);
 
         return Inertia::render('public/blog/index', [
@@ -91,6 +92,7 @@ class BlogController extends Controller
                     BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE,
                     'preview',
                 ) ?: $post->getFirstMediaUrl(BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE),
+                'gallery_image_urls' => $post->galleryImageUrls(),
             ],
             'categories' => $this->categories(),
             'tags' => $this->tags(),

@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { CalendarDays, ChevronRight } from 'lucide-react';
+import BlogImageCarousel from '@/components/landing/blog-image-carousel';
 
 export type LandingBlogCardPost = {
     id: number;
@@ -8,6 +9,7 @@ export type LandingBlogCardPost = {
     excerpt: string | null;
     published_at: string | null;
     featured_image_url: string | null;
+    gallery_image_urls: string[];
 };
 
 type Props = {
@@ -15,14 +17,17 @@ type Props = {
 };
 
 export default function BlogCard({ blog }: Props) {
+    const images =
+        blog.gallery_image_urls.length > 0
+            ? blog.gallery_image_urls
+            : [blog.featured_image_url || '/images/blog-post-default.png'];
+
     return (
         <article className="group relative pb-8">
-            <img
-                src={blog.featured_image_url || '/images/blog-post-default.png'}
+            <BlogImageCarousel
+                images={images}
                 alt={blog.title}
-                loading="lazy"
-                decoding="async"
-                className="h-72 w-full rounded-lg object-cover transition duration-400 ease-in-out group-hover:translate-y-[15px]"
+                className="h-72 w-full rounded-lg transition duration-400 ease-in-out group-hover:translate-y-[15px]"
             />
 
             <div className="relative mx-4 -mt-20 rounded-lg border-b-2 border-[#e9648d] bg-white p-7 shadow-[0_18px_45px_rgba(21,35,74,0.06)] transition duration-400 ease-in-out group-hover:-translate-y-[15px] group-hover:shadow-[0_22px_48px_rgba(21,35,74,0.1)] sm:mx-7">

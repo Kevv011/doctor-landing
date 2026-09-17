@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateBlogPostRequest;
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -69,6 +70,8 @@ class BlogPostController extends Controller
                 ->toMediaCollection(BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE);
         }
 
+        $this->storeGalleryImages($request, $post);
+
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Blog creado.')]);
 
         return to_route('admin.blogs.index');
@@ -97,6 +100,7 @@ class BlogPostController extends Controller
                     BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE,
                     'preview',
                 ) ?: $blog->getFirstMediaUrl(BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE),
+                'gallery_images' => $this->galleryImages($blog),
                 'media_upload_url' => route('admin.blogs.media.store', $blog),
             ],
             'statuses' => $this->statuses(),
@@ -120,6 +124,12 @@ class BlogPostController extends Controller
                 ->addMediaFromRequest('featured_image')
                 ->toMediaCollection(BlogPost::MEDIA_COLLECTION_FEATURED_IMAGE);
         }
+
+        $this->removeGalleryImages(
+            $blog,
+            $request->input('remove_gallery_images', []),
+        );
+        $this->storeGalleryImages($request, $blog);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Blog actualizado.')]);
 
@@ -246,5 +256,48 @@ class BlogPostController extends Controller
             ->take(12)
             ->values()
             ->all();
+    }
+
+    /**
+     * @return list<array{id: int, url: string}>
+     */
+    private function galleryImages(BlogPost $post): array
+    {
+        return $post
+            ->getMedia(BlogPost::MEDIA_COLLECTION_GALLERY_IMAGES)
+            ->map(fn ($media) => [
+                'id' => $media->id,
+                'url' => $media->getUrl('preview') ?: $media->getUrl(),
+            ])
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @param  array<int, mixed>  $mediaIds
+     */
+    private function removeGalleryImages(BlogPost $post, array $mediaIds): void
+    {
+        if ($mediaIds === []) {
+            return;
+        }
+
+        $post
+            ->getMedia(BlogPost::MEDIA_COLLECTION_GALLERY_IMAGES)
+            ->whereIn('id', $mediaIds)
+            ->each(fn ($media) => $media->delete());
+    }
+
+    private function storeGalleryImages(Request $request, BlogPost $post): void
+    {
+        if (! $request->hasFile('gallery_images')) {
+            return;
+        }
+
+        $post
+            ->addMultipleMediaFromRequest(['gallery_images'])
+            ->each(fn ($fileAdder) => $fileAdder->toMediaCollection(
+                BlogPost::MEDIA_COLLECTION_GALLERY_IMAGES,
+            ));
     }
 }

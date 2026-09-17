@@ -15,6 +15,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import BlogContentRenderer from '@/components/landing/blog-content-renderer';
 import type { BlogContentBlock } from '@/components/landing/blog-content-renderer';
+import BlogImageCarousel from '@/components/landing/blog-image-carousel';
 import BlogSidebar from '@/components/landing/blog-sidebar';
 import type { BlogSidebarCategory } from '@/components/landing/blog-sidebar';
 import LandingContainer from '@/components/landing/landing-container';
@@ -37,6 +38,7 @@ type BlogPost = {
     seo_title: string | null;
     seo_description: string | null;
     featured_image_url: string | null;
+    gallery_image_urls: string[];
 };
 
 type RelatedPost = {
@@ -94,7 +96,11 @@ export default function BlogShow({
                     'Información de salud femenina de Women’s Health Clinic.'
                 }
                 canonicalPath={`/blog/${post.slug}`}
-                imagePath={post.featured_image_url || '/images/filled-logo.png'}
+                imagePath={
+                    post.gallery_image_urls[0] ??
+                    post.featured_image_url ??
+                    '/images/filled-logo.png'
+                }
                 type="article"
                 schema={{
                     '@type': 'BlogPosting',
@@ -102,7 +108,10 @@ export default function BlogShow({
                     headline: post.title,
                     description:
                         post.seo_description || post.excerpt || undefined,
-                    image: post.featured_image_url || undefined,
+                    image:
+                        post.gallery_image_urls[0] ??
+                        post.featured_image_url ??
+                        undefined,
                     datePublished: post.published_at_iso || undefined,
                     dateModified: post.updated_at_iso || undefined,
                     author: post.author
@@ -124,13 +133,18 @@ export default function BlogShow({
                                 data-landing-reveal="up"
                                 className="order-2 rounded-lg bg-white p-3 shadow-[0_18px_45px_rgba(21,35,74,0.04)] sm:p-4 lg:order-1 lg:p-5"
                             >
-                                <img
-                                    src={
-                                        post.featured_image_url ||
-                                        '/images/blog-post-default.png'
+                                <BlogImageCarousel
+                                    images={
+                                        post.gallery_image_urls.length > 0
+                                            ? post.gallery_image_urls
+                                            : [
+                                                  post.featured_image_url ||
+                                                      '/images/blog-post-default.png',
+                                              ]
                                     }
                                     alt={post.title}
-                                    className="h-[320px] w-full rounded-md object-cover sm:h-[420px]"
+                                    loading="eager"
+                                    className="h-[320px] w-full rounded-md sm:h-[420px]"
                                 />
 
                                 <div className="px-2 py-6 sm:px-4">
