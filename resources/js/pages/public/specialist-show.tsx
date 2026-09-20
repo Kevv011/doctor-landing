@@ -77,7 +77,7 @@ export default function SpecialistShow({ specialist }: Props) {
                 }}
             />
 
-            <main className="min-h-screen overflow-hidden bg-[#fff0f7] pt-28 text-[#09123f] sm:pt-32 lg:pt-36">
+            <main className="min-h-screen overflow-hidden bg-[#fff0f7] pt-36 text-[#09123f]">
                 <LandingContainer>
                     <BackButton />
 
