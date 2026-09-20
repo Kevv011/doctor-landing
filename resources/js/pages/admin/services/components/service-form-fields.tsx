@@ -1,5 +1,7 @@
 import { Link } from '@inertiajs/react';
+import ImagePicker from '@/components/image-picker';
 import InputError from '@/components/input-error';
+import MultiImagePicker from '@/components/multi-image-picker';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -128,95 +130,23 @@ export default function ServiceFormFields({
                     </div>
                 </div>
 
-                <div className="grid gap-2">
-                    <Label htmlFor="image">Imagen del servicio</Label>
-                    {service?.image_url && (
-                        <div className="overflow-hidden rounded-lg border">
-                            <img
-                                src={service.image_url}
-                                alt=""
-                                className="h-44 w-full object-cover"
-                            />
-                        </div>
-                    )}
-                    <Input
-                        id="image"
-                        name="image"
-                        type="file"
-                        accept="image/jpeg,image/png,image/webp,image/avif"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                        Si no agregas una imagen, el sitio usará la imagen
-                        predeterminada de servicios.
-                    </p>
-                    <InputError message={errors.image} />
-                </div>
+                <ImagePicker
+                    name="image"
+                    label="Imagen del servicio"
+                    description="Si no agregas una imagen, el sitio usará la imagen predeterminada de servicios."
+                    existingUrl={service?.image_url}
+                    removeFieldName={service?.has_image ? 'remove_image' : undefined}
+                    error={errors.image}
+                />
 
-                {service?.has_image && (
-                    <label className="flex items-center gap-2 text-sm">
-                        <input
-                            type="checkbox"
-                            name="remove_image"
-                            value="1"
-                            className="h-4 w-4 rounded border-input"
-                        />
-                        Quitar imagen actual
-                    </label>
-                )}
-
-                <div className="grid gap-2">
-                    <Label htmlFor="gallery_images">Galería de imágenes</Label>
-                    <Input
-                        id="gallery_images"
-                        name="gallery_images[]"
-                        type="file"
-                        multiple
-                        accept="image/jpeg,image/png,image/webp,image/avif"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                        Puedes subir hasta 10 imágenes por carga. Se mostrarán
-                        en un carrusel automático de 7 segundos en el sitio.
-                    </p>
-                    <InputError message={errors.gallery_images} />
-                </div>
-
-                {service?.gallery_images &&
-                    service.gallery_images.length > 0 && (
-                        <div className="grid gap-3">
-                            <div>
-                                <h3 className="text-sm font-medium">
-                                    Imágenes de la galería
-                                </h3>
-                                <p className="text-xs text-muted-foreground">
-                                    Marca las imágenes que deseas quitar al
-                                    guardar.
-                                </p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-3">
-                                {service.gallery_images.map((image) => (
-                                    <label
-                                        key={image.id}
-                                        className="overflow-hidden rounded-md border bg-background"
-                                    >
-                                        <img
-                                            src={image.url}
-                                            alt=""
-                                            className="aspect-[4/3] w-full object-cover"
-                                        />
-                                        <span className="flex items-center gap-2 p-2 text-xs">
-                                            <input
-                                                type="checkbox"
-                                                name="remove_gallery_images[]"
-                                                value={image.id}
-                                                className="h-4 w-4 rounded border-input"
-                                            />
-                                            Quitar
-                                        </span>
-                                    </label>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                <MultiImagePicker
+                    name="gallery_images"
+                    label="Galería de imágenes"
+                    description="Puedes subir hasta 10 imágenes por carga. Se mostrarán en un carrusel automático de 7 segundos en el sitio."
+                    existingImages={service?.gallery_images}
+                    removeFieldName="remove_gallery_images[]"
+                    errors={errors}
+                />
 
                 <div className="flex flex-col gap-2 border-t pt-4 sm:flex-row lg:flex-col xl:flex-row">
                     <Button disabled={processing}>{submitLabel}</Button>

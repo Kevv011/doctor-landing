@@ -8,15 +8,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@font-face {
-    font-family: 'Outfit';
-    font-style: normal;
-    font-weight: 100 900;
-    font-display: swap;
-    src: url('/fonts/outfit/variable/outfit-latin-ext-wght-normal.woff2')
-        format('woff2');
-}
-
 @theme {
     --font-sans:
         'Outfit', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
