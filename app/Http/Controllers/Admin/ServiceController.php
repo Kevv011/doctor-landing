@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreServiceRequest;
 use App\Http\Requests\Admin\UpdateServiceRequest;
 use App\Models\Service;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -55,6 +56,8 @@ class ServiceController extends Controller
                 ->toMediaCollection(Service::MEDIA_COLLECTION_IMAGE);
         }
 
+        $this->storeGalleryImages($request, $service);
+
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Servicio creado.')]);
 
         return to_route('admin.services.index');
@@ -76,6 +79,7 @@ class ServiceController extends Controller
                 'sort_order' => $service->sort_order,
                 'has_image' => $service->hasMedia(Service::MEDIA_COLLECTION_IMAGE),
                 'image_url' => $service->imageUrl(),
+                'gallery_images' => $this->galleryImages($service),
                 'media_upload_url' => route('admin.services.media.store', $service),
             ],
         ]);
@@ -97,6 +101,12 @@ class ServiceController extends Controller
                 ->addMediaFromRequest('image')
                 ->toMediaCollection(Service::MEDIA_COLLECTION_IMAGE);
         }
+
+        $this->removeGalleryImages(
+            $service,
+            $request->input('remove_gallery_images', []),
+        );
+        $this->storeGalleryImages($request, $service);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Servicio actualizado.')]);
 
@@ -181,5 +191,48 @@ class ServiceController extends Controller
             ])
             ->values()
             ->all();
+    }
+
+    /**
+     * @return list<array{id: int, url: string}>
+     */
+    private function galleryImages(Service $service): array
+    {
+        return $service
+            ->getMedia(Service::MEDIA_COLLECTION_GALLERY_IMAGES)
+            ->map(fn ($media) => [
+                'id' => $media->id,
+                'url' => $media->getUrl('preview') ?: $media->getUrl(),
+            ])
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @param  array<int, mixed>  $mediaIds
+     */
+    private function removeGalleryImages(Service $service, array $mediaIds): void
+    {
+        if ($mediaIds === []) {
+            return;
+        }
+
+        $service
+            ->getMedia(Service::MEDIA_COLLECTION_GALLERY_IMAGES)
+            ->whereIn('id', $mediaIds)
+            ->each(fn ($media) => $media->delete());
+    }
+
+    private function storeGalleryImages(Request $request, Service $service): void
+    {
+        if (! $request->hasFile('gallery_images')) {
+            return;
+        }
+
+        $service
+            ->addMultipleMediaFromRequest(['gallery_images'])
+            ->each(fn ($fileAdder) => $fileAdder->toMediaCollection(
+                Service::MEDIA_COLLECTION_GALLERY_IMAGES,
+            ));
     }
 }

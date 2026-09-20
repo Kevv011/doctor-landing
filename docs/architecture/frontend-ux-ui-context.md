@@ -206,8 +206,13 @@ Orden deliberado de secciones:
    pacientes. Los números 10, 5 y 3,200 cuentan una única vez al entrar al
    viewport.
 4. `HomeServicesSection`: grid de servicios médicos y card CTA destacada.
-5. `HomeSpecialistsSection`: dos perfiles profesionales, imagen circular, rol
-   y biografía.
+5. `HomeSpecialistsSection`: dos perfiles profesionales, imagen circular, rol,
+   biografía y acceso a su experiencia. Cada perfil público usa una ficha
+   profesional responsiva, seguida de trayectoria, formación, acreditaciones
+   y publicaciones cuando existen. La introducción y las áreas complementarias
+   se resumen para lectura web, mientras que la experiencia profesional y la
+   formación académica conservan todos los registros indicados en cada CV. El
+   enlace de regreso apunta a `/#especialistas`.
 6. `HomeTestimonialsSection`: carrusel Embla responsivo de testimonios.
 7. `HomeFeaturedBlogsSection`: carrusel Embla de posts destacados publicados.
 8. `LandingFooter`: contacto, enlaces, dirección, horarios y redes. La imagen

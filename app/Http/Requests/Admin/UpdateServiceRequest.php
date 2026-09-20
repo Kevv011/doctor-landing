@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Service;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateServiceRequest extends FormRequest
@@ -28,6 +29,10 @@ class UpdateServiceRequest extends FormRequest
             'sort_order' => ['nullable', 'integer', 'min:0', 'max:9999'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
             'remove_image' => ['nullable', 'boolean'],
+            'gallery_images' => ['nullable', 'array', 'max:'.Service::MAX_GALLERY_IMAGES_PER_UPLOAD],
+            'gallery_images.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
+            'remove_gallery_images' => ['nullable', 'array'],
+            'remove_gallery_images.*' => ['integer', 'distinct'],
         ];
     }
 }

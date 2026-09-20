@@ -16,6 +16,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import BlogContentRenderer from '@/components/landing/blog-content-renderer';
+import BlogImageCarousel from '@/components/landing/blog-image-carousel';
 import LandingContainer from '@/components/landing/landing-container';
 import LandingFooter from '@/components/landing/landing-footer';
 import LandingHeroImage from '@/components/landing/landing-hero-image';
@@ -40,6 +41,8 @@ const socialIcons: Record<string, LucideIcon> = {
 };
 
 export default function ServiceShow({ service, relatedServices }: Props) {
+    const galleryImages = service.gallery_image_urls ?? [];
+
     return (
         <>
             <PublicSeo
@@ -50,7 +53,7 @@ export default function ServiceShow({ service, relatedServices }: Props) {
                     'Servicio especializado de Women’s Health Clinic.'
                 }
                 canonicalPath={service.url}
-                imagePath={service.image_url}
+                imagePath={galleryImages[0] ?? service.image_url}
                 schema={{
                     '@type': 'MedicalWebPage',
                     name: service.title,
@@ -72,16 +75,15 @@ export default function ServiceShow({ service, relatedServices }: Props) {
                                 className="overflow-hidden rounded-lg bg-white p-3 shadow-[0_18px_45px_rgba(21,35,74,0.04)] sm:p-4 lg:p-5"
                             >
                                 <div className="relative min-h-[260px] overflow-hidden rounded-md bg-[#f6dce8] sm:min-h-[380px] lg:min-h-[430px]">
-                                    <img
-                                        src={service.image_url}
+                                    <BlogImageCarousel
+                                        images={
+                                            galleryImages.length > 0
+                                                ? galleryImages
+                                                : [service.image_url]
+                                        }
                                         alt={service.title}
-                                        loading="lazy"
-                                        decoding="async"
-                                        onError={(event) => {
-                                            event.currentTarget.src =
-                                                '/images/Services/ServicesDefault.png';
-                                        }}
-                                        className="absolute inset-0 h-full w-full object-cover"
+                                        loading="eager"
+                                        className="absolute inset-0 h-full w-full"
                                     />
                                     <div className="pointer-events-none absolute top-0 right-0 grid grid-cols-3 gap-1 p-5 opacity-80">
                                         {[0, 1, 2, 3, 4].map((square) => (

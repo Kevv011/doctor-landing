@@ -15,6 +15,10 @@ export type ServiceFormRecord = {
     sort_order?: number;
     has_image?: boolean;
     image_url?: string | null;
+    gallery_images?: Array<{
+        id: number;
+        url: string;
+    }>;
     media_upload_url?: string | null;
 };
 
@@ -159,6 +163,60 @@ export default function ServiceFormFields({
                         Quitar imagen actual
                     </label>
                 )}
+
+                <div className="grid gap-2">
+                    <Label htmlFor="gallery_images">Galería de imágenes</Label>
+                    <Input
+                        id="gallery_images"
+                        name="gallery_images[]"
+                        type="file"
+                        multiple
+                        accept="image/jpeg,image/png,image/webp,image/avif"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                        Puedes subir hasta 10 imágenes por carga. Se mostrarán
+                        en un carrusel automático de 7 segundos en el sitio.
+                    </p>
+                    <InputError message={errors.gallery_images} />
+                </div>
+
+                {service?.gallery_images &&
+                    service.gallery_images.length > 0 && (
+                        <div className="grid gap-3">
+                            <div>
+                                <h3 className="text-sm font-medium">
+                                    Imágenes de la galería
+                                </h3>
+                                <p className="text-xs text-muted-foreground">
+                                    Marca las imágenes que deseas quitar al
+                                    guardar.
+                                </p>
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                                {service.gallery_images.map((image) => (
+                                    <label
+                                        key={image.id}
+                                        className="overflow-hidden rounded-md border bg-background"
+                                    >
+                                        <img
+                                            src={image.url}
+                                            alt=""
+                                            className="aspect-[4/3] w-full object-cover"
+                                        />
+                                        <span className="flex items-center gap-2 p-2 text-xs">
+                                            <input
+                                                type="checkbox"
+                                                name="remove_gallery_images[]"
+                                                value={image.id}
+                                                className="h-4 w-4 rounded border-input"
+                                            />
+                                            Quitar
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                 <div className="flex flex-col gap-2 border-t pt-4 sm:flex-row lg:flex-col xl:flex-row">
                     <Button disabled={processing}>{submitLabel}</Button>

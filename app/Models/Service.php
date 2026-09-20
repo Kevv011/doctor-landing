@@ -19,6 +19,10 @@ class Service extends Model implements HasMedia
 
     public const MEDIA_COLLECTION_IMAGE = 'image';
 
+    public const MEDIA_COLLECTION_GALLERY_IMAGES = 'gallery_images';
+
+    public const MAX_GALLERY_IMAGES_PER_UPLOAD = 10;
+
     public const MEDIA_COLLECTION_CONTENT_IMAGES = 'content_images';
 
     /**
@@ -86,6 +90,10 @@ class Service extends Model implements HasMedia
             ->singleFile();
 
         $this
+            ->addMediaCollection(self::MEDIA_COLLECTION_GALLERY_IMAGES)
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp', 'image/avif']);
+
+        $this
             ->addMediaCollection(self::MEDIA_COLLECTION_CONTENT_IMAGES)
             ->acceptsMimeTypes(self::CONTENT_MEDIA_MIME_TYPES);
     }
@@ -106,6 +114,21 @@ class Service extends Model implements HasMedia
             : $this->getFirstMediaUrl(self::MEDIA_COLLECTION_IMAGE);
 
         return $url ?: $this->getFirstMediaUrl(self::MEDIA_COLLECTION_IMAGE) ?: self::FALLBACK_IMAGE;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function galleryImageUrls(?string $conversion = 'preview'): array
+    {
+        return $this
+            ->getMedia(self::MEDIA_COLLECTION_GALLERY_IMAGES)
+            ->map(fn (Media $media) => $conversion
+                ? $media->getUrl($conversion)
+                : $media->getUrl())
+            ->filter()
+            ->values()
+            ->all();
     }
 
     #[Scope]

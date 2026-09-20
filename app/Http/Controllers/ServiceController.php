@@ -71,6 +71,7 @@ class ServiceController extends Controller
             'seo_title' => $service->seo_title,
             'seo_description' => $service->seo_description,
             'image_url' => $service->imageUrl(),
+            'gallery_image_urls' => $service->galleryImageUrls(),
             'url' => route('services.show', $service->slug, false),
         ];
     }

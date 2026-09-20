@@ -242,7 +242,16 @@ export default function LandingFooter({
             </div>
 
             <div className="relative bg-[#c9003c] py-5 text-center text-xs font-medium text-white/90">
-                © 2026 {business.profile.name}. Todos los derechos reservados.
+                2026 Women&apos;s Health Clinic. Desarrollado por{' '}
+                <a
+                    href="https://pixelperfectlab.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline decoration-white/60 underline-offset-4 transition hover:text-white hover:decoration-white"
+                >
+                    Pixel Perfect
+                </a>
+                .
             </div>
         </footer>
     );

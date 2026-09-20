@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { ChevronRight, Search, X } from 'lucide-react';
+import BlogImageCarousel from '@/components/landing/blog-image-carousel';
 import LandingContainer from '@/components/landing/landing-container';
 import LandingFooter from '@/components/landing/landing-footer';
 import LandingHeroImage from '@/components/landing/landing-hero-image';
@@ -218,6 +219,10 @@ function ServiceCard({
     service: LandingService;
     index: number;
 }) {
+    const galleryImages = service.gallery_image_urls ?? [];
+    const images =
+        galleryImages.length > 0 ? galleryImages : [service.image_url];
+
     return (
         <article
             data-landing-reveal="up"
@@ -225,15 +230,10 @@ function ServiceCard({
             className="group overflow-hidden rounded-lg bg-white shadow-[0_12px_35px_rgba(21,35,74,0.04)] transition duration-400 ease-in-out hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(21,35,74,0.1)]"
         >
             <div className="relative h-40 overflow-hidden bg-[#d9d9d9] sm:h-44">
-                <img
-                    src={service.image_url}
+                <BlogImageCarousel
+                    images={images}
                     alt={service.title}
-                    loading="lazy"
-                    decoding="async"
-                    onError={(event) => {
-                        event.currentTarget.style.display = 'none';
-                    }}
-                    className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    className="h-full w-full transition duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-[#e9648d]/0 transition duration-300 group-hover:bg-[#e9648d]/25" />
                 <div className="pointer-events-none absolute top-0 right-0 grid grid-cols-3 gap-1 p-4 opacity-80">

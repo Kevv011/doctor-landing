@@ -1,14 +1,18 @@
+import { Link } from '@inertiajs/react';
+import { Folder } from 'lucide-react';
 import LandingContainer from '@/components/landing/landing-container';
 
 const specialists = [
     {
         name: 'Dra. Priscila Elizabeth Coto de Arévalo',
+        slug: 'dra-priscila-coto',
         specialty: 'Ginecóloga y obstetra',
         image: '/images/Home/HomeSpecialist1.png',
         bio: 'Especialista en ginecología, obstetricia, colposcopia y ultrasonografía, con más de 11 años de experiencia en la atención integral de la salud femenina. Brinda un acompañamiento cercano y humanizado en cada etapa de la vida de sus pacientes.',
     },
     {
         name: 'Dr. Danilo Alfonso Arévalo Sandoval',
+        slug: 'dr-danilo-arevalo',
         specialty: 'Ginecólogo obstetra | ginecólogo oncólogo',
         image: '/images/Home/HomeSpecialist2.png',
         bio: 'Especialista en ginecología oncológica, cirugía ginecológica y laparoscopia avanzada, con más de 15 años de experiencia. Cuenta con formación internacional y una amplia trayectoria en el manejo integral del cáncer ginecológico y la innovación en salud.',
@@ -17,7 +21,7 @@ const specialists = [
 
 export default function HomeSpecialistsSection() {
     return (
-        <section className="bg-white py-12 text-[#09123f]">
+        <section id="especialistas" className="bg-white py-12 text-[#09123f]">
             <LandingContainer>
                 <div className="mx-auto max-w-5xl">
                     <div data-landing-reveal="up" className="text-center">
@@ -55,6 +59,13 @@ export default function HomeSpecialistsSection() {
                                     <p className="mt-6 text-sm leading-6 text-[#6f7080]">
                                         {specialist.bio}
                                     </p>
+                                    <Link
+                                        href={`/especialistas/${specialist.slug}`}
+                                        className="landing-action mt-7 inline-flex items-center gap-3 rounded-md bg-[#e9648d] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(233,100,141,0.2)] hover:bg-[#c9003c]"
+                                    >
+                                        Experiencia
+                                        <Folder className="size-5 stroke-[1.7]" />
+                                    </Link>
                                 </div>
                             </article>
                         ))}

@@ -14,6 +14,7 @@ use App\Http\Controllers\AppointmentSubmissionController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PublicSeoController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SpecialistController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Models\BlogPost;
 use App\Models\Service;
@@ -75,6 +76,7 @@ Route::get('/', fn () => Inertia::render('public/home', [
             'seo_title' => $service->seo_title,
             'seo_description' => $service->seo_description,
             'image_url' => $service->imageUrl(),
+            'gallery_image_urls' => $service->galleryImageUrls(),
             'url' => route('services.show', $service->slug, false),
         ])
         ->values(),
@@ -85,6 +87,7 @@ Route::get('sitemap.xml', [PublicSeoController::class, 'sitemap'])->name('seo.si
 
 Route::get('servicios', [ServiceController::class, 'index'])->name('services');
 Route::get('servicios/{slug}', [ServiceController::class, 'show'])->name('services.show');
+Route::get('especialistas/{slug}', [SpecialistController::class, 'show'])->name('specialists.show');
 Route::inertia('contact', 'public/contact')->name('contact');
 Route::post('appointments', [AppointmentSubmissionController::class, 'store'])
     ->name('appointments.store');

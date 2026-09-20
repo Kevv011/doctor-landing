@@ -94,6 +94,8 @@ function ServiceCard({
     service: LandingService;
     index: number;
 }) {
+    const galleryImages = service.gallery_image_urls ?? [];
+
     return (
         <article
             data-landing-reveal="up"
@@ -103,7 +105,7 @@ function ServiceCard({
             <div>
                 <div className="mb-7 size-11 overflow-hidden rounded-full bg-[#e9648d] transition-transform duration-300 group-hover:-translate-y-0.5">
                     <img
-                        src={service.image_url}
+                        src={galleryImages[0] ?? service.image_url}
                         alt=""
                         loading="lazy"
                         decoding="async"

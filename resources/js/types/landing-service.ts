@@ -11,5 +11,6 @@ export type LandingService = {
     seo_title: string | null;
     seo_description: string | null;
     image_url: string;
+    gallery_image_urls?: string[];
     url: string;
 };

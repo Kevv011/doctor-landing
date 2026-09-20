@@ -32,6 +32,12 @@ Visitor opens /
   page renders those blocks with the same landing renderer used for Blog.
 - The service summary, tags, image, order, and visibility remain separate from
   the rich-text detail so they can be used independently in service cards.
+- Services can have an optional image gallery. The public catalog and service
+  detail render it as an automatic carousel that advances every seven seconds;
+  the primary service image remains the fallback when no gallery is assigned.
+- Public specialist profiles use concise summaries and complementary-training
+  highlights, while preserving the complete professional-experience and
+  academic-education records supplied in each doctor’s CV.
 
 ## Expected Sections
 
