@@ -38,6 +38,9 @@ Visitor opens /
 - Public specialist profiles use concise summaries and complementary-training
   highlights, while preserving the complete professional-experience and
   academic-education records supplied in each doctor’s CV.
+- The navigation search only returns public content: active services, published
+  blog posts, and active testimonials. Results remain grouped by content type
+  and link to the relevant detail or landing section.
 
 ## Expected Sections
 

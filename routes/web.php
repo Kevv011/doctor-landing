@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AppointmentSubmissionController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\LandingSearchController;
 use App\Http\Controllers\PublicSeoController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpecialistController;
@@ -84,6 +85,7 @@ Route::get('/', fn () => Inertia::render('public/home', [
 
 Route::get('robots.txt', [PublicSeoController::class, 'robots'])->name('seo.robots');
 Route::get('sitemap.xml', [PublicSeoController::class, 'sitemap'])->name('seo.sitemap');
+Route::get('buscar', LandingSearchController::class)->name('landing.search');
 
 Route::get('servicios', [ServiceController::class, 'index'])->name('services');
 Route::get('servicios/{slug}', [ServiceController::class, 'show'])->name('services.show');
