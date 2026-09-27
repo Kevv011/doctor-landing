@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import InputError from '@/components/input-error';
+import MultiImagePicker from '@/components/multi-image-picker';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -220,57 +221,14 @@ export default function BlogFormFields({
                     </label>
                 )}
 
-                <div className="grid gap-2">
-                    <Label htmlFor="gallery_images">Galería de imágenes</Label>
-                    <Input
-                        id="gallery_images"
-                        name="gallery_images[]"
-                        type="file"
-                        multiple
-                        accept="image/jpeg,image/png,image/webp,image/avif"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                        Puedes subir hasta 10 imágenes por carga. Se mostrarán
-                        en un carrusel automático de 7 segundos en el blog.
-                    </p>
-                    <InputError message={errors.gallery_images} />
-                </div>
-
-                {post?.gallery_images && post.gallery_images.length > 0 && (
-                    <div className="grid gap-3">
-                        <div>
-                            <h3 className="text-sm font-medium">
-                                Imágenes de la galería
-                            </h3>
-                            <p className="text-xs text-muted-foreground">
-                                Marca las imágenes que deseas quitar al guardar.
-                            </p>
-                        </div>
-                        <div className="grid grid-cols-2 gap-3">
-                            {post.gallery_images.map((image) => (
-                                <label
-                                    key={image.id}
-                                    className="overflow-hidden rounded-md border bg-background"
-                                >
-                                    <img
-                                        src={image.url}
-                                        alt=""
-                                        className="aspect-[4/3] w-full object-cover"
-                                    />
-                                    <span className="flex items-center gap-2 p-2 text-xs">
-                                        <input
-                                            type="checkbox"
-                                            name="remove_gallery_images[]"
-                                            value={image.id}
-                                            className="h-4 w-4 rounded border-input"
-                                        />
-                                        Quitar
-                                    </span>
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-                )}
+                <MultiImagePicker
+                    name="gallery_images"
+                    label="Galería de imágenes"
+                    description="Gestiona hasta 10 imágenes para el carrusel automático de 7 segundos del blog."
+                    existingImages={post?.gallery_images}
+                    removeFieldName="remove_gallery_images[]"
+                    errors={errors}
+                />
 
                 <div className="grid gap-4 rounded-lg border p-4">
                     <div>

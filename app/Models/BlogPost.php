@@ -146,6 +146,13 @@ class BlogPost extends Model implements HasMedia
             ->width(640)
             ->height(420)
             ->nonQueued();
+
+        $this
+            ->addMediaConversion('carousel')
+            ->performOnCollections(self::MEDIA_COLLECTION_GALLERY_IMAGES)
+            ->width(1920)
+            ->quality(90)
+            ->nonQueued();
     }
 
     #[Scope]
@@ -170,9 +177,13 @@ class BlogPost extends Model implements HasMedia
     {
         return $this
             ->getMedia(self::MEDIA_COLLECTION_GALLERY_IMAGES)
-            ->map(fn (Media $media) => $conversion
-                ? $media->getUrl($conversion)
-                : $media->getUrl())
+            ->map(function (Media $media) use ($conversion): string {
+                if ($conversion === 'preview' && $media->hasGeneratedConversion('carousel')) {
+                    return $media->getUrl('carousel');
+                }
+
+                return $conversion ? $media->getUrl($conversion) : $media->getUrl();
+            })
             ->filter()
             ->values()
             ->all();

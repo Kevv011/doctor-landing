@@ -45,8 +45,8 @@ Expected first version:
 - `excerpt`: short summary for cards and metadata.
 - `featured_image`: single-file Media Library collection for the article cover.
 - `gallery_images`: multi-file Media Library collection for the public image
-  carousel; the admin can upload up to 10 images in one submission and remove
-  existing images individually.
+  carousel; the admin manages up to 10 images with previews, can remove or
+  restore selections before saving, and can remove existing images individually.
 - `content_images`: Media Library collection for images inserted inside the block
   editor.
 - `body`: structured JSON block content.
