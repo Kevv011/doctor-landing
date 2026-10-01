@@ -79,7 +79,7 @@ export default function BlogImageCarousel({
                 onError={(event) => {
                     event.currentTarget.src = fallbackImage;
                 }}
-                className={`h-full w-full object-cover ${className} ${imageClassName}`}
+                className={`w-full object-cover ${className} ${imageClassName}`}
             />
         );
     }
