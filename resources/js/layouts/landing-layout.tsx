@@ -46,7 +46,10 @@ export default function LandingLayout({ children }: PropsWithChildren) {
                     }
                 });
             },
-            { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+            // A percentage threshold can leave very tall sections (such as a
+            // complete blog article) permanently hidden: the viewport never
+            // represents enough of their total height. Reveal on entry instead.
+            { rootMargin: '0px 0px -8% 0px', threshold: 0 },
         );
 
         revealElements.forEach((element) => {
@@ -63,8 +66,8 @@ export default function LandingLayout({ children }: PropsWithChildren) {
         });
 
         return () => observer.disconnect();
-    // A same-route Inertia visit replaces `children` without changing `url`.
-    // Re-run the observer so freshly rendered landing sections are revealed.
+        // A same-route Inertia visit replaces `children` without changing `url`.
+        // Re-run the observer so freshly rendered landing sections are revealed.
     }, [url, children]);
 
     return (
